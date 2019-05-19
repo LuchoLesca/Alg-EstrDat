@@ -433,8 +433,6 @@ while not cola_vacia(c):
 
     barridoC(c)
 
-sdfsdf
-
 
 # Ejercicio 17
 
