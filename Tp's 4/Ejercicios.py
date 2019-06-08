@@ -372,12 +372,12 @@ else:
 
 
 # Ejercicio 16
-
+"""
 for i in range(1, 6):
     arribo(c, [i, random.uniform(1, 10)])
 
 barridoC(c)
-
+"""
 # A
 """
 for i in range(1, 6):
@@ -409,7 +409,7 @@ while not cola_vacia(c):
 """
 
 # C
-
+"""
 i = 0
 while not cola_vacia(c):
 
@@ -432,16 +432,130 @@ while not cola_vacia(c):
         arribo(c, [7, random.uniform(1, 10)])
 
     barridoC(c)
-
+"""
+# D <-------------------- FALTA ESTE
 
 # Ejercicio 17
+"""
+# A
+letras = "ABCDEF"
 
+for i in range(0, cant):
+    turno = str(random.choice(letras))
+    for j in range(0, 3):
+        turno += str(random.randint(0, 9))
+    arribo(c, turno)
+
+print("Cola original:")
+barridoC(c)
+
+
+# B
+
+while not cola_vacia(c):
+    turno = atencion(c)
+    if turno[0] in ["A", "C", "F"]:
+        arribo(c1, turno)
+    else:
+        arribo(c2, turno)
+
+print("C1 -------------")
+barridoC(c1)
+print("C2 -------------")
+barridoC(c2)
+print("")
+
+# C
+
+contA, contB, contC, contD, contE, contF = 0, 0, 0, 0, 0, 0
+
+if tamanio(c1) == tamanio(c2):
+    print("El tamaño de ambas colas es igual")
+else:
+    if tamanio(c1) > tamanio(c2):
+        print("C1 tiene más cantidad de turnos")
+
+        for i in range(0, tamanio(c1)):
+            turno = atencion(c1)
+            if turno[0] == "A":
+                contA += 1
+            elif turno[0] == "C":
+                contC += 1
+            else:
+                contF += 1
+            arribo(c1, turno)
+
+        mayor = "A"
+        cant_mayor = contA
+        if cant_mayor < contC:
+            mayor = "C"
+            cant_mayor = contC
+        if cant_mayor < contF:
+            mayor = "F"
+            cant_mayor = contF
+        print("Aparece mas veces la letra: " + mayor + " con " +
+              str(cant_mayor) + " ocurrencias")
+
+    else:
+        print("C2 tiene más cantidad de turnos")
+
+        for i in range(0, tamanio(c2)):
+            turno = atencion(c2)
+            if turno[0] == "B":
+                contB += 1
+            elif turno[0] == "D":
+                contD += 1
+            else:
+                contE += 1
+            arribo(c2, turno)
+
+        mayor = "B"
+        cant_mayor = contB
+        if cant_mayor < contD:
+            mayor = "D"
+            cant_mayor = contD
+        if cant_mayor < contE:
+            mayor = "E"
+            cant_mayor = contE
+        print("Aparece mas veces la letra: " + mayor + " con " +
+              str(cant_mayor) + " ocurrencias")
+"""
 
 # Ejercicio 18  <---
 
 
-# Ejercicio 19
+# Ejercicio 19  <----- REVISAR SI ESTE SE PUEDE HACER DE UNA FORMA MÁS OPTIMA
+"""
+palabra_in = "Parasito"
+# palabra_in = "Parasitos"
 
+if len(palabra_in) % 2 == 0:
+    for i in range(0, len(palabra_in), 2):
+        byte = palabra_in[i] + palabra_in[i + 1]
+        arribo(c, byte)
+else:
+    for i in range(0, len(palabra_in) - 1, 2):
+        byte = palabra_in[i] + palabra_in[i + 1]
+        arribo(c, byte)
+    arribo(c, palabra_in[len(palabra_in) - 1])
+
+barridoC(c)
+
+# B
+
+while not cola_vacia(c):
+    arribo(c1, atencion(c))
+
+barridoC(c1)
+
+# C
+palabra_out = ""
+
+while not cola_vacia(c1):
+    palabra_out += atencion(c1)
+
+print(palabra_out)
+"""
 
 # Ejercicio 20
 
