@@ -74,6 +74,11 @@ def barridoC(cola):
             nodo = nodo.sig
 
 
+def en_frente(cola):
+    if tamanio(cola) > 0:
+        return cola.frente.info
+
+
 def cargaAutoIntC(cola, cant):
     for i in range(0, cant):
         arribo(cola, random.randint(-10, 10))
@@ -87,14 +92,44 @@ def cargaAutoStrC(cola, cant):
 
 def primo(num):
     pri = True
-    if num < 2:
+    if num < 2 and num != 0:
         return True
     elif num == 2:
         return True
     else:
         i = 2
-        while (i < num) and pri:
-            if (num % i == 0):
+        while (i <= math.sqrt(num)) and pri:
+            if (i != num) and (num % i == 0):
                 pri = False
             i += 1
         return pri
+
+
+def fibonacci(indice):
+    c = Cola()
+    c1 = Cola()
+
+    arribo(c, 0)
+    arribo(c, 1)
+
+    if (indice < 1) and (indice >= 0):
+        moverAFinal(c)
+        atencion(c)
+    elif (indice > 1):
+        while tamanio(c) <= indice:
+            while tamanio(c) > 2:
+                arribo(c1, atencion(c))
+
+            dato1 = atencion(c)
+            dato2 = atencion(c)
+
+            suma = 0
+            suma = dato1 + dato2
+
+            arribo(c1, dato1)
+            arribo(c1, dato2)
+            arribo(c1, suma)
+
+            c, c1 = c1, c
+
+    barridoC(c)

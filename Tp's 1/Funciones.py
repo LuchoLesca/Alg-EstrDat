@@ -20,6 +20,8 @@ def producto(n1, n2):
         return 0
     elif (n2 == 1):
         return n1
+    elif (n1 == 1):
+        return n2
     else:
         return n1 + producto(n1, n2 - 1)
 

@@ -1,6 +1,6 @@
 from TDA_Cola_Nodo import Cola, arribo, atencion, barridoC, cargaAutoIntC
 from TDA_Cola_Nodo import cargaAutoStrC, cola_llena, cola_vacia, moverAFinal
-from TDA_Cola_Nodo import tamanio, primo
+from TDA_Cola_Nodo import tamanio, primo, fibonacci, en_frente
 
 from TDA_Pila_Nodo import Pila, apilar, desapilar, pila_llena, pila_vacia
 from TDA_Pila_Nodo import barrido, cargaAutoInt, cargaAutoStr
@@ -14,6 +14,7 @@ p = Pila()
 c = Cola()
 c1 = Cola()
 c2 = Cola()
+c3 = Cola()
 
 
 # Ejercicio 1
@@ -200,6 +201,15 @@ print("Cantidad de numeros negativos: " + str(cont))
 
 
 # Ejercicio 10 (Fibonacci)
+"""
+# Prueba uno
+# fibonacci(5)
+
+# Prueba varios ciclos
+for i in range(0, 7):
+    print("Indice: " + str(i))
+    fibonacci(i)
+"""
 
 
 # Ejercicio 11
@@ -363,10 +373,41 @@ else:
     else:
         print("Mas numeros primos en c2")
 """
-"""
-# E      <------------------ FALTA HACER ESTE
-"""
 
+# E
+"""
+hay_mult_dos = False
+hay_mult_tres = False
+hay1 = False
+hay2 = False
+
+for i in range(0, tamanio(c1)):
+    dato = atencion(c1)
+    if (dato % 3 == 0):
+        hay_mult_tres = True
+    if (dato % 2 == 0):
+        hay_mult_tres = True
+    arribo(c1, dato)
+
+if (hay_mult_dos) and (hay_mult_tres):
+    hay1 = True
+
+for i in range(0, tamanio(c2)):
+    dato = atencion(c2)
+    if (dato % 3 == 0):
+        hay_mult_tres = True
+    if (dato % 2 == 0):
+        hay_mult_tres = True
+    arribo(c2, dato)
+
+if (hay_mult_dos) and (hay_mult_tres):
+    hay2 = True
+
+if hay1 and hay2:
+    print("Ambas colas poseen al menos un número múltiplo de dos y un número múltiplo de tres")
+else:
+    print("Ambas colas no poseen al menos un número múltiplo de dos y un número múltiplo de tres")
+"""
 
 # Ejercicio 15  <---
 
@@ -433,7 +474,6 @@ while not cola_vacia(c):
 
     barridoC(c)
 """
-# D <-------------------- FALTA ESTE
 
 # Ejercicio 17
 """
@@ -524,7 +564,7 @@ else:
 # Ejercicio 18  <---
 
 
-# Ejercicio 19  <----- REVISAR SI ESTE SE PUEDE HACER DE UNA FORMA MÁS OPTIMA
+# Ejercicio 19
 """
 palabra_in = "Parasito"
 # palabra_in = "Parasitos"
@@ -543,21 +583,269 @@ barridoC(c)
 
 # B
 
-while not cola_vacia(c):
-    arribo(c1, atencion(c))
+cola_buff_in = Cola()
 
-barridoC(c1)
+while not cola_vacia(c):
+    arribo(cola_buff_in, atencion(c))
+
+# barridoC(cola_buff_in)
 
 # C
 palabra_out = ""
 
-while not cola_vacia(c1):
-    palabra_out += atencion(c1)
+while not cola_vacia(cola_buff_in):
+    palabra_out += atencion(cola_buff_in)
 
 print(palabra_out)
 """
 
 # Ejercicio 20
+"""
+cant_c1, cant_c2, cant_c3 = 0, 0, 0
+
+for i in range(0, 8):
+    cabina = random.randint(1, 3)
+    if cabina == 1:
+        arribo(c1, True)
+    elif cabina == 2:
+        arribo(c2, True)
+    else:
+        arribo(c3, True)
+'''
+print("Cabina 1:")
+barridoC(c1)
+print("Cabina 2:")
+barridoC(c2)
+print("Cabina 3:")
+barridoC(c3)
+'''
+while (not cola_vacia(c1)) or (not cola_vacia(c2)) or (not cola_vacia(c3)):
+    if not cola_vacia(c1):
+        atencion(c1)
+        cant_c1 += 1
+    if not cola_vacia(c2):
+        atencion(c2)
+        cant_c2 += 1
+    if not cola_vacia(c3):
+        atencion(c3)
+        cant_c3 += 1
+
+cant_mayor = cant_c1
+cab_mayor = 1
+
+if cant_mayor < cant_c2:
+    cant_mayor = cant_c2
+    cab_mayor = 2
+if cant_mayor < cant_c3:
+    cant_mayor = cant_c3
+    cab_mayor = 3
+
+print("Cabina que más dinero recaudó: " + str(cab_mayor))
+"""
+
+# Ejercicio 21 
+"""
+
+def insertar_vuelo_despegues(nuevo, cola):
+    '''Devuelve la cola con el elemento nuevo cargado'''
+    hora = nuevo[1]
+
+    aux = Cola()
+
+    while (not cola_vacia(cola)) and (cola.frente.info[1] < hora):
+        arribo(aux, atencion(cola))
+
+    arribo(aux, nuevo)
+
+    while not cola_vacia(cola):
+        arribo(aux, atencion(cola))
+
+    return aux
 
 
-# Ejercicio 21
+def insertar_vuelo_aterrizajes(nuevo, cola):
+    '''Devuelve la cola con el elemento nuevo cargado'''
+    hora = nuevo[2]
+
+    aux = Cola()
+
+    while (not cola_vacia(cola)) and (cola.frente.info[2] < hora):
+        arribo(aux, atencion(cola))
+
+    arribo(aux, nuevo)
+
+    while not cola_vacia(cola):
+        arribo(aux, atencion(cola))
+
+    return aux
+
+
+def obtener_hora():
+    return time.strftime("%S")
+
+
+def crear_vuelo():  # Para usos practicos, los horarios seran segundos
+    empresa = random.choice(empresas)
+    hora_salida = random.randint(0, 59)
+    hora_llegada = random.randint(0, 59)
+    origen = random.choice(aero_ori)
+    destino = random.choice(aero_des)
+    tipo = random.choice(tipos_aviones)
+
+    return [empresa, hora_salida, hora_llegada, origen, destino, tipo]
+
+
+# Tiempos
+# Aviones       aterrizaje         despegue
+# pasajeros     10                  5
+# negocios      5                   3
+# carga         7                   9
+
+
+# INDICES: empresa = 0, hora_s = 1, hora_l = 2
+#          origen = 3, destino = 4, tipo = 5
+
+
+despegues = Cola()
+aterrizajes = Cola()
+aux = Cola()
+
+empresas = ["Empr_a", "Empr_b", "Empr_c", "Empr_d", "Empr_e"]
+aero_ori = ["Ori_a", "Ori_b", "Ori_c", "Ori_d", "Ori_e"]
+aero_des = ["Des_a", "Des_b", "Des_c", "Des_d", "Des_e"]
+tipos_aviones = ["pasajeros", "negocios", "carga"]
+
+
+# Genera cola de despegues y aterrizajes iniciales
+for i in range(0, 2):
+    vuelo_nuevo = crear_vuelo()
+    despegues = insertar_vuelo_despegues(vuelo_nuevo, despegues)
+    vuelo_nuevo = crear_vuelo()
+    aterrizajes = insertar_vuelo_aterrizajes(vuelo_nuevo, aterrizajes)
+
+
+def reprogramarVuelo(vuelo, despegues):
+    '''Reprograma el vuelo para último'''
+    caux = Cola()
+    ultimo_despegue = []
+
+    if (tamanio(despegues) > 1):
+        while (tamanio(despegues) > 1):
+            arribo(caux, atencion(despegues))
+
+        ultimo_despegue = atencion(despegues)  # Extrae hora de ultimo despegue
+        ultima_hora = ultimo_despegue[1]
+
+        arribo(caux, ultimo_despegue)  # Arriba ultimo despegue
+
+        vuelo[1] = random.randint(ultima_hora, 59)  # Asigna al vuelo reprogramado un horario mayor al último
+
+    else:
+        vuelo[1] = random.randint(vuelo[1], 59)  # Cambia el horario del último vuelo para un horario mayor al que tenía
+
+    arribo(caux, vuelo)
+
+    despegues = caux
+
+    return despegues
+
+
+print("Despegues:")
+barridoC(despegues)
+print("Aterrizajes:")
+barridoC(aterrizajes)
+
+pista = False
+hora_actual = int(obtener_hora())
+
+while (not cola_vacia(despegues)) or (not cola_vacia(aterrizajes)):
+    if not pista:
+
+        if hora_actual < 59:
+            hora_actual += 1
+        else:
+            hora_actual = 0
+
+        if (not cola_vacia(despegues)):
+
+            prox_despegue = en_frente(despegues)
+
+            if (prox_despegue[1] <= hora_actual) or (cola_vacia(aterrizajes)):
+                print("Hora actual: " + str(hora_actual))  # Acordarse sacar esto, es solo para prueba
+                print("Que desea hacer con el despegue actual: ")
+                opcion = int(input("1- despegar.  2- cancelar.  3- Reprogramar: "))
+
+                prox_despegue = atencion(despegues)
+
+                if (opcion == 1):
+                    if prox_despegue[5] == "pasajeros":
+                        duracion = 5
+                    elif prox_despegue[5] == "carga":
+                        duracion = 9
+                    else:
+                        duracion = 3
+
+                    print("Despegando, durará " + str(duracion) + " seg")
+                    time.sleep(duracion)
+
+                elif (opcion == 3):
+                    print("Vuelo reprogramado")
+                    despegues = reprogramarVuelo(prox_despegue, despegues)
+
+                else:
+                    print("Vuelo cancelado")
+
+                print("Despegues:")
+                barridoC(despegues)
+                print("Aterrizajes:")
+                barridoC(aterrizajes)
+
+            else:
+                if (not cola_vacia(aterrizajes)):
+                    print("Hora actual: " + str(hora_actual))  # Acordarse sacar esto, es solo para prueba
+                    prox_aterrizaje = atencion(aterrizajes)
+                    if prox_aterrizaje[5] == "pasajeros":
+                        duracion = 10
+                    elif prox_aterrizaje[5] == "carga":
+                        duracion = 7
+                    else:
+                        duracion = 5
+
+                    print("Aterrizando, durará " + str(duracion) + " seg")
+                    time.sleep(duracion)
+
+                    print("Despegues:")
+                    barridoC(despegues)
+                    print("Aterrizajes:")
+                    barridoC(aterrizajes)
+
+        else:
+            print("Hora actual: " + str(hora_actual))  # Acordarse sacar esto, es solo para prueba
+            prox_aterrizaje = atencion(aterrizajes)
+            if prox_aterrizaje[5] == "pasajeros":
+                duracion = 10
+            elif prox_aterrizaje[5] == "carga":
+                duracion = 7
+            else:
+                duracion = 5
+
+            print("Aterrizando, durará " + str(duracion) + " seg")
+            time.sleep(duracion)
+
+            print("Despegues:")
+            barridoC(despegues)
+            print("Aterrizajes:")
+            barridoC(aterrizajes)
+"""
+
+"""
+    otro = input(print("Desea ingresa un nuevo vuelo para despegar? S/N"))
+    if otro == "S":
+        vuelo = crear_vuelo()
+        despegues = insertar_vuelo_despegues(vuelo, despegues)
+
+    otro = input(print("Desea ingresa un nuevo vuelo para aterrizar? S/N"))
+    if otro == "S":
+        vuelo = crear_vuelo()
+        aterrizajes = insertar_vuelo_aterrizajes(vuelo, aterrizajes)
+"""
