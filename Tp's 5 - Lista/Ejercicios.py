@@ -631,7 +631,7 @@ subtipo = 3
 """
 tipos = ["Fuego", "Planta", "Agua", "Volador", "Tierra", "Eléctrico", "Hielo"]
 entrenadores = ["Entr1", "Entr2", "Entr3", "Entre4"]
-
+"""
 
 def ListaPokemons(cant):
 
@@ -665,7 +665,7 @@ for i in range(0, 9):
 
 barridoLista(entrenadores)
 print()
-
+"""
 
 # A
 """
@@ -763,6 +763,8 @@ else:
 """
 
 # G
+"""
+cantidad = 0
 pokemon = "Poke1"
 print("Entrenadores que tengan de pokemon a " + pokemon)
 
@@ -772,6 +774,211 @@ while (aux_entrenador is not None):
     result = busquedaListaCampo(aux_entrenador.info[4], pokemon, 0)
 
     if result is not None:
+        cantidad += 1
         print(aux_entrenador.info)
 
     aux_entrenador = aux_entrenador.sig
+
+print("Total de entrenadores con el mismo pokemon: " + str(cantidad))
+"""
+
+# H
+"""
+print("Entrenadores que tienen pokemon repetidos: ")
+aux_entrenador = entrenadores.inicio
+
+while (aux_entrenador is not None):
+    aux_poke = aux_entrenador.info[4].inicio
+    repetido = False
+
+    while (aux_poke.sig is not None) and (not repetido):
+
+        if aux_poke.info[0] == aux_poke.sig.info[0]:
+            print(aux_entrenador)
+            print("Pokemon repetido: " + aux_poke.info[0])
+            repetido = True
+
+        aux_poke = aux_poke.sig
+
+    aux_entrenador = aux_entrenador.sig
+"""
+
+
+# EJERCICIO 15
+"""
+costo = 0
+tiempo = 1 (horas)
+dia = 2
+mes = 3
+anio = 4
+resp = 5
+"""
+
+tareas = Lista()
+
+for i in range(1, 11):
+    costo = randint(10, 10000)
+    tiempo = randint(1, 12)
+    dia = randint(1, 29)
+    mes = randint(1, 12)
+    anio = randint(2017, 2019)
+    resp = "Persona" + str(i)
+    tarea = [costo, tiempo, dia, mes, anio, resp]
+
+    inserCampo(tareas, tarea, 5)
+
+# barridoLista(tareas)
+
+# A y B
+"""
+tiempo_promedio = 0
+costo_total = 0
+
+aux = tareas.inicio
+
+while (aux is not None):
+    tiempo_promedio += aux.info[1]
+    costo_total += aux.info[0]
+
+    aux = aux.sig
+
+tiempo_promedio = tiempo_promedio / tareas.tamanio
+print("Tiempo promedio de tareas: " + str(tiempo_promedio))
+print("Costo total del proyecto: " + str(costo_total))
+"""
+
+# C
+"""
+persona_buscada = "Persona3"
+inserCampo(tareas, [1000, 3, 5, 2, 2018, "Persona3"], 5)
+
+buscado = busquedaListaCampo(tareas, persona_buscada, 5)
+
+if (buscado is not None):
+    aux = buscado
+
+    while (aux.info[5] == persona_buscada) and (aux is not None):
+        print(aux.info)
+        aux = aux.sig
+"""
+
+# D
+"""
+barridoLista(tareas)
+print()
+
+def enRango(dato, min, max):
+    if (dato >= min) and (dato <= max):
+        return True
+    else:
+        return False
+
+
+fecha1 = [1, 1, 2018]
+fecha2 = [29, 6, 2019]
+
+aux = tareas.inicio
+
+while (aux is not None):
+    if enRango(aux.info[4], fecha1[2], fecha2[2]) and enRango(aux.info[3], fecha1[1], fecha2[1]) and enRango(aux.info[2], fecha1[0], fecha2[0]):
+        print(aux.info)
+    aux = aux.sig
+"""
+
+# EJERCICIO 17     <<<<<<< FALTA EL EJERCICIO B
+# Codigo = 0, precio = 1, tipo(nombre) = 2, marca = 3, modelo = 4, cantidad = 5
+
+"""
+def cargarStock(lista, cant, campo):
+
+    while (lista.tamanio < cant):
+        tipo = choice(tipos)
+        if (busqueda(lista, tipo, campo) is None):
+            codigo, precio, marca = articulos.get(tipo)
+            modelo = "Modelo" + str(randint(1, 1000))
+            cantidad = randint(1, 100)
+            articulo = [codigo, precio, tipo, marca, modelo, cantidad]
+
+            inserCampo(lista, articulo, campo)
+
+
+local, provA, provB = Lista(), Lista(), Lista()
+
+articulos = {
+             "Pendrive": [125, 1000, "Kingston"],
+             "Disco Solido": [12, 2000, "WD"],
+             "Teclado Inalambrico": [3, 1500, "Aorus"],
+             "Estabilizador": [11, 1800, "Sur Electric"],
+             "Mouse": [77, 300, "Sentey"],
+             "Cable USB": [59, 150, "Desconocido"]
+}
+
+tipos = ["Pendrive", "Disco Solido", "Teclado Inalambrico", "Estabilizador",
+         "Mouse", "Cable USB"]
+
+cargarStock(local, 2, 2)
+cargarStock(provA, 4, 2)
+cargarStock(provB, 3, 2)
+
+barridoLista(local)
+print()
+barridoLista(provA)
+print()
+barridoLista(provB)
+print()
+"""
+
+# A y C
+"""
+aux = provA.inicio
+
+while (aux is not None):
+    art = busquedaListaCampo(local, aux.info[2], 2)
+    if (art is None):
+        inserCampo(local, aux.info, 2)
+    else:
+        art.info[5] += aux.info[5]
+    aux = aux.sig
+
+aux = provB.inicio
+
+while (aux is not None):
+    art = busquedaListaCampo(local, aux.info[2], 2)
+    if (art is None):
+        inserCampo(local, aux.info, 2)
+    else:
+        art.info[5] += aux.info[5]
+    aux = aux.sig
+
+print("Se agregaron los articulos de los proveedores al local:")
+barridoLista(local)
+print()
+"""
+# B
+
+aux = local.inicio
+
+while (aux.sig is not None) and (aux.sig.info[2] != "Pendrive"):
+    aux = aux.sig
+
+if (aux is not None):
+    aux2 = aux.sig
+
+
+# D Hay que haber ejecutado el punto A, ya que deja actualizada la lista local
+"""
+disco_duro = busquedaListaCampo(local, "Disco Solido", 2)
+tecl_inalam = busquedaListaCampo(local, "Teclado Inalambrico", 2)
+
+if disco_duro is not None:
+    costo_existencia = disco_duro.info[1] * disco_duro.info[5]
+    print("Costo de existencia de disco duro: " + str(costo_existencia))
+else:
+    print("No se encuentra disco duro en la lista de stock del local")
+
+if tecl_inalam is not None:
+    costo_existencia = tecl_inalam.info[1] * tecl_inalam.info[5]
+    print("Costo de existencia de teclado inalambrico: " + str(costo_existencia))
+else:
+    print("No se encuentra teclado inalambrico en la lista de stock del local")
+"""
