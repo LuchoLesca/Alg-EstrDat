@@ -950,21 +950,28 @@ while (aux is not None):
         art.info[5] += aux.info[5]
     aux = aux.sig
 
-print("Se agregaron los articulos de los proveedores al local:")
+print("Stock de local actualizada con proveedores:")
 barridoLista(local)
 print()
 """
 # B
+"""
+if local.tamanio == 1:
+    if (local.info[2] == "Pendrive") and (local.info[3] == "Kingston"):
+        local.inicio = None
+else:
+    ant = local.inicio
+    act = ant.sig
+    while (act is not None) and ((act.info[2] != "Pendrive") or (act.info[3] != "Kingston")):
+        ant = ant.sig
+        act = act.sig
 
-aux = local.inicio
+    if act is not None:
+        ant.sig = act.sig
 
-while (aux.sig is not None) and (aux.sig.info[2] != "Pendrive"):
-    aux = aux.sig
-
-if (aux is not None):
-    aux2 = aux.sig
-
-
+print()
+barridoLista(local)
+"""
 # D Hay que haber ejecutado el punto A, ya que deja actualizada la lista local
 """
 disco_duro = busquedaListaCampo(local, "Disco Solido", 2)
