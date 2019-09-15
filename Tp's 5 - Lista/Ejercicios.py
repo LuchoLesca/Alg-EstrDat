@@ -1,9 +1,7 @@
 from TDA_Lista import *
-# import datetime
-# from random import randint, choice
+import datetime
+from random import randint, choice, random
 
-import random
-from datetime import datetime, timedelta
 
 # EJERCICIO 1
 """
@@ -994,27 +992,133 @@ else:
 
 # EJERCICIO 18
 
-# Usuario: nombre = 0, commits = 1
-# Commit: fyh = 0, msj = 1, archivo = 2, lineas = 3
+# Usuario: nombre = 0, commits = 1  -->  Ordenado por nombre
+# Commit: fyh = 0, msj = 1, archivo = 2, lineas = 3  -->  Ordenador por lineas
+
+
+def gen_datetime(min_year=2012, max_year=datetime.datetime.now().year):
+    # genera un datatime en formato yyyy-mm-dd hh:mm:ss.000000
+    start = datetime.datetime(min_year, 1, 1, 00, 00, 00)
+    years = max_year - min_year + 1
+    end = start + datetime.timedelta(days=365 * years)
+    return start + (end - start) * random()
+
 
 usuarios = Lista()
 
+for i in range(1, 10):  # Usuarios
+    commits = Lista()
+    nombre = "Usuario" + str(i)
 
-def gen_datetime(min_year=2012, max_year=datetime.now().year):
-    # genera un datatime en formato yyyy-mm-dd hh:mm:ss.000000
-    start = datetime(min_year, 1, 1, 00, 00, 00)
-    years = max_year - min_year + 1
-    end = start + timedelta(days=365 * years)
-    return start + (end - start) * random.random()
+    for j in range(0, randint(1, 11)):  # Commits
+        fyh = gen_datetime()
+        msj = "Mensaje" + str(i + j)
+        archivo = choice(["Archivo" + str(randint(0, 10)), "Test.py"])
+        cant_lineas = randint(0, 500)
+        if (cant_lineas != 0):
+            lineas = int(choice(["-", "+"]) + str(cant_lineas))
+        else:
+            lineas = cant_lineas
+        commit = [fyh, msj, archivo, lineas]
+        inserCampo(commits, commit, 3)
+
+    usuario = [nombre, commits]
+    inserCampo(usuarios, usuario, 0)
 
 
-fechas = []
+# A
+"""
+aux = usuarios.inicio
+max = aux
 
-for i in range(0, 10):
-    fechas.append(gen_datetime())
+while aux is not None:
+    if (aux.info[1].tamanio > max.info[1].tamanio):
+        max = aux
+    aux = aux.sig
 
-for fecha in fechas:
-    print(fecha)
+usuarios_con_mayor_commit = [max]
 
+aux = usuarios.inicio
+while (aux is not None):
+    if (aux.info[1].tamanio == max.info[1].tamanio):
+        usuarios_con_mayor_commit.append(aux)
+    aux = aux.sig
 
-for i in range()
+print("Usuario/s con mayor cantidad de commits (" + str(max.info[1].tamanio) +
+      ")")
+for usuario in usuarios_con_mayor_commit:
+    print(usuario.info)
+"""
+
+# B
+"""
+aux_usuario = usuarios.inicio
+
+user_agreg = aux_usuario
+max = ultimoNodo(aux_usuario.info[1]).info[3]
+
+user_elim = aux_usuario
+min = aux_usuario.info[1].inicio.info[3]
+
+while (aux_usuario is not None):
+    # Lista de commits
+    commits = aux_usuario.info[1]
+    # Primero y último commit de la lista
+    pri_commit = commits.inicio
+    ult_commit = ultimoNodo(commits)
+    # Cantidad de líneas de primer y último commit
+    lineas_pri = pri_commit.info[3]
+    lineas_ult = ultimoNodo(commits).info[3]
+
+    if lineas_pri < 0:
+        if (lineas_pri > min):
+            min = lineas_pri
+            user_elim = aux_usuario
+    else:
+        if (lineas_ult > max):
+            max = lineas_ult
+            user_agreg = aux_usuario
+
+    aux_usuario = aux_usuario.sig
+
+print("Usuario que agregó mayor cantidad de lineas: " + str(max))
+print(user_agreg.info)
+print("Usuario que eliminó menor cantidad de lineas: " + str(min))
+print(user_elim.info )
+"""
+
+# C
+"""
+hora_limite = datetime.time(19, 45, 0)
+print("Usuarios que han realizado cambios después de las 19:45")
+
+aux_usuario = usuarios.inicio
+
+while (aux_usuario is not None):
+    aux_commit = aux_usuario.info[1].inicio
+
+    while (aux_commit is not None):
+        name_archivo = aux_commit.info[2]
+        hora = aux_commit.info[0].time()
+
+        if (aux_commit.info[3] != 0) and (name_archivo == "Test.py") and (hora > hora_limite):
+            print(aux_usuario.info)
+            break
+
+        aux_commit = aux_commit.sig
+
+    aux_usuario = aux_usuario.sig
+"""
+
+# D
+"""
+print("Usuarios que realizaron commits con cero lineas agregadas/eliminadas")
+aux_usuario = usuarios.inicio
+
+while (aux_usuario is not None):
+    encontrado = busqueda(aux_usuario.info[1], 0, 3)
+    if (encontrado is not None):
+        print(aux_usuario.info)
+
+    aux_usuario = aux_usuario.sig
+"""

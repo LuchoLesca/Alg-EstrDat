@@ -196,8 +196,9 @@ def cargaAutoStrL(l, cantidad):
 def ultimoNodo(lista):
     aux = lista.inicio
 
-    while (aux.sig is not None):
-        aux = aux.sig
+    if lista.tamanio > 1:
+        while (aux.sig is not None):
+            aux = aux.sig
 
     return aux
 
