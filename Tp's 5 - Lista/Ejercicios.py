@@ -1,7 +1,9 @@
 from TDA_Lista import *
-import time
-from random import randint, choice
+# import datetime
+# from random import randint, choice
 
+import random
+from datetime import datetime, timedelta
 
 # EJERCICIO 1
 """
@@ -813,7 +815,7 @@ mes = 3
 anio = 4
 resp = 5
 """
-
+"""
 tareas = Lista()
 
 for i in range(1, 11):
@@ -826,7 +828,7 @@ for i in range(1, 11):
     tarea = [costo, tiempo, dia, mes, anio, resp]
 
     inserCampo(tareas, tarea, 5)
-
+"""
 # barridoLista(tareas)
 
 # A y B
@@ -885,7 +887,7 @@ while (aux is not None):
     aux = aux.sig
 """
 
-# EJERCICIO 17     <<<<<<< FALTA EL EJERCICIO B
+# EJERCICIO 17
 # Codigo = 0, precio = 1, tipo(nombre) = 2, marca = 3, modelo = 4, cantidad = 5
 
 """
@@ -989,3 +991,30 @@ if tecl_inalam is not None:
 else:
     print("No se encuentra teclado inalambrico en la lista de stock del local")
 """
+
+# EJERCICIO 18
+
+# Usuario: nombre = 0, commits = 1
+# Commit: fyh = 0, msj = 1, archivo = 2, lineas = 3
+
+usuarios = Lista()
+
+
+def gen_datetime(min_year=2012, max_year=datetime.now().year):
+    # genera un datatime en formato yyyy-mm-dd hh:mm:ss.000000
+    start = datetime(min_year, 1, 1, 00, 00, 00)
+    years = max_year - min_year + 1
+    end = start + timedelta(days=365 * years)
+    return start + (end - start) * random.random()
+
+
+fechas = []
+
+for i in range(0, 10):
+    fechas.append(gen_datetime())
+
+for fecha in fechas:
+    print(fecha)
+
+
+for i in range()
