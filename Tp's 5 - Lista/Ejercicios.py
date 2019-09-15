@@ -1122,3 +1122,105 @@ while (aux_usuario is not None):
 
     aux_usuario = aux_usuario.sig
 """
+
+# EJERICIO 20
+
+# nombre = 0, precio = 1, calificacion = 2
+
+productos = Lista()  # Ordenada por nombre
+aux_productos = Lista()  # Ordenada por calificación
+
+while productos.tamanio < 10:
+    nombre = choice("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
+    if busquedaListaCampo(productos, nombre, 0) is None:
+        precio = randint(10, 10000)
+        calificacion = randint(1, 5)
+
+        producto = [nombre, precio, calificacion]
+
+        inserCampo(productos, producto, 0)
+        inserCampo(aux_productos, producto, 2)
+
+
+# A
+"""
+producto_buscado = "A"
+
+encontrado = busquedaListaCampo(productos, producto_buscado, 0)
+if (encontrado is not None):
+    print(encontrado.info)
+else:
+    print("El producto no se encuentra en la lista")
+"""
+
+# B
+"""
+lista_mostrada = productos
+
+opcion = int(input("Ordenar lista por: 1-Nombre, 2-Calificación, Otro para salir"))
+
+while (opcion == 1) or (opcion == 2):
+    if opcion == 1:
+        lista_mostrada = productos
+        print("Lista ordenada por Nombre")
+    else:
+        lista_mostrada = aux_productos
+        print("Lista ordenada por calificacion")
+    barridoLista(lista_mostrada)
+    print()
+
+    opcion = int(input("Ordenar lista por: 1-Nombre, 2-Calificación, Otro para salir"))
+"""
+
+# C
+"""
+print("Lista ordenada por calificación:")
+barridoLista(aux_productos)
+"""
+
+# D
+"""
+barridoLista(aux_productos)
+print()
+
+calificacion = 3
+
+prod_min = None
+precio_min = 0
+
+aux = busquedaListaCampo(aux_productos, 3, 2)
+
+if (aux is not None):
+    prod_min = aux
+    precio_min = prod_min.info[1]
+
+    while (aux is not None) and (aux.info[2] == calificacion):
+        if precio_min > aux.info[1]:
+            prod_min = aux
+            precio_min = prod_min.info[1]
+        aux = aux.sig
+
+if prod_min is None:
+    print("No hay productos de calificación 3")
+else:
+    print("Producto más barato de calificación 3")
+    print(prod_min.info)
+"""
+
+# E
+"""
+inserCampo(productos, ["Ha", 100, 3], 0)
+inserCampo(productos, ["Hh", 700, 1], 0)
+barridoLista(productos)
+print()
+print("A continuacion los precios de los productos que empiezan por H")
+
+aux = productos.inicio
+
+while (aux is not None) and (aux.info[0][0].capitalize() < "H"):
+    aux = aux.sig
+if aux is not None:
+    while (aux is not None) and (aux.info[0][0].capitalize() == "H"):
+        print("Precio: " + str(aux.info[1]))
+        aux = aux.sig
+"""
