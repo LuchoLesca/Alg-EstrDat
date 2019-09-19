@@ -32,6 +32,21 @@ def barridoHashCerrada(tabla):
             print(elemento)
 
 
+def rehash(tabla, original):
+    indice = original + 1
+    if indice == len(tabla):
+        indice = 0
+    while (tabla[indice] is not None) and (indice != original):
+        indice += 1
+        if indice == len(tabla):
+            indice = 0
+
+    if indice == original:
+        indice = None
+
+    return indice
+
+
 # EJERCICIO 1
 """
 tabla = crearTablaAbierta(28)
@@ -143,7 +158,7 @@ for i in range(0, len(tabla)):
 
 # EJERICICO 3
 
-
+"""
 def cantidadCargados(tabla):
     cont = 0
     for elemento in tabla:
@@ -151,27 +166,48 @@ def cantidadCargados(tabla):
             cont += 1
     return cont
 
-# Código = clave cátedra = 0, modalidad = 1, horas = 2 docentes = 3
+
+def buscarCatedra(tabla, catedra):
+    clave = hash(catedra[0])
+    indice = clave % len(tabla)
+    if tabla[indice][1] != catedra[1]:
+        indice = rehash(tabla, indice)
+
+    return indice
+
+
+def nuevaCatedra():
+    docentes = Lista()
+    codigo = randint(0, 100)
+    nom_catedra = "Cátedra" + str(randint(0, 150))
+    modalidad = choice(["Anual", "Cuatrimestral"])
+    cant_horas = randint(1, 20)
+    catedra = [codigo, nom_catedra, modalidad, cant_horas, docentes]
+
+    return catedra
+
+
+def agregarDocenteRandom(tabla, catedra):
+    nombre = "Docente" + str(randint(0, 20))
+    anios_catedra = randint(0, 10)
+
+    docente = [nombre, amios_catedra]
+
+    indice = buscarCatedra(tabla, catedra)
+
+    if indice is not None:
+        insertar(tabla[indice][4], docente)
+
+
+# Código = 0 cátedra = 1, modalidad = 2, horas = 3 docentes = 4
 # Nombre = 0, anios_catedra = 1
+
 
 tabla = crearTablaCerrada(97)
 
 
 def hash(codigo):
     return codigo*3
-
-
-def rehash(tabla, original):
-    indice = original + 1
-    while (tabla[indice] is not None) and (indice != original):
-        indice += 1
-        if indice == len(tabla):
-            indice = 0
-
-    if indice == original:
-        indice = None
-
-    return indice
 
 
 def insertarCatedra(tabla, dato):
@@ -187,8 +223,72 @@ def insertarCatedra(tabla, dato):
             print("No hay más lugares en la tabla")
 
 
-for i in range(0, 98):
-    insertarCatedra(tabla, [randint(0, 100), "Catedra"+str(i)])
+cantidad_insertar = 50
+for i in range(0, cantidad_insertar):
+    catedra = nuevaCatedra()
+    insertarCatedra(tabla, catedra)
 
 barridoHashCerrada(tabla)
 print("Cantidad de lugares ocupados: " + str(cantidadCargados(tabla)))
+"""
+
+
+# EJERCICIO 4
+"""
+
+def hash(clave):
+    indice = 0
+    for elemento in clave:
+        indice += ord(elemento)
+    return indice
+
+
+def factorCarga(tabla):
+    espacios_ocupados = 0
+    for personaje in tabla:
+        if personaje is not None:
+            espacios_ocupados += 1
+
+    factor = (espacios_ocupados*100) / len(tabla)
+    return factor
+
+
+def expandirTabla(tabla):
+    nueva_tabla = crearTablaCerrada(len(tabla)*2)
+
+    for personaje in tabla:
+        if personaje is not None:
+            insertarPersonaje(nueva_tabla, personaje)
+
+    return nueva_tabla
+
+
+def insertarPersonaje(tabla, personaje):
+    indice = hash(personaje)
+    indice = indice % len(tabla)
+
+    if tabla[indice] is not None:
+        indice = rehash(tabla, indice)
+
+    tabla[indice] = personaje
+
+    if factorCarga(tabla) > 75:
+        tabla = expandirTabla(tabla)
+
+    return tabla
+
+
+personajes = crearTablaCerrada(20)
+
+for i in range(0, 15):
+    personajes = insertarPersonaje(personajes, "Personaje" + str(i))
+
+# Con 15 personajes, esta tabla de 20 posiciones tiene el factor de carga de 75
+print(len(personajes))
+
+# Al agregar 2, se excede el factor de carga, por lo que la tabla se expande
+personajes = insertarPersonaje(personajes, "PjRandom1")
+personajes = insertarPersonaje(personajes, "PjRandom2")
+
+print(len(personajes))
+"""
