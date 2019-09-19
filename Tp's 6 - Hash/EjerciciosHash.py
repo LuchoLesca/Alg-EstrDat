@@ -140,8 +140,7 @@ def hash(telefono):
 
 
 def insertarTelefono(tabla, telefono, nom_y_ap, direccion):
-    clave = hash(telefono)
-    indice = clave % len(tabla)
+    indice = hash(telefono) % len(tabla)
     inserCampo(tabla[indice], [telefono, nom_y_ap, direccion], 0)
 
 
@@ -453,18 +452,30 @@ print(mision_endor)
 """
 
 
-# EJERICICO 7
+# EJERICICO 7   <<<<<<<<< FALLTA HACER ESTE
 # POKEMON SE CONOCE:
 # numero = 0, nombre = 1, tipo = 2, nivel = 3
 
 tipos = ["Normal", "Lucha", "Volador", "Veneno", "Tierra", "Roca", "Bicho",
          "Fantasma", "Acero", "Fuego", "Agua", "Planta", "Electrico", "Hielo",
          "Psiquico", "Dragon", "Hada", "Siniestro"]
+"""
 
-tabla1 = crearTablaCerrada(29)  # Tipos
+def nuevoPokemon(numero=0):
+    numero = numero
+    nombre = "Nombre"+str(i)
+    cant_tipo = randint(1, 2)
+    tipo = choice(tipos)
+    if cant_tipo == 2:
+        tipo += "/" + choice(tipos)
+    nivel = randint(1, 200)
+    return [numero, nombre, tipo, nivel]
 
 
-def hash1(clave):  # Tipo de pokemon
+tabla_tipos = crearTablaCerrada(29)  # Tipos
+
+
+def hash(clave):  # Tipo de pokemon
     if type(clave) is int:
         clave = str(clave)
     indice = 0
@@ -473,44 +484,59 @@ def hash1(clave):  # Tipo de pokemon
     return indice
 
 
-def sondeo(tabla, pokemon, original):
-    indice = original + 1
-    if indice == len(tabla):
-        indice = 0
-    while (tabla[indice] is not None) and (indice != original):
-        if tabla[indice].inicio.info[2] == pokemon[2]:
+def sondeo(tabla, tipo, indice):  # Se tiene en cuenta que el tamaño de la
+    while (tabla[indice] is not None):  # tabla es > que la cantidad de tipos
+        if tabla[indice][0] == tipo:
             break
         indice += 1
         if indice == len(tabla):
             indice = 0
 
-    if indice == original:
-        indice = None
-
     return indice
 
 
-pokemons = []
-for i in range(0, 100):
-    pokemons.append([i, "Nombre"+str(i), choice(tipos), randint(1, 200)])
+def insertarEnTablaNivel(tabla_nivel, pokemon):
+    indice = hash(pokemon[0]) % len(tabla_nivel)
+    insertar(tabla_nivel[indice], pokemon)
+"""
 
-for pokemon in pokemons:
-    indice = hash1(pokemon[2])
-    indice = indice % len(tabla1)
-    if tabla1[indice] is None:
-        # tabla1[indice] = crearTablaAbierta(15)
-        tabla1[indice] = Lista()
-        insertar(tabla1[indice], pokemon)
-    else:
-        if (tabla1[indice].inicio.info[2] == pokemon[2]):
-            insertar(tabla1[indice], pokemon)
-        else:
-            indice = sondeo(tabla1, pokemon, indice)
-            # tabla1[indice] = crearTablaAbierta(15)
-            tabla1[indice] = Lista()
-            insertar(tabla1[indice], pokemon)
 
-for elemento in tabla1:
-    if elemento is not None:
-        barridoLista(elemento)
-        print()
+# EJERCICIO 8
+
+
+def cifrar(oracion):
+    clave = ""
+    for letra in oracion:
+        parte1 = str(ord(letra)*37)
+        parte2 = hex(ord(letra)*2)
+        clave += parte1[0] + parte2[1] + parte2[3] + parte1[1] + parte1[2] + parte2[0] + parte1[3] + parte2[2]
+    return clave
+
+
+def descifrar(clave):
+    oracion = ""
+    while len(clave) > 0:
+        caracter = ""
+        caracter += clave[0] + clave[3] + clave[4] + clave[6]
+        clave = clave[8:]
+
+        caracter = int(caracter)
+        caracter = int(caracter/37)
+        caracter = chr(caracter)
+        oracion += caracter
+    return oracion
+
+
+para_cifrar = "Los hash son usados ampliamente en toda {internet}, los hash nos permiten cifrar los datos con mucha seguridad, ya que si una persona intercepta el código hash, no sabrá el valor original de los datos."
+print("Oracion original:")
+print(para_cifrar)
+print()
+
+cifrado = cifrar(para_cifrar)
+print("Mensaje cifrado:")
+print(cifrado)
+print()
+
+descifrado = descifrar(cifrado)
+print("Mensaje descifrado:")
+print(descifrado)
