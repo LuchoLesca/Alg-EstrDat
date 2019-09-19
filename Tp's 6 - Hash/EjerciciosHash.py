@@ -292,3 +292,44 @@ personajes = insertarPersonaje(personajes, "PjRandom2")
 
 print(len(personajes))
 """
+
+
+# EJERCICIO 5
+"""
+# nombre = 0, apellido = 1, email = 2
+contactos = crearTablaCerrada(97)
+
+cant_contactos = 78
+
+
+def insertarContacto(tabla, contacto):
+    clave = hash(contacto[0] + contacto[1])
+    indice = clave % len(tabla)
+    if tabla[indice] is None:
+        tabla[indice] = contacto
+    else:
+        indice = rehash(tabla, indice)
+        if indice is not None:
+            tabla[indice] = contacto
+        else:
+            print("No hay más lugares en la tabla")
+
+
+for i in range(0, cant_contactos):
+    nombre = "Nombre" + str(randint(0, 100))
+    apellido = "Apellido" + str(randint(0, 100))
+    email = "Email" + str(randint(0, 50))
+
+    insertarContacto(contactos, [nombre, apellido, email])
+
+
+barridoHashCerrada(contactos)
+
+cantidad = 0
+for contacto in contactos:
+    if contacto is not None:
+        cantidad += 1
+print("Cantidad cargados: " + str(cantidad))
+"""
+
+# EJERCICIO 6
