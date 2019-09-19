@@ -451,3 +451,66 @@ print()
 print("Troopers asignados a misión en Endor (TF):")
 print(mision_endor)
 """
+
+
+# EJERICICO 7
+# POKEMON SE CONOCE:
+# numero = 0, nombre = 1, tipo = 2, nivel = 3
+
+tipos = ["Normal", "Lucha", "Volador", "Veneno", "Tierra", "Roca", "Bicho",
+         "Fantasma", "Acero", "Fuego", "Agua", "Planta", "Electrico", "Hielo",
+         "Psiquico", "Dragon", "Hada", "Siniestro"]
+
+tabla1 = crearTablaCerrada(29)  # Tipos
+
+
+def hash1(clave):  # Tipo de pokemon
+    if type(clave) is int:
+        clave = str(clave)
+    indice = 0
+    for elemento in clave:
+        indice += ord(elemento)
+    return indice
+
+
+def sondeo(tabla, pokemon, original):
+    indice = original + 1
+    if indice == len(tabla):
+        indice = 0
+    while (tabla[indice] is not None) and (indice != original):
+        if tabla[indice].inicio.info[2] == pokemon[2]:
+            break
+        indice += 1
+        if indice == len(tabla):
+            indice = 0
+
+    if indice == original:
+        indice = None
+
+    return indice
+
+
+pokemons = []
+for i in range(0, 100):
+    pokemons.append([i, "Nombre"+str(i), choice(tipos), randint(1, 200)])
+
+for pokemon in pokemons:
+    indice = hash1(pokemon[2])
+    indice = indice % len(tabla1)
+    if tabla1[indice] is None:
+        # tabla1[indice] = crearTablaAbierta(15)
+        tabla1[indice] = Lista()
+        insertar(tabla1[indice], pokemon)
+    else:
+        if (tabla1[indice].inicio.info[2] == pokemon[2]):
+            insertar(tabla1[indice], pokemon)
+        else:
+            indice = sondeo(tabla1, pokemon, indice)
+            # tabla1[indice] = crearTablaAbierta(15)
+            tabla1[indice] = Lista()
+            insertar(tabla1[indice], pokemon)
+
+for elemento in tabla1:
+    if elemento is not None:
+        barridoLista(elemento)
+        print()
