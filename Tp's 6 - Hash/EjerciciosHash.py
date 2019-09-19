@@ -502,8 +502,7 @@ def insertarEnTablaNivel(tabla_nivel, pokemon):
 
 
 # EJERCICIO 8
-
-
+"""
 def cifrar(oracion):
     clave = ""
     for letra in oracion:
@@ -540,3 +539,90 @@ print()
 descifrado = descifrar(cifrado)
 print("Mensaje descifrado:")
 print(descifrado)
+"""
+
+
+# EJERCICIO 9
+
+tabla_codif = crearTablaCerrada(10)
+
+tabla_codif[0] = "#?&"
+tabla_codif[1] = "abc"
+tabla_codif[2] = "def"
+tabla_codif[3] = "ghi"
+tabla_codif[4] = "jkl"
+tabla_codif[5] = "mnñ"
+tabla_codif[6] = "opq"
+tabla_codif[7] = "rst"
+tabla_codif[8] = "uvw"
+tabla_codif[9] = "xyz"
+
+
+def hash(caracter):
+    cadena = ""
+    ascii = ord(caracter)
+    ascii = str(ascii)
+    for digito in ascii:
+        dig = int(digito)
+        clave = tabla_codif[dig]
+        cadena += clave
+    cadena += "%"
+    return cadena
+
+
+def codificar(mensaje):
+    cadena = ""
+    for letra in mensaje:
+        cadena += hash(letra)
+    return cadena
+
+
+def decodificar(codigo):
+    mensaje = ""
+    codigo_div = codigo.split("%")
+    for segmento in codigo_div:
+        if len(segmento) > 0:
+            digitos = ""
+            for i in range(0, len(segmento), 3):
+                if segmento[i] == "#":
+                    digitos += "0"
+                elif segmento[i] == "a":
+                    digitos += "1"
+                elif segmento[i] == "d":
+                    digitos += "2"
+                elif segmento[i] == "g":
+                    digitos += "3"
+                elif segmento[i] == "j":
+                    digitos += "4"
+                elif segmento[i] == "m":
+                    digitos += "5"
+                elif segmento[i] == "o":
+                    digitos += "6"
+                elif segmento[i] == "r":
+                    digitos += "7"
+                elif segmento[i] == "u":
+                    digitos += "8"
+                elif segmento[i] == "x":
+                    digitos += "9"
+            digitos = int(digitos)
+
+            mensaje += chr(digitos)
+
+    return mensaje
+
+
+
+
+oracion = "Se debe utilizar una tabla hash para guardar los valores de codificacion y decodificacion respectivamente que se vayan utilizando"
+print("Oración original")
+print(oracion)
+print()
+
+print("Mensaje codificado:")
+msj_codificado = codificar(oracion)
+print(msj_codificado)
+print()
+
+print("Mensaje decodificado:")
+msj_decodificado = decodificar(msj_codificado)
+print(msj_decodificado)
