@@ -303,8 +303,8 @@ cant_contactos = 78
 
 
 def insertarContacto(tabla, contacto):
-    clave = hash(contacto[0] + contacto[1])
-    indice = clave % len(tabla)
+    indice = hash(contacto[0] + contacto[1])
+    indice = indice % len(tabla)
     if tabla[indice] is None:
         tabla[indice] = contacto
     else:
@@ -333,3 +333,121 @@ print("Cantidad cargados: " + str(cantidad))
 """
 
 # EJERCICIO 6
+"""
+tamanio_tablas = 5000
+troopers_digitos = crearTablaAbierta(tamanio_tablas)
+troopers_legion = crearTablaAbierta(tamanio_tablas)
+
+legiones = ["FL", "TF", "TK", "CT", "FN", "FO"]
+
+
+def hash(clave):
+    indice = 0
+    if len(clave) == 2:
+        indice = (ord(clave[0])*3) + (ord(clave[1])*7)
+    else:
+        indice = ((ord(clave[0]) * ord(clave[1])) + ord(clave[2]))
+    return indice
+
+
+def busquedaTrooper(tabla, digitos):
+    indice = hash(digitos)
+    indice = indice % len(tabla)
+    return tabla[indice]
+
+
+def nuevoTrooper():
+    legion = choice(legiones)
+    cohoerte = str(randint(0, 9))
+    siglo = str(randint(0, 9))
+    escuadra = str(randint(0, 9))
+    id_trooper = str(randint(0, 9))
+
+    trooper = legion + "-" + cohoerte + siglo + escuadra + id_trooper
+    return trooper
+
+
+def insertarTrooperLegion(tabla, trooper):
+    legion, codigo = trooper.split("-")
+
+    indice = hash(legion)
+    indice = indice % len(tabla)
+    insertar(tabla[indice], trooper)
+
+
+def insertarTrooperDigitos(tabla, trooper):
+    legion, codigo = trooper.split("-")
+    indice = hash(codigo[1:len(codigo)])
+    indice = indice % len(tabla)
+    insertar(tabla[indice], trooper)
+
+
+def agregarTrooper(trooper):
+    insertarTrooperLegion(troopers_legion, trooper)
+    insertarTrooperDigitos(troopers_digitos, trooper)
+
+
+for i in range(0, 2000):
+    agregarTrooper(nuevoTrooper())
+"""
+# barridoHashAbierta(troopers_legion)
+# print()
+# barridoHashAbierta(troopers_digitos)
+
+# C
+"""
+mision_asalto = []
+mision_exploracion = []
+
+buscado = busquedaTrooper(troopers_digitos, "781")
+if buscado.tamanio > 0:
+    aux = buscado.inicio
+    while aux is not None:
+        if aux.info[4:] == "781":
+            mision_asalto.append(aux.info)
+        aux = aux.sig
+
+buscado = busquedaTrooper(troopers_digitos, "537")
+if buscado.tamanio > 0:
+    aux = buscado.inicio
+    while aux is not None:
+        if aux.info[4:] == "537":
+            mision_exploracion.append(aux.info)
+        aux = aux.sig
+
+
+print("Troopers asignados a misión de asalto (terminados en 781):")
+print(mision_asalto)
+print()
+print("Troopers asignados a misión de exploración (terminados en 537):")
+print(mision_exploracion)
+print()
+"""
+# D
+"""
+mision_holt = []
+mision_endor = []
+
+buscado = busquedaTrooper(troopers_legion, "CT")
+if buscado.tamanio > 0:
+    aux = buscado.inicio
+    while aux is not None:
+        if aux.info[:2] == "CT":
+            mision_holt.append(aux.info)
+        aux = aux.sig
+
+buscado = busquedaTrooper(troopers_legion, "TF")
+if buscado.tamanio > 0:
+    aux = buscado.inicio
+    while aux is not None:
+        if aux.info[0:2] == "TF":
+            mision_endor.append(aux.info)
+        aux = aux.sig
+
+
+print("Troopers asignados a misión en Holt (CT):")
+print(mision_holt)
+print()
+print("Troopers asignados a misión en Endor (TF):")
+print(mision_endor)
+"""
