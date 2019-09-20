@@ -543,7 +543,7 @@ print(descifrado)
 
 
 # EJERCICIO 9
-
+"""
 tabla_codif = crearTablaCerrada(10)
 
 tabla_codif[0] = "#?&"
@@ -611,8 +611,6 @@ def decodificar(codigo):
     return mensaje
 
 
-
-
 oracion = "Se debe utilizar una tabla hash para guardar los valores de codificacion y decodificacion respectivamente que se vayan utilizando"
 print("Oración original")
 print(oracion)
@@ -626,3 +624,34 @@ print()
 print("Mensaje decodificado:")
 msj_decodificado = decodificar(msj_codificado)
 print(msj_decodificado)
+"""
+
+
+# EJERCICIO 10
+
+print(chr(35))
+
+def complemento(caracter):
+    if ord(caracter) <= 78:
+        return 79 + ord(caracter) - 32
+    else:
+        return 32 + ord(caracter) - 79
+
+
+def hash(caracter):
+    devuelve = ""
+    # i
+    caracter_ascii = ord(caracter)
+    caracter_ascii *= 37
+    # print(caracter_ascii)
+    # ii
+    complemento = complemento(caracter)
+    # iii
+    for digito in str(caracter_ascii):
+        (int(digito) * int(digito))
+
+
+def codificar(oracion):
+
+    for caracter in oracion:
+        clave = hash(caracter)
