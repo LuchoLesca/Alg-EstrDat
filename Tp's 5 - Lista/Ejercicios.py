@@ -11,7 +11,8 @@ for i in range(0, randint(0, 20)):
 
 barridoLista(lista)
 print()
-print(lista.tamanio)
+print("Cantidad de elementos de lista con atributo tamanio: " +
+      str(lista.tamanio))
 
 aux = lista.inicio
 cant = 0
@@ -19,7 +20,7 @@ while aux is not None:
     cant += 1
     aux = aux.sig
 print()
-print(cant)
+print("Cantidad de elementos en lista con algoritmo de barrido: " + str(cant))
 """
 
 
@@ -32,7 +33,9 @@ insertar(lista, "A")
 insertar(lista, "e")
 insertar(lista, "o")
 
+print("Lista de caracteres")
 barridoLista(lista)
+# print("Tamaño: " + str(lista.tamanio))
 
 vocales = ["a", "e", "i", "o", "u", "A", "E", "I", "O", "U"]
 
@@ -40,10 +43,10 @@ for vocal in vocales:
     eliminarTodos(lista, vocal)
 
 print()
-print("Barrido sin vocales")
+print("Lista sin vocales")
 barridoLista(lista)
+# print("Tamaño: " + str(lista.tamanio))
 """
-
 
 # EJERCICIO 3
 """
@@ -65,12 +68,14 @@ while (aux is not None):
 print()
 print("Lista de números pares")
 barridoLista(lista2)
+# print("Tamaño: " + str(lista2.tamanio))
+
 
 print()
 print("Lista de números impares")
 barridoLista(lista3)
+# print("Tamaño: " + str(lista3.tamanio))
 """
-
 
 # EJERCICIO 4
 """
@@ -89,16 +94,17 @@ print("Lista con " + str(dato) + " ingresado en posicion " + str(pos))
 barridoLista(lista)
 """
 
-
 # EJERCICIO 5
 """
 lista = Lista()
 
-while lista.tamanio < 4:  # Carga números primos
+# Carga números 4 primos aleatorios
+while lista.tamanio < 4:
     num = randint(2, 100)
     if primo(num):
         insertar(lista, num)
-while lista.tamanio < 8:  # Carga números compuestos
+# Carga 4 números compuestos aleatorios
+while lista.tamanio < 8:
     num = randint(2, 100)
     if not primo(num):
         insertar(lista, num)
@@ -116,7 +122,6 @@ while (aux is not None):
 print()
 print("Lista sin números primos. Tamaño: " + str(lista.tamanio))
 barridoLista(lista)
-
 """
 
 # EJERCICIO 6
@@ -124,7 +129,8 @@ barridoLista(lista)
 lista = Lista()
 lista2 = Lista()  # Copia de lista2, con heroes ordenados por fecha aparición
 
-heroes = ["Linterna Verde", "Wolverine", "Ant-Man", "Batman", "Spider-man", "Ironman"]
+heroes = ["Linterna Verde", "Wolverine", "Ant-Man", "Batman",
+          "Spider-man", "Ironman"]
 anios = [1955, 1960, 1980, 1985, 1990, 1995]
 casas = ["DC", "DC", "DC", "DC", "Marvel", "Marvel"]
 biografias = ["None", "None", "Traje", "Traje", "Traje", "Armadura"]
@@ -138,7 +144,7 @@ print("Lista original:")
 barridoLista(lista)
 print()
 """
-# A
+# A Elimina el nodo de linterna verde
 """
 eliminarCampo(lista, "Linterna Verde", 0)
 
@@ -147,24 +153,19 @@ barridoLista(lista)
 print()
 """
 
-# B
+# B Busca y muestra el año de apraricio de Wolverine
 """
-aux = lista.inicio
-
-while (aux is not None) and (aux.info[0] < "Wolverine"):
-    aux = aux.sig
+aux = busquedaListaCampo(lista, "Wolverine", 0)
 if aux is not None:
     print("Año aparicion Woverine: " + str(aux.info[1]))
 else:
     print("Wolverine no estaba en la lista")
 """
 
-# C
+# C Cambiar la casa de ant-man a Marvel
 """
-aux = lista.inicio
+aux = busquedaListaCampo(lista, "Ant-Man", 0)
 
-while (aux is not None) and (aux.info[0] < "Ant-Man"):
-    aux = aux.sig
 if aux is not None:
     aux.info[2] = "Marvel"
     print("Casa de Ant-Man cambiada")
@@ -174,8 +175,7 @@ else:
 barridoLista(lista)
 """
 
-
-# D
+# D Mostrar nombre de personajes que en biografia mencione traje o armadura
 """
 aux = lista.inicio
 
@@ -185,9 +185,14 @@ while (aux is not None):
     aux = aux.sig
 """
 
-
-# E
+# E Mostrar nombre y casa de heroes con aparicion anterior a 1963
 """
+print()
+print("Lista de heroes ordenada por año de aparición:")
+barridoLista(lista2)
+print()
+print("Superhéroes con fecha de aparición menor a 1963:")
+
 aux = lista2.inicio
 
 while (aux is not None) and (aux.info[1] < 1963):
@@ -195,10 +200,9 @@ while (aux is not None) and (aux.info[1] < 1963):
     aux = aux.sig
 """
 
-
 # EJERCICIO 7
 """
-lista1 , lista2 = Lista(), Lista()
+lista1, lista2 = Lista(), Lista()
 
 for i in range(1, 6):
     insertar(lista1, i*2)
@@ -211,17 +215,17 @@ print("Lista2")
 barridoLista(lista2)
 """
 
-# A
+# A Concatenar una lista atrás de otra
 """
-lista3 = copiarLista(lista1)
-ultimoNodo(lista3).sig = lista2.inicio
+lista3 = copiarLista(lista1)  # Crea copia de la lista1, para no modificar esta
+ultimoNodo(lista3).sig = lista2.inicio  # Concatena lista2 atrás de lista3
 
 print()
 print("Lista una atras de otra concatenadas:")
 barridoLista(lista3)
 """
 
-# B
+# B Concatear listas en 1 sola, omitiendo datos repetidos, manteniendo orden
 """
 lista3 = union(lista1, lista2)
 print("Lista concatenada sin repetir y ordenada")
@@ -231,9 +235,10 @@ barridoLista(lista3)
 # C
 """
 lista3 = interseccion(lista1, lista2)
+print()
 print("Cantidad de elementos repetidos: " + str(lista3.tamanio))
+barridoLista(lista3)
 """
-
 
 # D
 """
@@ -260,11 +265,11 @@ if (lista1.tamanio >= 0):
           str(lista1.tamanio))
 """
 
-
 # EJERCICIO 8
 """
 lista = Lista()
-cantidad_deseada = 3
+
+cantidad_deseada = 30
 
 while (lista.tamanio < cantidad_deseada):
 
@@ -290,34 +295,19 @@ while (lista.tamanio < cantidad_deseada):
 
         if act is None:  # Si llegó al final
             if (primo(num)) and (abs(ant.info - num) > 14):
-                nodo = NodoLista()
-                nodo.info = num
-                ant.sig = nodo
-                lista.tamanio += 1
-            if (not primo(num)) and (num % 2 != 0) and ((ant.info % 2) == 0):
-                nodo = NodoLista()
-                nodo.info = num
-                ant.sig = nodo
-                lista.tamanio += 1
+                insertar(lista, num)
 
+            if (not primo(num)) and (num % 2 != 0) and ((ant.info % 2) == 0):
+                insertar(lista, num)
         else:
             if (primo(num)) and (abs(ant.info - num) > 14) and (abs(act.info - num) > 14):
-                nodo = NodoLista()
-                nodo.info = num
-                ant.sig = nodo
-                nodo.sig = act
-                lista.tamanio += 1
-            if (not primo(num)) and (num % 2 != 0) and ((ant.info % 2) == 0) and ((act.info % 2) == 0):
-                nodo = NodoLista()
-                nodo.info = num
-                ant.sig = nodo
-                nodo.sig = act
-                lista.tamanio += 1
+                insertar(lista, num)
 
+            if (not primo(num)) and (num % 2 != 0) and ((ant.info % 2) == 0) and ((act.info % 2) == 0):
+                insertar(lista, num)
 
 barridoLista(lista)
 """
-
 
 # EJERCICIO 9
 """
@@ -344,17 +334,19 @@ for i in range(0, 15):
     inserCampo(lista2, cancion, 2)
     inserCampo(lista3, cancion, 3)
 """
+
 # A
 """
 barridoLista(lista2)
 print()
+print("Canción más larga")
 print(ultimoNodo(lista2).info)
 """
 # B
 """
 barridoLista(lista3)
 print()
-top = 5
+top = 10
 
 cont = lista3.tamanio - top
 
@@ -367,12 +359,14 @@ if (cont >= 0):
         aux = aux.sig
 else:
     print("No se puede mostrar la cantidad de canciones solicitadas")
-    print("A cambio, se muestran todas las canciones almacenadas: " + str(lista3.tamanio))
+    print("A cambio, se muestran todas las canciones almacenadas: " +
+          str(lista3.tamanio))
     aux = lista3.inicio
     while aux is not None:
         print(aux.info)
         aux = aux.sig
 """
+
 # C
 """
 barridoLista(lista1)
@@ -385,9 +379,8 @@ if aux is not None:
         aux = aux.sig
 """
 
-
 # EJERCICIO 10
-"""
+
 lista0 = Lista()  # Lista ordenada por nombre
 lista1 = Lista()  # Lista ordenada por altura
 lista2 = Lista()  # Lista ordenada por edad
@@ -422,26 +415,12 @@ for i in range(0, 6):
     inserCampo(lista5, personaje, 5)
     inserCampo(lista6, personaje, 6)
 
-"""
+
 # A
-
-# barridoLista(lista3)
-# print()
-"""  # Otra forma de hacelo
-nod = busquedaListaCampo(lista3, "F", 3)
-
-if(nod is not None):
-    if lista3.inicio == nod:
-        aux = lista3.inicio
-    else:
-        aux = lista3.inicio
-        while aux.sig != nod:
-            aux = aux.sig
-    while (aux is not None) and aux.info[3] == "F":
-        print(aux.info)
-        aux = aux.sig
 """
-"""
+barridoLista(lista3)
+print()
+
 aux = lista3.inicio
 while (aux is not None) and (aux.info[3] != "F"):
     aux = aux.sig
@@ -449,6 +428,8 @@ if (aux is not None):
     while (aux is not None) and (aux.info[3] == "F"):
         print(aux.info)
         aux = aux.sig
+else:
+    print("La lista no tiene personajes mujeres")
 """
 
 # B
@@ -1126,7 +1107,7 @@ while (aux_usuario is not None):
 # EJERICIO 20
 
 # nombre = 0, precio = 1, calificacion = 2
-
+"""
 productos = Lista()  # Ordenada por nombre
 aux_productos = Lista()  # Ordenada por calificación
 
@@ -1141,7 +1122,7 @@ while productos.tamanio < 10:
         inserCampo(productos, producto, 0)
         inserCampo(aux_productos, producto, 2)
 
-
+"""
 # A
 """
 producto_buscado = "A"
