@@ -628,7 +628,7 @@ print(msj_decodificado)
 """
 
 
-# EJERCICIO 10
+# EJERCICIO 10   <<<<<<< FALTA TEMRINAR
 
 
 def hash_djb2(string):
@@ -638,8 +638,7 @@ def hash_djb2(string):
     return hash & 0xFFFFFFFF
 
 
-
-tabla = crearTablaCerrada(100000)
+tabla = crearTablaCerrada(100)
 
 
 def calcComplemento(caracter):
@@ -674,11 +673,11 @@ def codificar(oracion):
     for caracter in oracion:
         clave = chrTo5Chrs(caracter)
         oracion_codificada += clave
+
     return oracion_codificada
 
 
-mensaje_a_codificar = " a"
+mensaje_a_codificar = "Esta es la prueba de una oracion larga. Al realizar esta prueba, se comprueba la cantidad de código de 5 caracteres que puede almacenar la carotida"
 mensaje_codificado = codificar(mensaje_a_codificar)
-print(mensaje_codificado)
 mensaje_codificado_2 = hash_djb2(mensaje_codificado)
-print((mensaje_codificado_2) % len(tabla))
+# print((mensaje_codificado_2) % len(tabla))
