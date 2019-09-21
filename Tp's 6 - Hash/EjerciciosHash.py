@@ -1,5 +1,6 @@
 from TDA_Lista import *
 from random import choice, randint
+from math import pow
 
 
 def crearTablaAbierta(tamanio):
@@ -629,29 +630,55 @@ print(msj_decodificado)
 
 # EJERCICIO 10
 
-print(chr(35))
 
-def complemento(caracter):
+def hash_djb2(string):
+    hash = 5381
+    for caracter in string:
+        hash = ((hash << 5) + hash) + ord(caracter)
+    return hash & 0xFFFFFFFF
+
+
+
+tabla = crearTablaCerrada(100000)
+
+
+def calcComplemento(caracter):
     if ord(caracter) <= 78:
         return 79 + ord(caracter) - 32
     else:
         return 32 + ord(caracter) - 79
 
 
-def hash(caracter):
+def chrTo5Chrs(caracter):
     devuelve = ""
     # i
     caracter_ascii = ord(caracter)
     caracter_ascii *= 37
     # print(caracter_ascii)
     # ii
-    complemento = complemento(caracter)
+    complemento = calcComplemento(caracter)
     # iii
-    for digito in str(caracter_ascii):
-        (int(digito) * int(digito))
+    caracter_ascii = str(caracter_ascii)
+    for digito in caracter_ascii:
+        digito = int(digito)
+        num = pow(digito, 2) + 35
+        caracter = chr(int(num))
+        devuelve += caracter
+    # iv
+    devuelve += chr(complemento)
+    return devuelve
 
 
 def codificar(oracion):
-
+    oracion_codificada = ""
     for caracter in oracion:
-        clave = hash(caracter)
+        clave = chrTo5Chrs(caracter)
+        oracion_codificada += clave
+    return oracion_codificada
+
+
+mensaje_a_codificar = " a"
+mensaje_codificado = codificar(mensaje_a_codificar)
+print(mensaje_codificado)
+mensaje_codificado_2 = hash_djb2(mensaje_codificado)
+print((mensaje_codificado_2) % len(tabla))
