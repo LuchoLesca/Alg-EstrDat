@@ -123,22 +123,29 @@ def eliminarCampo(lista, dato, campo):  # Para manejo con array
 
 def eliminarTodos(l, dato):
     """Elimina de la lista toda las ocurrencias del dato ingresado"""
-    if (l.inicio.info == dato):
-        l.inicio = l.inicio.sig
-        l.tamanio -= 1
-    else:
-        anterior = l.inicio
-        actual = anterior.sig
-
-        while (actual is not None) and (actual.info < dato):  # Todo esto teniendo en cuenta que la lista va a estar ordenada
-            actual = actual.sig
-            anterior = anterior.sig
-
-        if actual is not None:
-            while (actual is not None) and (actual.info == dato):
-                actual = actual.sig
+    if l.tamanio > 0:
+        if (l.tamanio == 1):
+            if (l.inicio.info == dato):
+                l.inicio = None
                 l.tamanio -= 1
-            anterior.sig = actual
+        else:
+            if l.inicio.info == dato:
+                while (l.inicio.info == dato):
+                    l.inicio = l.inicio.sig
+                    l.tamanio -= 1
+            else:
+                anterior = l.inicio
+                actual = anterior.sig
+
+                while (actual is not None) and (actual.info < dato):  # Todo esto teniendo en cuenta que la lista va a estar ordenada
+                    actual = actual.sig
+                    anterior = anterior.sig
+
+                if actual is not None:
+                    while (actual is not None) and (actual.info == dato):
+                        actual = actual.sig
+                        l.tamanio -= 1
+                    anterior.sig = actual
 
 
 def barridoLista(l):
