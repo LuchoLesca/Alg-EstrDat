@@ -380,7 +380,7 @@ if aux is not None:
 """
 
 # EJERCICIO 10
-
+"""
 lista0 = Lista()  # Lista ordenada por nombre
 lista1 = Lista()  # Lista ordenada por altura
 lista2 = Lista()  # Lista ordenada por edad
@@ -414,12 +414,13 @@ for i in range(0, 6):
     inserCampo(lista4, personaje, 4)
     inserCampo(lista5, personaje, 5)
     inserCampo(lista6, personaje, 6)
+"""
 
-
-# A
+# A  Personajes femeninos
 """
 barridoLista(lista3)
 print()
+print("Personajes de género femenino:")
 
 aux = lista3.inicio
 while (aux is not None) and (aux.info[3] != "F"):
@@ -432,7 +433,7 @@ else:
     print("La lista no tiene personajes mujeres")
 """
 
-# B
+# B  Personajes droides
 """
 barridoLista(lista4)
 print()
@@ -447,7 +448,7 @@ if (aux is not None):
         aux = aux.sig
 """
 
-# C
+# C  Info de Darth Vader
 """
 barridoLista(lista0)
 print()
@@ -526,7 +527,6 @@ print("Personajes que no aparecieoon en episodio 4, 5 y 6:")
 barridoLista(lista6)
 """
 
-
 # G
 """
 barridoLista(lista5)
@@ -588,9 +588,9 @@ barridoLista(lista0)
 
 print()
 
-aux = busquedaListaCampo(lista0, "Chewbacca", 0)
-if aux is not None:
-    print(aux.info)
+chewbacca = busquedaListaCampo(lista0, "Chewbacca", 0)
+if chewbacca is not None:
+    print(chewbacca.info)
 """
 
 
@@ -650,11 +650,13 @@ print()
 
 # A
 """
-aux = entrenadores.inicio
-while (aux is not None):
-    print("Entrenador: " + str(aux.info[0]) + ". Cantidad pokemons: " +
-          str(aux.info[4].tamanio))
-    aux = aux.sig
+buscado = "Entre1"
+aux = busquedaListaCampo(entrenadores, buscado, 0)
+if (aux is not None):
+    print("Pokemons de entrenador " + buscado)
+    barridoLista(aux.info[4])
+else:
+    print("El entrenador buscado no está en la lista")
 """
 
 # B y C
@@ -784,7 +786,6 @@ while (aux_entrenador is not None):
     aux_entrenador = aux_entrenador.sig
 """
 
-
 # EJERCICIO 15
 """
 costo = 0
@@ -807,9 +808,9 @@ for i in range(1, 11):
     tarea = [costo, tiempo, dia, mes, anio, resp]
 
     inserCampo(tareas, tarea, 5)
-"""
-# barridoLista(tareas)
 
+barridoLista(tareas)
+"""
 # A y B
 """
 tiempo_promedio = 0
@@ -824,6 +825,7 @@ while (aux is not None):
     aux = aux.sig
 
 tiempo_promedio = tiempo_promedio / tareas.tamanio
+print()
 print("Tiempo promedio de tareas: " + str(tiempo_promedio))
 print("Costo total del proyecto: " + str(costo_total))
 """
@@ -833,6 +835,9 @@ print("Costo total del proyecto: " + str(costo_total))
 persona_buscada = "Persona3"
 inserCampo(tareas, [1000, 3, 5, 2, 2018, "Persona3"], 5)
 
+print()
+print("Actividades realizadas por " + persona_buscada)
+
 buscado = busquedaListaCampo(tareas, persona_buscada, 5)
 
 if (buscado is not None):
@@ -841,12 +846,14 @@ if (buscado is not None):
     while (aux.info[5] == persona_buscada) and (aux is not None):
         print(aux.info)
         aux = aux.sig
+else:
+    print("La persona buscada no se encuentra en la lista")
 """
 
 # D
 """
 barridoLista(tareas)
-print()
+
 
 def enRango(dato, min, max):
     if (dato >= min) and (dato <= max):
@@ -857,6 +864,8 @@ def enRango(dato, min, max):
 
 fecha1 = [1, 1, 2018]
 fecha2 = [29, 6, 2019]
+print()
+print("Tareas entres las fechas " + str(fecha1) + " y " + str(fecha2) + ":")
 
 aux = tareas.inicio
 
@@ -901,10 +910,13 @@ cargarStock(local, 2, 2)
 cargarStock(provA, 4, 2)
 cargarStock(provB, 3, 2)
 
+print("Stock del local")
 barridoLista(local)
 print()
+print("Proveedor A")
 barridoLista(provA)
 print()
+print("Proveedor B")
 barridoLista(provB)
 print()
 """
@@ -935,6 +947,7 @@ print("Stock de local actualizada con proveedores:")
 barridoLista(local)
 print()
 """
+
 # B
 """
 if local.tamanio == 1:
@@ -951,8 +964,10 @@ else:
         ant.sig = act.sig
 
 print()
+print("Lista del local  con producto Pendrive Kingston eliminado")
 barridoLista(local)
 """
+
 # D Hay que haber ejecutado el punto A, ya que deja actualizada la lista local
 """
 disco_duro = busquedaListaCampo(local, "Disco Solido", 2)
@@ -976,7 +991,7 @@ else:
 # Usuario: nombre = 0, commits = 1  -->  Ordenado por nombre
 # Commit: fyh = 0, msj = 1, archivo = 2, lineas = 3  -->  Ordenador por lineas
 
-
+"""
 def gen_datetime(min_year=2012, max_year=datetime.datetime.now().year):
     # genera un datatime en formato yyyy-mm-dd hh:mm:ss.000000
     start = datetime.datetime(min_year, 1, 1, 00, 00, 00)
@@ -1005,7 +1020,7 @@ for i in range(1, 10):  # Usuarios
 
     usuario = [nombre, commits]
     inserCampo(usuarios, usuario, 0)
-
+"""
 
 # A
 """
