@@ -1,5 +1,6 @@
 from random import randint
 
+
 class Nodoarbol():
 
     def __init__(self, dato):
@@ -24,8 +25,9 @@ def actualizarAltura(raiz):
     return raiz
 
 
+# Para balancear el arbol se hacen rotaciones, a la derecha y/o
+# izquierda. simple o doble
 
-# Para balancear el arbol se hacen rotaciones, a la derecha y/o izquierda. simple o doble
 
 def rotacionSimple(raiz, control):  # Si es true rota a la derecha, sino izquierdas
     if control:
@@ -124,10 +126,10 @@ def postorden(raiz):
         postorden(raiz.izq)
 
 
-def remplazar(raiz):
+def reemplazar(raiz):
     aux = None
     if (raiz.der is not None):
-        raiz.der, aux = remplazar(raiz.der)
+        raiz.der, aux = reemplazar(raiz.der)
     else:
         aux = raiz
         raiz = raiz.izq
@@ -151,6 +153,6 @@ def eliminar(raiz, clave):
                         x = raiz.info
                         raiz = raiz.izq
                     else:
-                        raiz.izq, aux = remplazar(raiz.izq)
+                        raiz.izq, aux = reemplazar(raiz.izq)
                         raiz.info = aux.info
     return(raiz, x)

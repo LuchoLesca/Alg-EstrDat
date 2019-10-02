@@ -4,7 +4,7 @@ from math import pow
 
 
 def crearTablaAbierta(tamanio):
-    '''Crea un tabla hash del tamanio ingresado'''
+    '''Crea un tabla hash abierta del tamanio ingresado'''
     tabla = []
     for i in range(0, tamanio):
         tabla.append(Lista())
@@ -12,7 +12,7 @@ def crearTablaAbierta(tamanio):
 
 
 def crearTablaCerrada(tamanio):
-    '''Crea un tabla hash del tamanio ingresado'''
+    '''Crea un tabla hash cerrada del tamanio ingresado'''
     tabla = []
     for i in range(0, tamanio):
         tabla.append(None)
@@ -460,20 +460,20 @@ print(mision_endor)
 tipos = ["Normal", "Lucha", "Volador", "Veneno", "Tierra", "Roca", "Bicho",
          "Fantasma", "Acero", "Fuego", "Agua", "Planta", "Electrico", "Hielo",
          "Psiquico", "Dragon", "Hada", "Siniestro"]
-"""
+
+tabla_tipos = crearTablaCerrada(29)  # Tipos (hay 18)
+
 
 def nuevoPokemon(numero=0):
     numero = numero
-    nombre = "Nombre"+str(i)
-    cant_tipo = randint(1, 2)
+    nombre = "Nombre"+str(numero)
+    # cant_tipo = randint(1, 2)
+    cant_tipo = 1
     tipo = choice(tipos)
     if cant_tipo == 2:
         tipo += "/" + choice(tipos)
     nivel = randint(1, 200)
     return [numero, nombre, tipo, nivel]
-
-
-tabla_tipos = crearTablaCerrada(29)  # Tipos
 
 
 def hash(clave):  # Tipo de pokemon
@@ -485,10 +485,17 @@ def hash(clave):  # Tipo de pokemon
     return indice
 
 
-def sondeo(tabla, tipo, indice):  # Se tiene en cuenta que el tamaño de la
-    while (tabla[indice] is not None):  # tabla es > que la cantidad de tipos
-        if tabla[indice][0] == tipo:
+def comprobarTipoHashAbierta(tabla):
+    tipo = None
+    for elemento in tabla:
+        if elemento.tamanio > 0:
+            tipo = elemento.inicio.info[2]
             break
+    return tipo
+
+
+def sondeoTipo(tabla, tipo, indice):
+    while (tabla[indice] is not None) and (comprobarTipoHashAbierta(tabla[indice]) != tipo):
         indice += 1
         if indice == len(tabla):
             indice = 0
@@ -496,10 +503,53 @@ def sondeo(tabla, tipo, indice):  # Se tiene en cuenta que el tamaño de la
     return indice
 
 
-def insertarEnTablaNivel(tabla_nivel, pokemon):
-    indice = hash(pokemon[0]) % len(tabla_nivel)
-    insertar(tabla_nivel[indice], pokemon)
-"""
+def insertarEnTablaNumeros(tabla, pokemon):
+    indice = hash(pokemon[0]) % len(tabla)
+    inserCampo(tabla[indice], pokemon, 0)
+
+
+def insertarEnTablaTipos(tabla_tipos, pokemon):
+    tipo = pokemon[2]
+
+    indice = hash(tipo) % len(tabla_tipos)
+
+    if tabla_tipos[indice] is None:
+
+        tabla_tipos[indice] = crearTablaAbierta(15)
+        insertarEnTablaNumeros(tabla_tipos[indice], pokemon)
+    else:
+
+        if comprobarTipoHashAbierta(tabla_tipos[indice]) == tipo:
+            insertarEnTablaNumeros(tabla_tipos[indice], pokemon)
+
+        else:
+            indice = sondeoTipo(tabla_tipos, tipo, indice)
+
+            if tabla_tipos[indice] is None:
+                tabla_tipos[indice] = crearTablaAbierta(15)
+            insertarEnTablaNumeros(tabla_tipos[indice], pokemon)
+
+
+pokemons_ingresados = []
+
+for i in range(100):
+    pokemon = nuevoPokemon(i)
+    pokemons_ingresados.append(pokemon)
+    insertarEnTablaTipos(tabla_tipos, pokemon)
+
+
+print("Lista de pokemons ingresados")
+for p in pokemons_ingresados:
+    print(p)
+print()
+
+print("Elementos que hay cargados en la tabla")
+for elemento in tabla_tipos:
+    if elemento is not None:
+        print(comprobarTipoHashAbierta(elemento))
+
+print()
+print()
 
 
 # EJERCICIO 8
@@ -630,7 +680,7 @@ print(msj_decodificado)
 
 # EJERCICIO 10   <<<<<<< FALTA TEMRINAR
 
-
+"""
 def hash_djb2(string):
     hash = 5381
     for caracter in string:
@@ -681,3 +731,4 @@ mensaje_a_codificar = "Esta es la prueba de una oracion larga. Al realizar esta 
 mensaje_codificado = codificar(mensaje_a_codificar)
 mensaje_codificado_2 = hash_djb2(mensaje_codificado)
 # print((mensaje_codificado_2) % len(tabla))
+"""
