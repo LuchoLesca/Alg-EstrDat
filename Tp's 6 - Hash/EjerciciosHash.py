@@ -467,8 +467,7 @@ tabla_tipos = crearTablaCerrada(29)  # Tipos (hay 18)
 def nuevoPokemon(numero=0):
     numero = numero
     nombre = "Nombre"+str(numero)
-    # cant_tipo = randint(1, 2)
-    cant_tipo = 1
+    cant_tipo = randint(1, 2)
     tipo = choice(tipos)
     if cant_tipo == 2:
         tipo += "/" + choice(tipos)
@@ -476,7 +475,7 @@ def nuevoPokemon(numero=0):
     return [numero, nombre, tipo, nivel]
 
 
-def hash(clave):  # Tipo de pokemon
+def hash(clave):
     if type(clave) is int:
         clave = str(clave)
     indice = 0
@@ -485,17 +484,8 @@ def hash(clave):  # Tipo de pokemon
     return indice
 
 
-def comprobarTipoHashAbierta(tabla):
-    tipo = None
-    for elemento in tabla:
-        if elemento.tamanio > 0:
-            tipo = elemento.inicio.info[2]
-            break
-    return tipo
-
-
 def sondeoTipo(tabla, tipo, indice):
-    while (tabla[indice] is not None) and (comprobarTipoHashAbierta(tabla[indice]) != tipo):
+    while (tabla[indice] is not None) and (tabla[indice][0] != tipo):
         indice += 1
         if indice == len(tabla):
             indice = 0
@@ -509,47 +499,56 @@ def insertarEnTablaNumeros(tabla, pokemon):
 
 
 def insertarEnTablaTipos(tabla_tipos, pokemon):
-    tipo = pokemon[2]
+    tippos = pokemon[2].split("/")
 
-    indice = hash(tipo) % len(tabla_tipos)
+    for tipo in tippos:
 
-    if tabla_tipos[indice] is None:
+        indice = hash(tipo) % len(tabla_tipos)
 
-        tabla_tipos[indice] = crearTablaAbierta(15)
-        insertarEnTablaNumeros(tabla_tipos[indice], pokemon)
-    else:
+        if tabla_tipos[indice] is None:
 
-        if comprobarTipoHashAbierta(tabla_tipos[indice]) == tipo:
-            insertarEnTablaNumeros(tabla_tipos[indice], pokemon)
+            tabla_tipos[indice] = [tipo, crearTablaAbierta(15)]
+            insertarEnTablaNumeros(tabla_tipos[indice][1], pokemon)
 
         else:
-            indice = sondeoTipo(tabla_tipos, tipo, indice)
 
-            if tabla_tipos[indice] is None:
-                tabla_tipos[indice] = crearTablaAbierta(15)
-            insertarEnTablaNumeros(tabla_tipos[indice], pokemon)
+            if tabla_tipos[indice][0] == tipo:
+                insertarEnTablaNumeros(tabla_tipos[indice][1], pokemon)
+
+            else:
+                indice = sondeoTipo(tabla_tipos, tipo, indice)
+
+                if tabla_tipos[indice] is None:
+                    tabla_tipos[indice] = [tipo, crearTablaAbierta(15)]
+                insertarEnTablaNumeros(tabla_tipos[indice][1], pokemon)
 
 
-pokemons_ingresados = []
-
-for i in range(100):
+print("Pokemons ingresados: ")
+for i in range(30):
     pokemon = nuevoPokemon(i)
-    pokemons_ingresados.append(pokemon)
+    print(pokemon)
     insertarEnTablaTipos(tabla_tipos, pokemon)
 
-
-print("Lista de pokemons ingresados")
-for p in pokemons_ingresados:
-    print(p)
 print()
-
-print("Elementos que hay cargados en la tabla")
+print("Tipos que fueron ingresados en la tabla")
 for elemento in tabla_tipos:
     if elemento is not None:
-        print(comprobarTipoHashAbierta(elemento))
+        print(elemento[0])
 
 print()
-print()
+tipo_busq = choice(tipos)
+print("Pokemons tipo {0}, {0}/?, o ?/{0}:".format(tipo_busq))
+indice = hash(tipo_busq) % len(tabla_tipos)
+
+if (tabla_tipos[indice] is not None) and (tabla_tipos[indice][0] == tipo_busq):
+    barridoHashAbierta(tabla_tipos[indice][1])
+else:
+    indice = sondeoTipo(tabla_tipos, tipo_busq, indice)
+    if tabla_tipos[indice] is not None:
+        barridoHashAbierta(tabla_tipos[indice][1])
+    else:
+        print("No hay pokemons de tipos " + tipo_busq + " agregados")
+
 
 
 # EJERCICIO 8
