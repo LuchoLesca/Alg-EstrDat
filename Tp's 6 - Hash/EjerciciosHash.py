@@ -1,6 +1,6 @@
 from TDA_Lista import *
 from random import choice, randint
-from math import pow
+from math import pow, sqrt
 
 
 def crearTablaAbierta(tamanio):
@@ -453,10 +453,10 @@ print(mision_endor)
 """
 
 
-# EJERICICO 7   <<<<<<<<< FALLTA HACER ESTE
+# EJERICICO 7
 # POKEMON SE CONOCE:
 # numero = 0, nombre = 1, tipo = 2, nivel = 3
-
+"""
 tipos = ["Normal", "Lucha", "Volador", "Veneno", "Tierra", "Roca", "Bicho",
          "Fantasma", "Acero", "Fuego", "Agua", "Planta", "Electrico", "Hielo",
          "Psiquico", "Dragon", "Hada", "Siniestro"]
@@ -548,7 +548,7 @@ else:
         barridoHashAbierta(tabla_tipos[indice][1])
     else:
         print("No hay pokemons de tipos " + tipo_busq + " agregados")
-
+"""
 
 
 # EJERCICIO 8
@@ -677,17 +677,14 @@ print(msj_decodificado)
 """
 
 
-# EJERCICIO 10   <<<<<<< FALTA TEMRINAR
+# EJERCICIO 10   <<<< Flta agregarle que trabaje con la tabla ascii
 
-"""
+
 def hash_djb2(string):
     hash = 5381
     for caracter in string:
         hash = ((hash << 5) + hash) + ord(caracter)
     return hash & 0xFFFFFFFF
-
-
-tabla = crearTablaCerrada(100)
 
 
 def calcComplemento(caracter):
@@ -698,7 +695,7 @@ def calcComplemento(caracter):
 
 
 def chrTo5Chrs(caracter):
-    devuelve = ""
+    caracteres = ""
     # i
     caracter_ascii = ord(caracter)
     caracter_ascii *= 37
@@ -709,25 +706,105 @@ def chrTo5Chrs(caracter):
     caracter_ascii = str(caracter_ascii)
     for digito in caracter_ascii:
         digito = int(digito)
-        num = pow(digito, 2) + 35
+        num = pow(digito, 2) + complemento
         caracter = chr(int(num))
-        devuelve += caracter
+        caracteres += caracter
     # iv
-    devuelve += chr(complemento)
-    return devuelve
+    caracteres += chr(complemento)
+    return caracteres
 
 
-def codificar(oracion):
+def chrsTo1Chr(segmento):
+    num_cuatro_digitos = ""
+
+    pri_chr = segmento[:4]
+    ult_chr = segmento[4]
+
+    complemento = ord(ult_chr)
+
+    for elemento in pri_chr:
+        elemento = ord(elemento) - complemento
+        elemento = int(sqrt(elemento))
+        elemento = str(elemento)
+        num_cuatro_digitos += elemento
+
+    num_cuatro_digitos = int(num_cuatro_digitos)
+    chr_ascii = int(num_cuatro_digitos/37)
+    caracter = chr(chr_ascii)
+
+    return caracter
+
+
+def decodificarMensaje(tabla, mensaje):
+    oracion = ""
+    i = 0
+
+    while i < len(mensaje):
+        segmento = mensaje[i:i+5]
+        caracter = chrsTo1Chr(segmento)
+
+        oracion += caracter
+
+        i += 5
+
+    return oracion
+
+
+def sondeo(tabla, indice, codigo):
+    while (tabla[indice] is not None) and (tabla[indice] != codigo):
+        indice += 1
+        if indice == len(tabla):
+            indice = 0
+
+    return indice
+
+"""
+def codificarMensaje(texto):
     oracion_codificada = ""
-    for caracter in oracion:
-        clave = chrTo5Chrs(caracter)
-        oracion_codificada += clave
+    for caracter in texto:
+        codigo = chrTo5Chrs(caracter)
+        oracion_codificada += codigo
 
     return oracion_codificada
-
-
-mensaje_a_codificar = "Esta es la prueba de una oracion larga. Al realizar esta prueba, se comprueba la cantidad de código de 5 caracteres que puede almacenar la carotida"
-mensaje_codificado = codificar(mensaje_a_codificar)
-mensaje_codificado_2 = hash_djb2(mensaje_codificado)
-# print((mensaje_codificado_2) % len(tabla))
 """
+
+"""
+mensaje_original = "Mensaje de prueba de codificación"
+mensaje_codificado = codificarMensaje(mensaje_original)
+mensaje_decodificado = decodificarMensaje(mensaje_codificado)
+
+print("Mensaje original:")
+print(mensaje_original)
+print()
+print("Mensaje codificado:")
+print(mensaje_codificado)
+print()
+print("Mensaje decodificado:")
+print(mensaje_decodificado)
+print()
+"""
+tabla = crearTablaCerrada(200)
+
+mensaje_codificado = "x}tFa=PP_OAx998SGDC;Kr2O?p??PP_OQBQQAPA@q@>f555?g?g6SGDCPP_OTH]]DCzzS:?g?g6N>GG>QBQQASGDC?g?g6PP_OByIy9;Kr2PP_OPA@q@@hhG7VOJFTH]]D=XX=4;Kr2>f555PA@q@PP_O;Kr2Fa=PP_OByIy9PA@q@N>GG><W7W3SGDC?g?g6PP_OQBQQASGDCCzzS:N>GG>CzzS:UIIECzzS:WPkkGPA@q@\_[PP_O{w3.{3*wts,#,3#tppPP_O?g?g6TH]]DUIIEò»¶Ë²PP_OSGDC?g?g6VOJFO?p??CzzS:?g?g6O?p??>f555PA@q@PP_OVOJFO?p??PP_O;Kr2SGDCTH]]D?g?g6O?p??;Kr2Fa=PP_OQBQQA;Kr2SGDC;Kr2PP_O>f555?g?g6TH]]DUIIESGDCVOJFCzzS:SGDCPP_O;Kr2PP_ON>GG>CzzS:TH]]DPP_O?g?g6O?p???g?g6N>GG>CzzS:Ax998PA@q@TH]]DPP_O>f555?g?g6PP_OVOJFO?p??PP_OTH]]DPA@q@Fa=PA@q@PP_OAx998PA@q@Fa=QBQQA?g?g6\_[PP_O?g?g6TH]]DUIIEúÞ¾»ºO?p??PP_O>f555PA@q@O?p??>f555?g?g6PP_O?g?g6TH]]DUIIEúÞ¾»ºO?p??PP_OTH]]DCzzS:O?p??PP_OCzzS:N>GG>QBQQAPA@q@SGDCUIIE;Kr2SGDCPP_OFa=PA@q@TH]]DPP_O?g?g6@hhG7?g?g6=XX=4UIIECzzS:WPkkGPA@q@TH]]DPP_ORCCBVOJF?g?g6PP_OQBQQAPA@q@TH]]D?g?g6;Kr2O?p??PP_OZZ{{JPP_O?g?g6O?p??PP_O=XX=4VOJF?g?g6TH]]DUIIECzzS:ĄĕĕÅÄO?p??PP_O>f555?g?g6PP_OByIy9PA@q@SGDC;Kr2TH]]D^]a]PP_OtppTH]]Dþïâď¾PP_O>f555?g?g6PP_OTH]]DCzzS:N>GG>QBQQAFa=?g?g6PP_O=XX=4;Kr2<W7W3;Kr2Fa=Fa=?g?g6SGDCPA@q@TH]]DPP_OByIy9?g?g6PP_OFa=PA@q@Ax998SGDC;Kr2>f555PA@q@PP_OUIIEPA@q@N>GG>;Kr2SGDCPP_O?g?g6Fa=PP_OQBQQAPA@q@>f555?g?g6SGDCPP_O>f555?g?g6PP_OFa=PA@q@TH]]DPP_OwtsCzzS:PA@q@TH]]D?g?g6TH]]D^]a]"
+
+mensaje_decodificado = decodificarMensaje(tabla, mensaje_codificado)
+
+print("Mensaje 1:")
+print(mensaje_decodificado)
+print()
+
+
+'''
+mensaje_codificado = "x}tFa=PP_ON>GG>CzzS:úÞ¾»ºSGDC=XX=4PA@q@Fa=?g?g6TH]]DPP_Oc¢¢bPP_O>f555?g?g6PP_O;Kr2Ax998PA@q@TH]]DUIIEPA@q@\_[PP_OQBQQA;Kr2SGDCUIIECzzS:SGDCò»¶Ë²PP_OVOJFO?p??PP_O=XX=4;Kr2SGDCAx998;Kr2N>GG>?g?g6O?p??UIIEPA@q@PP_O>f555?g?g6PP_OSGDCCzzS:@hhG7Fa=?g?g6TH]]DPP_O>f555?g?g6PP_O;Kr2TH]]D;Kr2Fa=UIIEPA@q@PP_O>f555?g?g6PP_O?g?g6O?p???g?g6SGDCAx998þïâď¾;Kr2\_[PP_O>f555?g?g6PP_OFa=PA@q@TH]]DPP_OeµedPP_O=XX=4;Kr2N>GG>CzzS:PA@q@O?p???g?g6TH]]DPP_OFa=PA@q@TH]]DPP_OUIIESGDC?g?g6TH]]DPP_OQBQQASGDCCzzS:N>GG>?g?g6SGDCPA@q@TH]]DPP_OTH]]D?g?g6SGDCò»¶Ë²O?p??PP_OQBQQA;Kr2SGDC;Kr2PP_O>f555CzzS:TH]]DUIIESGDC;Kr2?g?g6SGDCPP_O;Kr2PP_OFa=PA@q@TH]]DPP_O;Kr2Fa=CzzS:;Kr2>f555PA@q@TH]]D\_[PP_OFa=PA@q@TH]]DPP_O>f555PA@q@TH]]DPP_OĜÏäËËFa=UIIECzzS:N>GG>PA@q@TH]]DPP_OTH]]DCzzS:N>GG>VOJFFa=;Kr2SGDCò»¶Ë²O?p??PP_OQBQQASGDCPA@q@<W7W3Fa=?g?g6N>GG>;Kr2TH]]DPP_ON>GG>?g?g6=XX=4ò»¶Ë²O?p??CzzS:=XX=4PA@q@TH]]DPP_OZZ{{JPP_OTH]]D?g?g6PP_O>f555?g?g6TH]]DWPkkGCzzS:;Kr2SGDCò»¶Ë²O?p??PP_O?g?g6O?p??PP_OFa=;Kr2PP_OUIIE?g?g6SGDC=XX=4?g?g6SGDCPP_OTH]]D;Kr2Fa=CzzS:>f555;Kr2PP_OSGDCVOJFN>GG><W7W3PA@q@PP_O;Kr2Fa=PP_OO?p??PA@q@SGDCPA@q@?g?g6TH]]DUIIE?g?g6PP_OQTTQP{w;Kr2CzzS:Fa=PP_O{wZZ{{J>f555SGDC;Kr2QTTQP"
+mensaje_decodificado = decodificarMensaje(mensaje_codificado)
+print("Mensaje 3:")
+print(mensaje_decodificado)
+print()
+'''
+'''
+mensaje_codificado = 'x}tFa=PP_O=XX=4PA@q@N>GG>;Kr2O?p??>f555;Kr2O?p??UIIE?g?g6PP_O,#,3#?g?g6>f555PP_O-$U%$EU<VOJFFa=Fa=PP_OUIIESGDC;Kr2O?p??TH]]DQBQQAPA@q@SGDCUIIE;Kr2SGDCò»¶Ë²PP_O?g?g6Fa=PP_O.&%e%?g?g6TH]]D?g?g6SGDC;Kr2=XX=4UIIEPA@q@PP_O?g?g6O?p??PP_OTH]]DVOJFPP_OO?p??;Kr2WPkkG?g?g6PP_OyÆuu2-BM)&ssS".&%e%.&%e%]u\f¶¶¥ef¶¶¥ef¶¶¥ePP_OByIy9;Kr2TH]]DUIIE;Kr2PP_OFa=;Kr2PP_OO?p??VOJF?g?g6WPkkG;Kr2PP_O<W7W3;Kr2TH]]D?g?g6PP_O?g?g6O?p??PP_Ouuq?g?g6SGDCFa=þïâď¾O?p??\_[PP_OFa=Fa=?g?g6WPkkG;Kr2SGDCò»¶Ë²PP_OVOJFO?p??;Kr2PP_O=XX=4VOJFTH]]DUIIEPA@q@>f555CzzS:;Kr2PP_OQBQQA?g?g6SGDCTH]]DPA@q@O?p??;Kr2Fa=PP_O>f555?g?g6PP_Oa ai`eµedPP_OAx998VOJF;Kr2SGDC>f555CzzS:;Kr2TH]]D\_[PP_O>f555PA@q@O?p??>f555?g?g6PP_OTH]]D?g?g6SGDCò»¶Ë²PP_OSGDC?g?g6=XX=4CzzS:<W7W3CzzS:>f555PA@q@PP_OQBQQAPA@q@SGDCPP_O?g?g6Fa=PP_OAx998?g?g6O?p???g?g6SGDC;Kr2Fa=PP_OZZ{{JPP_OFa=VOJF?g?g6Ax998PA@q@PP_OTH]]D?g?g6SGDCò»¶Ë²PP_O?g?g6TH]]D=XX=4PA@q@Fa=UIIE;Kr2>f555PA@q@PP_OQBQQAPA@q@SGDCPP_O=XX=4VOJF;Kr2UIIESGDCPA@q@PP_OUIIE;Kr2O?p??RCCBVOJF?g?g6TH]]DPP_O.&%e%2-BM)]u\d´gsckgkg`_444++^]a]PP_Ox}tFa=PP_O=XX=4VOJF<W7W3PA@q@PP_OTH]]D?g?g6SGDCò»¶Ë²PP_OFa=Fa=?g?g6WPkkG;Kr2>f555PA@q@PP_O;Kr2Fa=PP_OFa=;Kr2<W7W3PA@q@SGDC;Kr2UIIEPA@q@SGDCCzzS:PA@q@PP_OQBQQA;Kr2SGDC;Kr2PP_OFa=;Kr2PP_OQBQQASGDCPA@q@>f555VOJF=XX=4=XX=4CzzS:ĄĕĕÅÄO?p??PP_O>f555?g?g6PP_O;Kr2SGDCN>GG>;Kr2TH]]DPP_O>f555?g?g6PP_O?g?g6O?p???g?g6SGDCAx998þïâď¾;Kr2^]a]PP_O»|{;Kr2PP_OO?p??;Kr2WPkkG?g?g6PP_O>f555?g?g6Fa=PP_O=XX=4PA@q@N>GG>;Kr2O?p??>f555;Kr2O?p??UIIE?g?g6PP_OUIIECzzS:?g?g6O?p???g?g6PP_OVOJFO?p??PP_O?g?g6TH]]D=XX=4VOJF>f555PA@q@PP_O>f555?g?g6PP_OCzzS:O?p??WPkkGCzzS:TH]]DCzzS:<W7W3CzzS:Fa=CzzS:>f555;Kr2>f555PP_OQBQQA?g?g6SGDCPA@q@PP_OTH]]D?g?g6SGDCò»¶Ë²PP_ON>GG>PA@q@O?p??CzzS:UIIEPA@q@SGDC?g?g6;Kr2>f555;Kr2PP_O;Kr2PP_OUIIESGDC;Kr2WPkkGúÞ¾»ºTH]]DPP_O>f555?g?g6PP_OFa=;Kr2PP_O@hhG7SGDC?g?g6=XX=4VOJF?g?g6O?p??=XX=4CzzS:;Kr2PP_Od´gscc¢¢bc¢¢b{w[dL[K^]a]PP_OÃ£r{w;Kr2CzzS:Fa=PP_O{wZZ{{J>f555SGDC;Kr2QTTQP'
+mensaje_decodificado = decodificarMensaje(mensaje_codificado)
+print("Mensaje 2:")
+print(mensaje_decodificado)
+print()
+'''
