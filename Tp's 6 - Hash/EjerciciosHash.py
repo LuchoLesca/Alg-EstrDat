@@ -677,8 +677,8 @@ print(msj_decodificado)
 """
 
 
-# EJERCICIO 10   <<<< Flta agregarle que trabaje con la tabla ascii
-
+# EJERCICIO 10
+"""
 
 def hash_djb2(string):
     hash = 5381
@@ -741,8 +741,13 @@ def decodificarMensaje(mensaje):
 
     while i < len(mensaje):
         segmento = mensaje[i:i+5]
-        caracter = chrsTo1Chr(segmento)
 
+        indice = hash_djb2(segmento) % len(tabla)
+        if (tabla[indice] is None):
+            caracter = chrsTo1Chr(segmento)
+            tabla[indice] = caracter
+        else:
+            caracter = tabla[indice]
         oracion += caracter
 
         i += 5
@@ -750,7 +755,7 @@ def decodificarMensaje(mensaje):
     return oracion
 
 
-tabla = crearTablaCerrada(200)
+tabla = crearTablaCerrada(227)
 
 f = open("mensaje_1.txt", encoding="utf8")
 mensaje_codificado = f.read()
@@ -775,3 +780,4 @@ f.close()
 mensaje_decodificado = decodificarMensaje(mensaje_codificado)
 print(mensaje_decodificado)
 print()
+"""
