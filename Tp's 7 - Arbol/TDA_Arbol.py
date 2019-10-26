@@ -25,11 +25,8 @@ def actualizarAltura(raiz):
     return raiz
 
 
-# Para balancear el arbol se hacen rotaciones, a la derecha y/o
-# izquierda. simple o doble
-
-
-def rotacionSimple(raiz, control):  # Si es true rota a la derecha, sino izquierdas
+def rotacionSimple(raiz, control):  # Si es true rota a la der, sino izq
+    '''Realiza rotacion simple'''
     if control:
         aux = raiz.izq
         raiz.izq = aux.der
@@ -47,6 +44,7 @@ def rotacionSimple(raiz, control):  # Si es true rota a la derecha, sino izquier
 
 
 def rotacionDoble(raiz, control):  # La última rotación que se hace le da el
+    '''Realiza rotacion doble'''
     if control:                    # nombre si es izquierda o derecha
         raiz.izq = rotacionSimple(raiz.izq, False)
         raiz = rotacionSimple(raiz, True)
@@ -58,6 +56,7 @@ def rotacionDoble(raiz, control):  # La última rotación que se hace le da el
 
 
 def balancear(raiz):
+    '''Balancea el arbol'''
     if (raiz is not None):
         if (altura(raiz.izq) - altura(raiz.der) == 2):  # El desbalance es izq
             if (altura(raiz.izq.izq) >= altura(raiz.izq.der)):
@@ -74,6 +73,7 @@ def balancear(raiz):
 
 
 def insertar(raiz, dato):
+    '''Inserta el elemento en el arbol'''
     if (raiz is None):
         raiz = Nodoarbol(dato)
     else:
@@ -93,16 +93,17 @@ def arbolVacio(raiz):
 
 
 def busqueda(raiz, buscado):  # o clave
-    pos = None
+    '''Devuelve el nodo donde encontró la info buscada'''
+    aux = None
     if (raiz is not None):
         if (raiz.info == buscado):
-            pos = raiz
+            aux = raiz
         else:
             if (buscado < raiz.info):
-                pos = busqueda(raiz.izq, buscado)
+                aux = busqueda(raiz.izq, buscado)
             else:
-                pos = busqueda(raiz.der, buscado)
-    return(pos)
+                aux = busqueda(raiz.der, buscado)
+    return aux
 
 
 def preorden(raiz):  # Va a servir para hacer una búsqueda más facilmente
@@ -120,6 +121,13 @@ def inorden(raiz):
 
 
 def postorden(raiz):
+    if raiz is not None:
+        postorden(raiz.izq)
+        postorden(raiz.der)
+        print(raiz.info)
+
+
+def invInorden(raiz):
     if raiz is not None:
         postorden(raiz.der)
         print(raiz.info)
@@ -156,3 +164,32 @@ def eliminar(raiz, clave):
                         raiz.izq, aux = reemplazar(raiz.izq)
                         raiz.info = aux.info
     return(raiz, x)
+
+
+def cantidadNodos(raiz):
+    if raiz is not None:
+        return 1 + cantidadNodos(raiz.izq) + cantidadNodos(raiz.der)
+    else:
+        return 0
+
+
+def cantidadHojas(raiz):
+    if raiz is not None:
+        if (raiz.izq is None) and (raiz.der is None):
+            return 1
+        else:
+            return cantidadHojas(raiz.izq) + cantidadHojas(raiz.der)
+    else:
+        return 0
+
+
+def nodosEnAltura(raiz, nivel):
+    cont = 0
+    if raiz is not None:
+        if raiz.altura == nivel:
+            cont = 1
+        cont += nodosEnNivel(raiz.izq, nivel)
+        cont += nodosEnNivel(raiz.der, nivel)
+        return cont
+    else:
+        return 0
