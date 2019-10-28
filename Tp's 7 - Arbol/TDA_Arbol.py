@@ -134,39 +134,40 @@ def invInorden(raiz):
         postorden(raiz.izq)
 
 
-def reemplazar(raiz):
-    aux = None
+def reemplazar(raiz):  # Va hasta la derecha, hasta que no tenga raiz derecha
+    aux = None         # Encontro el mas gande los menores (porque entro por raiz izq)
     if (raiz.der is not None):
         raiz.der, aux = reemplazar(raiz.der)
     else:
-        aux = raiz
-        raiz = raiz.izq
+        aux = raiz  # Toma la info del elemento e indexa la raiz con la raiz
+        raiz = raiz.izq  # izquierda y elimina la conexión con esa hoja
     return(raiz, aux)
 
 
-def eliminar(raiz, clave):
+def eliminar(raiz, clave):  # Si devuleve None es porque no encontro nada
     x = None
-    if (raiz is not None):
-        if (raiz.info > clave):
+    if (raiz is not None):  # Mientras no llegue a hoja, se llama recursivament
+        if (raiz.info > clave):  # Si buscado es menor, recursivo para izquierd
             raiz.izq, x = eliminar(raiz.izq, clave)
-        else:
-            if(raiz.info < clave):
+        else:  # Si es mayor o igual
+            if(raiz.info < clave):  # Si es mayor, recursivo a derecha
                 raiz.der, x = eliminar(raiz.der, clave)
-            else:
-                if (raiz.izq is None):
-                    x = raiz.info
-                    raiz = raiz.der
-                else:
-                    if(raiz.der is None):
-                        x = raiz.info
-                        raiz = raiz.izq
-                    else:
-                        raiz.izq, aux = reemplazar(raiz.izq)
-                        raiz.info = aux.info
+            else:  # Si es igual
+                if (raiz.izq is None):  # Si no tiene rama izquierda
+                    x = raiz.info       # Saca info y enlaza con única rama
+                    raiz = raiz.der     # hijo. En este caso, derecha
+                else:  # Si tiene rama izquierda
+                    if(raiz.der is None):  # Si no tiene rama derecha
+                        x = raiz.info      # obtiene dato y enlaza con unica
+                        raiz = raiz.izq    # rama hijo, en este caso, derecha
+                    else:  # Si tiene ambas ramas
+                        raiz.izq, aux = reemplazar(raiz.izq)  # Busca de los número mas chicos, la hoja con el valor más alto
+                        raiz.info = aux.info  # Reemplaza el valor de ese nodo por el de la hoja que trajo
     return(raiz, x)
 
 
 def cantidadNodos(raiz):
+    '''Cantidad de nodos en el arbol'''
     if raiz is not None:
         return 1 + cantidadNodos(raiz.izq) + cantidadNodos(raiz.der)
     else:
@@ -174,6 +175,7 @@ def cantidadNodos(raiz):
 
 
 def cantidadHojas(raiz):
+    '''Cantidad de hojas en el arbol'''
     if raiz is not None:
         if (raiz.izq is None) and (raiz.der is None):
             return 1
@@ -184,6 +186,7 @@ def cantidadHojas(raiz):
 
 
 def nodosEnAltura(raiz, nivel):
+    '''Cantidad de nodos en altura seleccionada'''
     cont = 0
     if raiz is not None:
         if raiz.altura == nivel:
@@ -193,3 +196,12 @@ def nodosEnAltura(raiz, nivel):
         return cont
     else:
         return 0
+
+
+def imprimirArbol(raiz, espacios=0):
+    ''' Imprime arbol, girado hacia la izquierda'''
+    if raiz is not None:
+        espacios += 5
+        imprimirArbol(raiz.der, espacios)
+        print(" " * espacios, str(raiz.info))
+        imprimirArbol(raiz.izq, espacios)
