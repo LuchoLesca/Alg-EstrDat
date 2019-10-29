@@ -27,18 +27,20 @@ r = insertar(r, 50)
 r = insertar(r, 65)
 r = insertar(r, 91)
 
-
+"""
 print()
 print("Preorden")
 preorden(r)
 print()
+"""
 print("Inorden")
 inorden(r)
 print()
+"""
 print("Postorden")
 postorden(r)
 print()
-
+"""
 
 imprimirArbol(r)
 
@@ -76,9 +78,37 @@ print("Altura de sub arbol derecho: ", altura(r.der))
 
 # E
 
+r = insertar(r, 20)
+r = insertar(r, 29)
+r = insertar(r, 11)
+
+imprimirArbol(r)
 
 
+def repetido2(raiz):  # Para que este funcione tiene que estar en el nodo contiguo. Preguntar si se puiede hacer de estar forma aunque sea modificando algo
+    if raiz is not None:
+        if raiz.info == repetido2(raiz.izq):
+            print("Se repite:", raiz.info)
+        if raiz.info == repetido2(raiz.der):
+            print("Se repite:", raiz.info)
 
+        return raiz.info
+
+
+def repetido(raiz):
+    if raiz is not None:
+        if busqueda(raiz.izq, raiz.info) is not None:
+            print("Se repite", raiz.info)
+        if busqueda(raiz.der, raiz.info) is not None:
+            print("Se repite:", raiz.info)
+        repetido(raiz.izq)
+        repetido(raiz.der)
+
+
+print()
+repetido(r)
+print()
+# repetido2(r)
 
 """
 # EJERCICIO 2  <<<<< Falta hacer que relice la operación
