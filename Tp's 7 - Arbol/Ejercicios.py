@@ -138,7 +138,7 @@ print(impares(r))
 
 # A
 
-
+"""
 print("Expresión original: ((2 + 3) * 4) + 26")
 
 r = Nodoarbol("+")
@@ -160,3 +160,4 @@ print("En orden de postfijo")
 postorden(r)
 
 imprimirArbol(r)
+"""
