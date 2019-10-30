@@ -27,23 +27,24 @@ r = insertar(r, 50)
 r = insertar(r, 65)
 r = insertar(r, 91)
 
+
 """
 print()
 print("Preorden")
 preorden(r)
 print()
-"""
+
 print("Inorden")
 inorden(r)
 print()
-"""
+
 print("Postorden")
 postorden(r)
 print()
-"""
+
 
 imprimirArbol(r)
-
+"""
 # B
 """
 buscado = lista_numeros[0]
@@ -77,22 +78,12 @@ print("Altura de sub arbol derecho: ", altura(r.der))
 """
 
 # E
-
+"""
 r = insertar(r, 20)
 r = insertar(r, 29)
 r = insertar(r, 11)
 
 imprimirArbol(r)
-
-
-def repetido2(raiz):  # Para que este funcione tiene que estar en el nodo contiguo. Preguntar si se puiede hacer de estar forma aunque sea modificando algo
-    if raiz is not None:
-        if raiz.info == repetido2(raiz.izq):
-            print("Se repite:", raiz.info)
-        if raiz.info == repetido2(raiz.der):
-            print("Se repite:", raiz.info)
-
-        return raiz.info
 
 
 def repetido(raiz):
@@ -107,11 +98,46 @@ def repetido(raiz):
 
 print()
 repetido(r)
-print()
-# repetido2(r)
-
 """
+
+# F   <<<<< Falta terminar
+# HAY QUE HACER UNA FUNCION QUE PUEDA DEVOLVER LOS DOS AL MISMO TIEMPO
+# Y NO DE A UNO A LA VEZ
+"""
+imprimirArbol(r)
+
+pares, impares = 0, 0
+
+
+def pares(raiz):
+    if raiz is not None:
+        if raiz.info % 2 == 0:
+            return (1 + pares(raiz.izq) + pares(raiz.der))
+        else:
+            return (0 + pares(raiz.izq) + pares(raiz.der))
+    else:
+        return 0
+
+
+def impares(raiz):
+    if raiz is not None:
+        if raiz.info % 2 == 0:
+            return (0 + impares(raiz.izq) + impares(raiz.der))
+        else:
+            return (1 + impares(raiz.izq) + impares(raiz.der))
+    else:
+        return 0
+
+
+print(pares(r))
+print(impares(r))
+"""
+
+
 # EJERCICIO 2  <<<<< Falta hacer que relice la operación
+
+# A
+
 
 print("Expresión original: ((2 + 3) * 4) + 26")
 
@@ -133,6 +159,4 @@ print()
 print("En orden de postfijo")
 postorden(r)
 
-print()
-print(operar(r))
-"""
+imprimirArbol(r)

@@ -135,8 +135,8 @@ def invInorden(raiz):
 
 
 def reemplazar(raiz):  # Va hasta la derecha, hasta que no tenga raiz derecha
-    aux = None         # Encontro el mas gande los menores (porque entro por raiz izq)
-    if (raiz.der is not None):
+    aux = None         # Encontro el mas gande los menores (porque entro por
+    if (raiz.der is not None):  # raiz izquierda)
         raiz.der, aux = reemplazar(raiz.der)
     else:
         aux = raiz  # Toma la info del elemento e indexa la raiz con la raiz
