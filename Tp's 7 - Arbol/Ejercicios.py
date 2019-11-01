@@ -103,12 +103,26 @@ repetido(r)
 # F   <<<<< Falta terminar
 # HAY QUE HACER UNA FUNCION QUE PUEDA DEVOLVER LOS DOS AL MISMO TIEMPO
 # Y NO DE A UNO A LA VEZ
-"""
+
 imprimirArbol(r)
 
-pares, impares = 0, 0
+
+def paresImpares(raiz):
+    if raiz is not None:
+        if raiz.info % 2 == 0:
+            return (1 + paresImpares(raiz.izq)[0] + paresImpares(raiz.der)[0], 0 + paresImpares(raiz.izq)[1] + paresImpares(raiz.der)[1])
+        else:
+            return (0 + paresImpares(raiz.izq)[0] + paresImpares(raiz.der)[0], 1 + paresImpares(raiz.izq)[1] + paresImpares(raiz.der)[1])
+    else:
+        return 0, 0
 
 
+print(paresImpares(r))
+
+
+
+
+"""
 def pares(raiz):
     if raiz is not None:
         if raiz.info % 2 == 0:
