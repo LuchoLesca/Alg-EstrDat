@@ -166,10 +166,24 @@ def eliminar(raiz, clave):  # Si devuleve None es porque no encontro nada
     return(raiz, x)
 
 
-def cantidadNodos(raiz):
+def nodoMin(raiz):
+    aux = raiz
+    while aux.izq is not None:
+        aux = aux.izq
+    return aux
+
+
+def nodoMax(raiz):
+    aux = raiz
+    while aux.der is not None:
+        aux = aux.der
+    return aux
+
+
+def pesoArbol(raiz):
     '''Cantidad de nodos en el arbol'''
     if raiz is not None:
-        return 1 + cantidadNodos(raiz.izq) + cantidadNodos(raiz.der)
+        return 1 + pesoArbol(raiz.izq) + pesoArbol(raiz.der)
     else:
         return 0
 
@@ -185,15 +199,19 @@ def cantidadHojas(raiz):
         return 0
 
 
-def nodosEnAltura(raiz, nivel):
+"""def nodosEnNivel(raiz, nivel, cont=0):
+    nivel -= 1
+    while nivel >= 0:
+"""
+
+
+def nodosEnAltura(raiz, altura):
     '''Cantidad de nodos en altura seleccionada'''
-    cont = 0
-    if raiz is not None:
-        if raiz.altura == nivel:
-            cont = 1
-        cont += nodosEnNivel(raiz.izq, nivel)
-        cont += nodosEnNivel(raiz.der, nivel)
-        return cont
+    if raiz is not None and raiz.altura >= altura:
+        if raiz.altura == altura:
+            return 1 + nodosEnAltura(raiz.izq, altura) + nodosEnAltura(raiz.der, altura)
+        else:
+            return 0 + nodosEnAltura(raiz.izq, altura) + nodosEnAltura(raiz.der, altura)
     else:
         return 0
 
@@ -205,3 +223,8 @@ def imprimirArbol(raiz, espacios=0):
         imprimirArbol(raiz.der, espacios)
         print(" " * espacios, str(raiz.info))
         imprimirArbol(raiz.izq, espacios)
+
+
+def esHoja(raiz):
+    if (raiz.izq is None) and (raiz.der is None):
+        return True
