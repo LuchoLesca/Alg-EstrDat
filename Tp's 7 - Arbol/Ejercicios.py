@@ -322,7 +322,7 @@ imprimirArbol(arbolDerecho(r))
 # EJERCICIO 5
 
 # A
-"""
+
 heroes = ["Capitan America", "Iron Man", "Thor", "Hulk", "Black Widow",
           "Hawkeye", "Vision", "Dr Strange", "Groot", "Spider-man"]
 villanos = ["Thanos", "Yellowjacket", "Ultron", "Red Skull", "Iron Monger",
@@ -331,11 +331,9 @@ villanos = ["Thanos", "Yellowjacket", "Ultron", "Red Skull", "Iron Monger",
 
 r = None
 for i in range(10):
-    # r = insertar(r, heroes[i])
-    # r = insertar(r, villanos[i])
     r = insertar(r, [heroes[i], True])
     r = insertar(r, [villanos[i], False])
-"""
+
 # B
 
 """
@@ -396,11 +394,45 @@ print()
 invInorden(l)
 input()
 
-
+"""
 # F
+"""
+inorden(r)
+print()
+invInorden(r)
+"""
+
+# G
+bosque = [None, None]  # 0: arbol heroes. 1: arbol villanos
+
+
+def insertarHeroe(heroe):
+    bosque[0] = insertar(bosque[0], heroe)
+
+
+def insertarVillano(villano):
+    bosque[1] = insertar(bosque[1], villano)
+
+
+def serpararHeroesVillanos(raiz):
+    if raiz is not None:
+        serpararHeroesVillanos(raiz.izq)
+        serpararHeroesVillanos(raiz.der)
+        if raiz.info[1]:
+            insertarHeroe(raiz.info)
+        else:
+            insertarVillano(raiz.info)
+
 
 inorden(r)
-"""
+print()
+print("Arbol de heroes")
+serpararHeroesVillanos(r)
+inorden(bosque[0])
+print()
+print("Arbol de villanos:")
+inorden(bosque[1])
+# inorden(bosque[0])
 
 
 # EJERCICIO 6 <<<<<<<<<<<<<<<<<
@@ -480,7 +512,9 @@ def descomprimir():
 """
 
 # EJERCICIO 9
+"""
 imprimirArbol(r)
 alt = 2
 print("Nodos en altura", alt)
 print(nodosEnAltura(r, alt))
+"""

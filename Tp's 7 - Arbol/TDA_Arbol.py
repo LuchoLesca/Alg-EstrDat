@@ -106,6 +106,20 @@ def busqueda(raiz, buscado):  # o clave
     return aux
 
 
+def busquedaProximidad(raiz, buscado):  # o clave
+    '''Devuelve el nodo donde encontró la info buscada'''
+    aux = None
+    if (raiz is not None):
+        if (buscado in raiz.info):
+            aux = raiz
+        else:
+            if (buscado < raiz.info):
+                aux = busqueda(raiz.izq, buscado)
+            else:
+                aux = busqueda(raiz.der, buscado)
+    return aux
+
+
 def preorden(raiz):  # Va a servir para hacer una búsqueda más facilmente
     if raiz is not None:
         print(raiz.info)
@@ -129,9 +143,9 @@ def postorden(raiz):
 
 def invInorden(raiz):
     if raiz is not None:
-        postorden(raiz.der)
+        invInorden(raiz.der)
         print(raiz.info)
-        postorden(raiz.izq)
+        invInorden(raiz.izq)
 
 
 def reemplazar(raiz):  # Va hasta la derecha, hasta que no tenga raiz derecha
@@ -228,3 +242,8 @@ def imprimirArbol(raiz, espacios=0):
 def esHoja(raiz):
     if (raiz.izq is None) and (raiz.der is None):
         return True
+
+
+'''
+diccionario = {padre, lista_de_hijos}
+'''
