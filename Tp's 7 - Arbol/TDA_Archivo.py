@@ -1,11 +1,13 @@
 import shelve
-# El indice de estos archivos no es numérico, es string. Hay que transformar de string a int
+# El indice de estos archivos no es numérico, es string. Hay que transformar de
+# string a int
+
 
 def abrir(ruta):
     return shelve.open(ruta)
 
 
-def cerrar(ruta):
+def cerrar(archivo):
     archivo.close()
 
 
@@ -30,3 +32,10 @@ def modificar(archivo, dato, pos):
         return True
     except Exception:
         raise None
+
+
+def barridoArchivo(archivo):
+    pos = 0
+    while pos < len(archivo):
+        print(leer(archivo, pos))
+        pos += 1

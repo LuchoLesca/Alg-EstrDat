@@ -2,6 +2,7 @@ from TDA_Arbol import *
 from random import randint, choice
 import TDA_Lista as Lista
 import locale
+from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
 
 
 r = None
@@ -220,7 +221,7 @@ print("Resultado:\n", calcular(raiz2))
 
 # EJERCICIO 3   <<<< PENDIENTES HASTA QUE ME PASEN LOS PSEUDOCÓDIGOS
 
-
+"""
 class NodoarbolM():
     info, hijos = None, Lista.Lista()
 
@@ -257,9 +258,7 @@ def transformar(AM, AB=None):
                     aux = aux.der
                 aux.der = Nodoarbol(aux.info)
                 transformar(aux, aux.der)
-
-
-# raiz = NodoArbolM()
+"""
 
 
 """
@@ -324,7 +323,7 @@ imprimirArbol(arbolDerecho(r))
 # A
 
 heroes = ["Capitan America", "Iron Man", "Thor", "Hulk", "Black Widow",
-          "Hawkeye", "Vision", "Dr Strange", "Groot", "Spider-man"]
+          "Hawkeye", "Vision", "Dr. Strange", "Groot", "Spider-man"]
 villanos = ["Thanos", "Yellowjacket", "Ultron", "Red Skull", "Iron Monger",
             "Loki", "Vulture", "Whiplash", "Crossbones", "The Mandarin"]
 
@@ -349,8 +348,8 @@ print()
 print("Villanos ordenados alfabeticamente:")
 mostrarVillanos(r)
 """
-# C  <<< Fijar si se puede hacer más eficiente esto, en vez de recorrer
-# arbol entero
+# C
+
 """
 
 def mostrarC(raiz):
@@ -384,17 +383,17 @@ print("La cantidad de heroes en el arbol es de:", contHeores(r))
 """
 
 # E  <<<< Preguntar la busqueda por proximidad
-"""
-l = None
-for i in range(25):
-    l = insertar(l, i)
 
-inorden(l)
-print()
-invInorden(l)
-input()
+# doctorstrange = busquedaCampo(r, "Dr. Strange", 0)
+# print(doctorstrange.info)
 
-"""
+
+buscado = busquedaProximidadCampo(r, "Strange", 0)
+if buscado is not None:
+    print(buscado.info)
+else:
+    print("No encontrado")
+
 # F
 """
 inorden(r)
@@ -403,6 +402,7 @@ invInorden(r)
 """
 
 # G
+"""
 bosque = [None, None]  # 0: arbol heroes. 1: arbol villanos
 
 
@@ -432,8 +432,7 @@ inorden(bosque[0])
 print()
 print("Arbol de villanos:")
 inorden(bosque[1])
-# inorden(bosque[0])
-
+"""
 
 # EJERCICIO 6 <<<<<<<<<<<<<<<<<
 
