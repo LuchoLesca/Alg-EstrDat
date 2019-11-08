@@ -120,27 +120,29 @@ def busquedaCampo(raiz, buscado, campo=0):
     return aux
 
 
-def busquedaProximidad(raiz, buscado):  # o clave
+def busquedaProximidad(raiz, buscado):
     '''Realiza busqueda por proximidad'''
     aux = None
     if (raiz is not None):
         if (buscado in raiz.info):
-            aux = raiz
+            return raiz
         else:
-            if (buscado < raiz.info):
-                aux = busquedaProximidad(raiz.izq, buscado)
-            else:
+            aux = busquedaProximidad(raiz.izq, buscado)
+            if aux is None:
                 aux = busquedaProximidad(raiz.der, buscado)
     return aux
 
 
 def busquedaProximidadCampo(raiz, buscado, campo=0):
+    '''Realiza busqueda por proximidad por campo seleccionado'''
     aux = None
-    if raiz is not None:
-        aux = busquedaProximidadCampo(raiz.izq, buscado, campo)
-        if buscado in raiz.info[0]:
-            print(raiz.info)
-        aux = busquedaProximidadCampo(raiz.der, buscado, campo)
+    if (raiz is not None):
+        if (buscado in raiz.info[campo]):
+            return raiz
+        else:
+            aux = busquedaProximidadCampo(raiz.izq, buscado, campo)
+            if aux is None:
+                aux = busquedaProximidadCampo(raiz.der, buscado, campo)
     return aux
 
 

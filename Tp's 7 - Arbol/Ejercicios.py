@@ -382,18 +382,14 @@ print()
 print("La cantidad de heroes en el arbol es de:", contHeores(r))
 """
 
-# E  <<<< Preguntar la busqueda por proximidad
-
-# doctorstrange = busquedaCampo(r, "Dr. Strange", 0)
-# print(doctorstrange.info)
-
-
+# E
+"""
 buscado = busquedaProximidadCampo(r, "trange", 0)
 if buscado is not None:
     print(buscado.info)
 else:
-    print("No encontrado")
-
+    print("No se encontró el personaje por busqueda por proximidad")
+"""
 # F
 """
 inorden(r)
