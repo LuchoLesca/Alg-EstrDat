@@ -388,7 +388,7 @@ print("La cantidad de heroes en el arbol es de:", contHeores(r))
 # print(doctorstrange.info)
 
 
-buscado = busquedaProximidadCampo(r, "Strange", 0)
+buscado = busquedaProximidadCampo(r, "trange", 0)
 if buscado is not None:
     print(buscado.info)
 else:

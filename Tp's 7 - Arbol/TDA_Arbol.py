@@ -137,11 +137,10 @@ def busquedaProximidad(raiz, buscado):  # o clave
 def busquedaProximidadCampo(raiz, buscado, campo=0):
     aux = None
     if raiz is not None:
-        if buscado in raiz.info[campo]:
-            aux = raiz
-        else:
-            aux = busquedaProximidadCampo(raiz.izq, buscado, campo)
-            aux = busquedaProximidadCampo(raiz.der, buscado, campo)
+        aux = busquedaProximidadCampo(raiz.izq, buscado, campo)
+        if buscado in raiz.info[0]:
+            print(raiz.info)
+        aux = busquedaProximidadCampo(raiz.der, buscado, campo)
     return aux
 
 
