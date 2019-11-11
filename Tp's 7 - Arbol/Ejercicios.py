@@ -3,22 +3,23 @@ from random import randint, choice
 import TDA_Lista as Lista
 import locale
 from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
+import queue
 
 
 r = None
 
-# EJERCICIO 1
+# EJERCICIO 1  HECHO
 
 # A
-lista_numeros = []
-"""
-for i in range(randint(5, 10)):
-    num = randint(0, 50)
-    lista_numeros.append(num)
-    r = insertar(r, num)
-"""
+
+# for i in range(randint(5, 10)):
+#    num = randint(0, 50)
+#    lista_numeros.append(num)
+#    r = insertar(r, num)
+
 # print("Lista de números ingresados", lista_numeros)
 # 20, 29, 11, 41, 32, 72, 99, 50, 65, 91
+
 r = insertar(r, 20)
 r = insertar(r, 29)
 r = insertar(r, 11)
@@ -123,7 +124,7 @@ pares, impares = paresImpares(r)
 print("Pares:", pares, "Impares:", impares)
 """
 
-# EJERCICIO 2
+# EJERCICIO 2   HECHO
 
 """
 
@@ -296,7 +297,7 @@ for linea in archivo_indice:
     #    print(linea)
 """
 
-# EJERCICIO 4
+# EJERCICIO 4  HECHO
 """
 def arbolIzquierdo(raiz):
     return raiz.izq
@@ -318,12 +319,12 @@ print("Arbol derecho")
 imprimirArbol(arbolDerecho(r))
 """
 
-# EJERCICIO 5
+# EJERCICIO 5  HECHO
 
 # A
-
+"""
 heroes = ["Capitan America", "Iron Man", "Thor", "Hulk", "Black Widow",
-          "Hawkeye", "Vision", "Dr. Strange", "Groot", "Spider-man"]
+          "Hawkeye", "Vision", "Dotor Strange", "Groot", "Spider-man"]
 villanos = ["Thanos", "Yellowjacket", "Ultron", "Red Skull", "Iron Monger",
             "Loki", "Vulture", "Whiplash", "Crossbones", "The Mandarin"]
 
@@ -332,6 +333,7 @@ r = None
 for i in range(10):
     r = insertar(r, [heroes[i], True])
     r = insertar(r, [villanos[i], False])
+"""
 
 # B
 
@@ -351,7 +353,6 @@ mostrarVillanos(r)
 # C
 
 """
-
 def mostrarC(raiz):
     if raiz is not None:
         mostrarC(raiz.izq)
@@ -384,16 +385,22 @@ print("La cantidad de heroes en el arbol es de:", contHeores(r))
 
 # E
 """
-buscado = busquedaProximidadCampo(r, "trange", 0)
+busc = "Strange"
+buscado = busquedaProximidadCampo(r, busc, 0)
 if buscado is not None:
-    print(buscado.info)
+    nombre_ant = buscado.info[0]
+    buscado.info[0] = "Dr. Strange"
+    print("El personaje buscado " + busc + " se encontró y se modificó su")
+    print("nombre de " + nombre_ant + " a " + buscado.info[0])
 else:
     print("No se encontró el personaje por busqueda por proximidad")
+
+print()
+inorden(r)
 """
+
 # F
 """
-inorden(r)
-print()
 invInorden(r)
 """
 
@@ -421,6 +428,14 @@ def serpararHeroesVillanos(raiz):
 
 
 inorden(r)
+
+# I
+print()
+print("Cantidad de nodos por arbol:")
+print("Héroes:", pesoArbol(bosque[0]))
+print("Villanos:", pesoArbol(bosque[1]))
+
+# II
 print()
 print("Arbol de heroes")
 serpararHeroesVillanos(r)
@@ -428,12 +443,12 @@ inorden(bosque[0])
 print()
 print("Arbol de villanos:")
 inorden(bosque[1])
-"""
 
+"""
 # EJERCICIO 6 <<<<<<<<<<<<<<<<<
 
 
-# EJERCICIO 7
+# EJERCICIO 7   HECHO
 """
 imprimirArbol(r)
 print()
@@ -443,33 +458,48 @@ print("Info de nodo máximo", nodoMax(r).info)
 
 
 # EJERCICIO 8
+
+
+# TABLA DE FRECUENCIAS
 """
-tabla = [
-    ["A", 0.2],
-    ["F", 0.17],
-    ["1", 0.13],
-    ["3", 0.21],
-    ["0", 0.05],
-    ["M", 0.09],
-    ["T", 0.15]
-]
+tabla = {"A": 0.2, "F": 0.17, "1": 0.13, "3": 0.21, "0": 0.05, "M": 0.09,
+         "T": 0.15}
 """
-# tabla.sort(key=lambda x: x[1])  # Ordena segun el campo (en esta caso 1)
-# print(tabla)
 """
-tabla_aux = []
-for elemento in tabla:
-    tabla_aux.append(elemento[1])
-tabla_aux.sort()
-print(tabla_aux)
+tabla = [["A", 0.2], ["F", 0.17], ["1", 0.13], ["3", 0.21], ["0", 0.05],
+         ["M", 0.09], ["T", 0.15]]
+
+# ORDENA TABLA DE FRECUENCIAS SEGÚN PARÁMETRO
+parametro = 1
+tabla.sort(key=lambda x: x[1])
+
+
+def crearArbolHuffman(lista):
+    while(len(lista) >= 2):
+        nod1 = lista.pop()
+        nod2 = lista.pop()
+        nuevo_nodo = Nodoarbol(nod1.info[1] + nod2.info[1], nod1, nod2)
+        lista.append(nuevo_nodo)
+        lista.sort()
+        lista.reverse()
+    return lista.pop()
 """
 
-"""r = None
-
-for simbolo in tabla:
-    r = insertar(r, simbolo)
+# Con tipo de lista del TDA
 """
-# imprimirArbol(r)
+lista = Lista.Lista()
+
+Lista.inserCampo(lista, ["A", 0.2], 1)
+Lista.inserCampo(lista, ["F", 0.17], 1)
+Lista.inserCampo(lista, ["1", 0.13], 1)
+Lista.inserCampo(lista, ["3", 0.21], 1)
+Lista.inserCampo(lista, ["0", 0.05], 1)
+Lista.inserCampo(lista, ["M", 0.09], 1)
+Lista.inserCampo(lista, ["T", 0.15], 1)
+
+
+Lista.barridoLista(lista)
+"""
 
 """
 def crearTabla(palabra):
@@ -493,11 +523,6 @@ pal = "Allá en la fuenta había un chorrito, se hacía grandote, se hacía chiq
 tabla = crearTabla(pal)
 
 
-def arbolHuffman(lista):
-    if len(tabla) > 1:
-        pass
-
-
 def comprimir(palabra):
     pass
 
@@ -506,10 +531,115 @@ def descomprimir():
     pass
 """
 
-# EJERCICIO 9
+
+# EJERCICIO 9   # HECHO Y PROBADO
 """
+def calcNodosNivel(nivel):
+    '''Calcula la cantidad de nodos que debería haber en el nivel para que
+    esté completo'''
+    return pow(2, nivel)
+
+
 imprimirArbol(r)
-alt = 2
-print("Nodos en altura", alt)
-print(nodosEnAltura(r, alt))
+
+# PRUEBA DE CALCULAR NODO POR NIVEL
+for i in range(4):  # Dondei representa a cada nivel
+    cant_nodos = nodosEnNivel(r, i)
+    deberia_haber = calcNodosNivel(i)
+    print("Nivel:", i, " Debería haber", deberia_haber, " Hay:", cant_nodos,
+          " Faltan:", int(deberia_haber - cant_nodos))
 """
+
+# EJERCICIO 10
+
+# imprimirArbol(r)
+
+# A
+"""
+print("Cantidad de nodos en el arbol:", pesoArbol(r))
+"""
+# B
+"""
+print("Cantidad de hojas:", cantidadHojas(r))
+"""
+# C
+"""
+def mostrarHojas(raiz):
+    if raiz is not None:
+        mostrarHojas(raiz.izq)
+        if esHoja(raiz):
+            print(raiz.info)
+        mostrarHojas(raiz.der)
+
+
+print("Información de los nodos hojas")
+mostrarHojas(r)
+"""
+# D  <<<< falta este. Determinarlo agregando atributo, o pasado un dato buscarlo?
+
+# E
+"""
+print("Altura de arbol:", r.altura)
+"""
+
+
+# EJERCICIO 11    Falta terminar todo esto también
+
+"""
+def generarArbol(niveles):
+    raiz = None
+    raiz = insertar(raiz, randint(0, 100))
+    while raiz.altura <= niveles:
+        raiz = insertar(raiz, randint(0, 100))
+    return raiz
+
+
+r = generarArbol(9)
+
+
+imprimirArbol(r)
+"""
+# A
+"""# Crea bosque y recorta arbol en nivel deseado
+nivel_a_cortar = 3
+bosque = []
+recortarArbol(r, bosque, nivel_a_cortar)
+"""
+# B
+"""# Muestras los nodos que hay en el bosque
+print()
+print("Raices")
+for arbol in bosque:
+    print("Raiz:", arbol.info, " Cantidad de nodos:", pesoArbol(arbol))
+"""
+# C
+"""
+for i in range(len(bosque)):
+    print()
+    print("Barrido arbol " + str(i+1))
+    preorden(bosque[i])
+
+"""
+# D
+"""
+if len(bosque) == 0:
+    print("No hay arboles en el bosque")
+else:
+    mayor = bosque[0]
+    cant = pesoArbol(mayor)
+    for arbol in bosque:
+        if cant <= pesoArbol(arbol):
+            mayor = arbol
+            cant = pesoArbol(arbol)
+
+
+print()
+print("Raiz de arbol más pesado", mayor.info, " Cantidad de nodos", cant)
+"""
+
+# E     <<<<< Falta este
+
+
+
+
+# EJERCICIO 12

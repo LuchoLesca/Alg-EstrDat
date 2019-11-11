@@ -1,11 +1,20 @@
+# Árbol Estricto: Si un subárbol está vacío, el otro también. Cada nodo puede
+# tener 0 ó 2 hijos.
+
+# Árbol Lleno: Árbol estricto donde en cada nodo la altura del subárbol
+# izquierdo es igual a la del derecho, y ambos subárboles son árboles llenos.
+
+# Árbol Completo: Árbol lleno hasta el penúltimo nivel. En el último nivel los
+# nodos están agrupados a la izquierda.
+
 from random import randint
 
 
 class Nodoarbol():
 
-    def __init__(self, dato):
-        self.izq = None
-        self.der = None
+    def __init__(self, dato, izq=None, der=None):
+        self.izq = izq
+        self.der = der
         self.altura = 0
         self.info = dato
 
@@ -239,21 +248,48 @@ def cantidadHojas(raiz):
         return 0
 
 
-"""def nodosEnNivel(raiz, nivel, cont=0):
-    nivel -= 1
-    while nivel >= 0:
-"""
-
-
-def nodosEnAltura(raiz, altura):
-    '''Cantidad de nodos en altura seleccionada'''
-    if raiz is not None and raiz.altura >= altura:
-        if raiz.altura == altura:
-            return 1 + nodosEnAltura(raiz.izq, altura) + nodosEnAltura(raiz.der, altura)
-        else:
-            return 0 + nodosEnAltura(raiz.izq, altura) + nodosEnAltura(raiz.der, altura)
+def nodosEnNivel(raiz, nivel, nivel_act=0):
+    '''Retorna la cantidad de nodos que hay en el nivel ingresado'''
+    cant = 0
+    if raiz is not None:
+        if nivel == nivel_act:
+            cant += 1
+        nivel_act += 1
+        cant += nodosEnNivel(raiz.izq, nivel, nivel_act)
+        cant += nodosEnNivel(raiz.der, nivel, nivel_act)
+        return cant
     else:
         return 0
+
+
+def nodosEnAltura(raiz, altura):  # FALTA PROBAR ESTE
+    '''Cantidad de nodos en altura seleccionada'''
+    cont = 0
+    if raiz is not None:
+        if raiz.altura == altura:
+            cont = 1
+        cont += nodosEnAltura(raiz.izq, altura)
+        cont += nodosEnAltura(raiz.der, altura)
+        return cont
+    else:
+        return 0
+
+
+def recortarArbol(raiz, bosque, hasta, nivel_act=0):
+    '''Recorta el arbol y devulve bosque de los nodos del nivel deseado'''
+    if raiz is not None and (nivel_act <= hasta):
+        if nivel_act == hasta:
+            bosque.append(raiz)
+        recortarArbol(raiz.izq, bosque, hasta, nivel_act+1)
+        recortarArbol(raiz.der, bosque, hasta, nivel_act+1)
+
+
+def imprimirNivel(raiz, nivel, nivel_act=0):
+    if raiz is not None:
+        imprimirNivel(raiz.izq, nivel, nivel_act+1)
+        if nivel == nivel_act:
+            print(raiz.info)
+        imprimirNivel(raiz.der, nivel, nivel_act+1)
 
 
 def imprimirArbol(raiz, espacios=0):
@@ -265,11 +301,55 @@ def imprimirArbol(raiz, espacios=0):
         imprimirArbol(raiz.izq, espacios)
 
 
+def recorridoArbolTodo(raiz, nivel=0):
+    '''Recorre todo el arbol mostrando la información, altura y nivel'''
+    if raiz is not None:
+        recorridoArbolTodo(raiz.izq, nivel+1)
+        print("Info ", raiz.info, "  Altura", raiz.altura, "  Nivel", nivel)
+        recorridoArbolTodo(raiz.der, nivel+1)
+
+
 def esHoja(raiz):
     if (raiz.izq is None) and (raiz.der is None):
         return True
 
 
-'''
-diccionario = {padre, lista_de_hijos}
-'''
+def hijoIzq(raiz):
+    return raiz.izq
+
+
+def hijoDer(raiz):
+    return raiz.der
+
+
+def hijos(raiz):
+    return raiz.izq, raiz.der
+
+
+def nivelMax(raiz):
+    return raiz.altura - 1
+
+
+def arbolAleatorio(cantidad=randint(5, 20)):
+    '''Crea un arbol aleatorio de la cantidad ingresada'''
+    raiz = None
+    for i in range(cantidad):
+        raiz = insertar(raiz, randint(-100, 100))
+    return raiz
+
+
+def nivelLleno(raiz, nivel):
+    '''Devuelve True si el nivel seleccionado está lleno'''
+    return nodosEnNivel(raiz, nivel) == calcNodosNivel(nivel)
+
+
+def calcNodosNivel(nivel):
+    '''Calcula la cantidad de nodos que debería haber en el nivel para que
+    esté completo'''
+    return pow(2, nivel)
+
+
+def ArbolLleno(raiz):
+    '''Devuelve True, si el ultimo nivel esta lleno'''
+    nivel_mas_profundo = nivelMax(raiz)
+    return nivelLleno(raiz, nivel_mas_profundo)

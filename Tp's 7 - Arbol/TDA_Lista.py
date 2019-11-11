@@ -77,6 +77,15 @@ def insertarEn(l, dato, pos):
         print("posee la lista")
 
 
+def eliminarPrimero(l):
+    aux = None
+    if l.tamanio > 0:
+        aux = l.inicio.info
+        l.inicio = l.inicio.sig
+        l.tamanio -= 1
+    return aux
+
+
 def eliminar(l, dato):
     """Elimina de la lista, el primer elemento deseado"""
     out = None
@@ -101,9 +110,10 @@ def eliminar(l, dato):
 
 
 def eliminarCampo(lista, dato, campo):  # Para manejo con array
-
+    out = None
     if (lista.inicio.info[campo] == dato):
         while lista.inicio.info[campo] == dato:
+            out = lista.inicio.info
             lista.inicio = lista.inicio.sig
             lista.tamanio -= 1
     else:
@@ -116,9 +126,11 @@ def eliminarCampo(lista, dato, campo):  # Para manejo con array
 
         if (actual is not None) and (actual.info[campo] == dato):
             while actual.info[0] == dato:
+                out = actual.info
                 anterior.sig = actual.sig
                 actual = anterior.sig
                 lista.tamanio -= 1
+    return out
 
 
 def eliminarTodos(l, dato):
