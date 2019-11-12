@@ -457,7 +457,7 @@ print("Info de nodo máximo", nodoMax(r).info)
 """
 
 
-# EJERCICIO 8
+# EJERCICIO 8    <<< falta terminar
 
 
 # TABLA DE FRECUENCIAS
@@ -575,7 +575,33 @@ def mostrarHojas(raiz):
 print("Información de los nodos hojas")
 mostrarHojas(r)
 """
-# D  <<<< falta este. Determinarlo agregando atributo, o pasado un dato buscarlo?
+# D
+
+
+def determinarPadre(raiz, buscado):
+    '''Devuelve el padre. Si es la raiz, devuelve el mismo valor. Si nodo
+    encuentra el dato al que se está buscado, devuelve None'''
+    aux = None
+    if (raiz is not None):
+        if raiz.info == buscado:
+            aux = buscado
+        elif (raiz.izq is not None and raiz.izq.info == buscado) or (raiz.der is not None and raiz.der.info == buscado):
+            aux = raiz
+        else:
+            if (buscado < raiz.info):
+                aux = determinarPadre(raiz.izq, buscado)
+            else:
+                aux = determinarPadre(raiz.der, buscado)
+    return aux
+
+
+imprimirArbol(r)
+buscado =
+padre = determinarPadre(r, buscado)
+print(padre)
+
+
+
 
 # E
 """
