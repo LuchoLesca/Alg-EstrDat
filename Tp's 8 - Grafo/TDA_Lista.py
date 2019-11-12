@@ -2,42 +2,37 @@ import random
 import math
 
 
-class Grafo(dirigido=True):
-    inicio, tamanio, dirigido = None, 0, True
+class NodoLista():
+
+    info, sig, ant = None, None, None
 
 
-class ListaAristas():
-    inicio, tamanio = None, 0
+class Lista():
+
+    def __init__(self):
+        self.tamanio = 0
+        self.inicio = None
 
 
-class NodoVertice():
-    info, sig, adyacentes = None, None, ListaAristas()
-
-
-class NodoArista():
-    info, sig, peso, visitado = None, None, None, False
-
-
-def insertarVertice(grafo, dato):
-    """Inserta en grafo, elemento deseado"""
+def insertar(l, dato):
+    """Inserta en lista, elemento deseado"""
     nodo = NodoLista()
     nodo.info = dato
 
-    if (grafo.inicio is None) or (nodo.info < grafo.inicio.info):  # Si está vacía o es el primero
-        nodo.sig = grafo.inicio
-        grafo.inicio = nodo
+    if (l.inicio is None) or (nodo.info < l.inicio.info):  # Si está vacía o es el primero
+        nodo.sig = l.inicio
+        l.inicio = nodo
     else:  # Si va al medio o a lo último
-        anterior = grafo.inicio
-        actual = grafo.inicio.sig
+        anterior = l.inicio
+        actual = l.inicio.sig
         while (actual is not None) and (actual.info <= nodo.info):
             actual = actual.sig
             anterior = anterior.sig
         nodo.sig = actual
         anterior.sig = nodo
-    grafo.tamanio += 1
+    l.tamanio += 1
 
 
-"""
 def inserCampo(l, dato, i):  # Para manejo con array
     nodo = NodoLista()
     nodo.info = dato
@@ -80,7 +75,15 @@ def insertarEn(l, dato, pos):
     else:
         print("El indice " + str(pos) + " excede el tamaño de elementos que ")
         print("posee la lista")
-"""
+
+
+def eliminarPrimero(l):
+    aux = None
+    if l.tamanio > 0:
+        aux = l.inicio.info
+        l.inicio = l.inicio.sig
+        l.tamanio -= 1
+    return aux
 
 
 def eliminar(l, dato):
@@ -106,10 +109,59 @@ def eliminar(l, dato):
     return out
 
 
-"""
+def eliminarCampo(lista, dato, campo):  # Para manejo con array
+    out = None
+    if (lista.inicio.info[campo] == dato):
+        while lista.inicio.info[campo] == dato:
+            out = lista.inicio.info
+            lista.inicio = lista.inicio.sig
+            lista.tamanio -= 1
+    else:
+        anterior = lista.inicio
+        actual = anterior.sig
+
+        while (actual is not None) and (actual.info[campo] < dato):
+            actual = actual.sig
+            anterior = anterior.sig
+
+        if (actual is not None) and (actual.info[campo] == dato):
+            while actual.info[0] == dato:
+                out = actual.info
+                anterior.sig = actual.sig
+                actual = anterior.sig
+                lista.tamanio -= 1
+    return out
+
+
+def eliminarTodos(l, dato):
+    """Elimina de la lista toda las ocurrencias del dato ingresado"""
+    if l.tamanio > 0:
+        if (l.tamanio == 1):
+            if (l.inicio.info == dato):
+                l.inicio = None
+                l.tamanio -= 1
+        else:
+            if l.inicio.info == dato:
+                while (l.inicio.info == dato):
+                    l.inicio = l.inicio.sig
+                    l.tamanio -= 1
+            else:
+                anterior = l.inicio
+                actual = anterior.sig
+
+                while (actual is not None) and (actual.info < dato):  # Todo esto teniendo en cuenta que la lista va a estar ordenada
+                    actual = actual.sig
+                    anterior = anterior.sig
+
+                if actual is not None:
+                    while (actual is not None) and (actual.info == dato):
+                        actual = actual.sig
+                        l.tamanio -= 1
+                    anterior.sig = actual
+
 
 def barridoLista(l):
-    '''Barrido de lista, imprimiendo en pantalla el elemento de cada nodo'''
+    """Barrido de lista, imprimiendo en pantalla el elemento de cada nodo"""
     aux = l.inicio
     while (aux is not None):
         print(str(aux.info))
@@ -117,7 +169,7 @@ def barridoLista(l):
 
 
 def busquedaLista(l, buscado):
-    '''Devuelve dirección de memoria. None si no se encontró lo buscado'''
+    """Devuelve dirección de memoria. None si no se encontró lo buscado"""
     aux = l.inicio
     while (aux is not None) and (aux.info != buscado):
         aux = aux.sig
@@ -148,13 +200,13 @@ def lista_vacia(l):
 
 
 def cargaAutoIntL(l, cantidad):
-    '''Carga en lista, cantidad ingresada de numeros random'''
+    """Carga en lista, cantidad ingresada de numeros random"""
     for i in range(0, cantidad):
         insertar(l, random.randint(-50, 50))
 
 
 def cargaAutoStrL(l, cantidad):
-    '''Carga en lista, cantidad ingresada de letras random'''
+    """Carga en lista, cantidad ingresada de letras random"""
     abc = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     for i in range(0, cantidad):
         insertar(l, random.choice(abc))
@@ -245,4 +297,3 @@ def primo(num):
                 pri = False
             i += 1
         return pri
-"""

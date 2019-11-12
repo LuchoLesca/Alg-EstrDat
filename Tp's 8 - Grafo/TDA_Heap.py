@@ -7,10 +7,6 @@ class Heap():
         self.vector = [None]*tamanio
 
 
-def intercambio(a, b):
-    a, b = b, a
-
-
 def agregar(heap, dato):
     heap.vector[heap.tamanio] = dato
     flotar(heap, heap.tamanio)
@@ -76,3 +72,10 @@ def monticulizar(heap):
 
 def heap_vacio(heap):
     return heap.tamanio == 0
+
+
+def buscar_H(heap, dato):
+    if dato in heap:
+        return heap.index(dato)
+    else:
+        return None

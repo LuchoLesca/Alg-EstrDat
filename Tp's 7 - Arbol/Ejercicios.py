@@ -550,7 +550,7 @@ for i in range(4):  # Dondei representa a cada nivel
           " Faltan:", int(deberia_haber - cant_nodos))
 """
 
-# EJERCICIO 10
+# EJERCICIO 10   # Hecho y PROBADO
 
 # imprimirArbol(r)
 
@@ -577,7 +577,7 @@ mostrarHojas(r)
 """
 # D
 
-
+"""
 def determinarPadre(raiz, buscado):
     '''Devuelve el padre. Si es la raiz, devuelve el mismo valor. Si nodo
     encuentra el dato al que se está buscado, devuelve None'''
@@ -596,12 +596,18 @@ def determinarPadre(raiz, buscado):
 
 
 imprimirArbol(r)
-buscado =
+
+buscado = 10
 padre = determinarPadre(r, buscado)
-print(padre)
 
-
-
+if padre == buscado:
+    print("El elemento buscado es la raiz, no tiene padre")
+else:
+    if padre is not None:
+        print("El padre de", buscado, " es", padre.info)
+    else:
+        print("El elemento buscado no se encuentra. No tiene padre")
+"""
 
 # E
 """
