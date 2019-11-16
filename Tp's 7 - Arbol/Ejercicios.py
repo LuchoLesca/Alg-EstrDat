@@ -223,6 +223,7 @@ print("Resultado:\n", calcular(raiz2))
 # EJERCICIO 3   <<<< PENDIENTES HASTA QUE ME PASEN LOS PSEUDOCÓDIGOS
 
 
+
 """
 
 def esNum(car):

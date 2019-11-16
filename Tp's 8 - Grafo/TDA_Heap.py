@@ -85,11 +85,9 @@ def heapSort(heap):
 
 
 def monticulizar(lista):
-    '''Convierte lista en montículo'''
-    heap_aux = Heap(len(lista))
-    for elemento in lista:
-        arribo_H(heap_aux, lista.pop())
-    return heap_aux
+    '''Convierte lista en montículo(la ordena como su fuese uno)'''
+    for i in range(len(lista)):
+        flotar(lista, i)
 
 
 def heap_vacio(heap):
