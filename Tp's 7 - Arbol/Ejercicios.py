@@ -222,45 +222,6 @@ print("Resultado:\n", calcular(raiz2))
 
 # EJERCICIO 3   <<<< PENDIENTES HASTA QUE ME PASEN LOS PSEUDOCÓDIGOS
 
-"""
-class NodoarbolM():
-    info, hijos = None, Lista.Lista()
-
-
-def hijoDer(raiz, nodo):  # No entendí la letra
-    if raiz is not None:
-        if busqueda(nodo.info) is not None:
-            x = nodo
-            aux = nodo.der
-
-
-def cargarHijos(raiz, padre):  # No entendí la letra
-    aux = buscar(raiz, padre)
-    if aux is not None:
-        while True:  # Aca hay que cambiar la condicion, preguntar a Mari
-            # leer(nombre_hijo)
-            insertar_lista(aux.hijos, nombre_hijo)
-            # ACtualizar condicion del mientras
-
-
-def transformar(AM, AB=None):
-    if AM is not None:
-        if AB is None:
-            AB = Nodoarbol(AM.info)
-
-        while not Lista.lista_vacia(AM.hijos):
-            aux = Lista.eliminar(AM.hijos, AM.hijos.inicio.info)
-            if AB.izq is None:
-                AB.izq = Nodoarbol(aux.info)
-                transformar(aux, AB.izq)
-            else:
-                aux = AB.izq.der
-                while aux is not None:
-                    aux = aux.der
-                aux.der = Nodoarbol(aux.info)
-                transformar(aux, aux.der)
-"""
-
 
 """
 
@@ -461,10 +422,10 @@ print("Info de nodo máximo", nodoMax(r).info)
 
 
 # TABLA DE FRECUENCIAS
-"""
-tabla = {"A": 0.2, "F": 0.17, "1": 0.13, "3": 0.21, "0": 0.05, "M": 0.09,
-         "T": 0.15}
-"""
+
+# tabla = {"A": 0.2, "F": 0.17, "1": 0.13, "3": 0.21, "0": 0.05, "M": 0.09,
+#         "T": 0.15}
+
 """
 tabla = [["A", 0.2], ["F", 0.17], ["1", 0.13], ["3", 0.21], ["0", 0.05],
          ["M", 0.09], ["T", 0.15]]
@@ -615,7 +576,7 @@ print("Altura de arbol:", r.altura)
 """
 
 
-# EJERCICIO 11    Falta terminar todo esto también
+# EJERCICIO 11
 
 """
 def generarArbol(niveles):
@@ -630,30 +591,32 @@ r = generarArbol(9)
 
 
 imprimirArbol(r)
-"""
+
 # A
-"""# Crea bosque y recorta arbol en nivel deseado
+# Crea bosque y recorta arbol en nivel deseado
+
 nivel_a_cortar = 3
 bosque = []
 recortarArbol(r, bosque, nivel_a_cortar)
-"""
+
 # B
-"""# Muestras los nodos que hay en el bosque
+# Muestras los nodos que hay en el bosque
+
 print()
 print("Raices")
 for arbol in bosque:
     print("Raiz:", arbol.info, " Cantidad de nodos:", pesoArbol(arbol))
-"""
+
 # C
-"""
+
 for i in range(len(bosque)):
     print()
     print("Barrido arbol " + str(i+1))
     preorden(bosque[i])
 
-"""
+
 # D
-"""
+
 if len(bosque) == 0:
     print("No hay arboles en el bosque")
 else:
@@ -667,11 +630,18 @@ else:
 
 print()
 print("Raiz de arbol más pesado", mayor.info, " Cantidad de nodos", cant)
-"""
+
 
 # E     <<<<< Falta este
+# Indicar qué arboles del bosque están llenos
 
+print()
+for arbol in bosque:
+    if arbolLleno(arbol):
+        print("El arbol que empieza con raíz", arbol, "esta lleno")
+    else:
+        print("El arbol que empieza con raíz", arbol, "no esta lleno")
 
-
+"""
 
 # EJERCICIO 12

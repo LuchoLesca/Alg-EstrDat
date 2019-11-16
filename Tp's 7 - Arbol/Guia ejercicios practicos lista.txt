@@ -1,0 +1,140 @@
+1-
+Hechos: todos
+Faltan:
+Probado: Si
+
+
+2-
+Hechos: Todos
+Faltan:
+Probado: Si
+
+3-
+Hechos: Ninguno
+Faltan: Todos
+Probado:
+
+4-
+Hechos: Todos
+Faltan:
+Probado: Si
+
+5-
+Hechos: Todos
+Faltan:
+Probado: Si
+
+6-
+Hechos: Ninguno
+Faltan: Todos
+Probado:
+
+7-
+Hechos: Todos
+Faltan:
+Probado: Si
+
+8-
+Hechos: Ninguno
+Faltan: Todos
+Probado:
+
+9-
+Hechos: Todos
+Faltan:
+Probado: Si
+
+10-
+Hechos: Todos
+Faltan:
+Probado: Si
+
+11-
+Hechos: Todos
+Faltan:
+Probado: Si
+
+12-
+Hechos:
+Faltan:
+Probado:
+
+13-
+Hechos:
+Faltan:
+Probado:
+
+14-
+Hechos:
+Faltan:
+Probado:
+
+15-
+Hechos:
+Faltan:
+Probado:
+
+16-
+Hechos:
+Faltan:
+Probado:
+
+17-
+Hechos:
+Faltan:
+Probado:
+
+18-
+Hechos:
+Faltan:
+Probado:
+
+19-
+Hechos:
+Faltan:
+Probado:
+
+20-
+Hechos:
+Faltan:
+Probado:
+
+21-
+Hechos:
+Faltan:
+Probado:
+
+22-
+Hechos:
+Faltan:
+Probado:
+
+23-
+Hechos:
+Faltan:
+Probado:
+
+24-
+Hechos:
+Faltan:
+Probado:
+
+25-
+Hechos:
+Faltan:
+Probado:
+
+26-
+Hechos:
+Faltan:
+Probado:
+
+27-
+Hechos:
+Faltan:
+Probado:
+
+28-
+Hechos:
+Faltan:
+Probado:

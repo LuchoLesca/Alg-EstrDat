@@ -349,7 +349,7 @@ def calcNodosNivel(nivel):
     return pow(2, nivel)
 
 
-def ArbolLleno(raiz):
+def arbolLleno(raiz):
     '''Devuelve True, si el ultimo nivel esta lleno'''
     nivel_mas_profundo = nivelMax(raiz)
     return nivelLleno(raiz, nivel_mas_profundo)
