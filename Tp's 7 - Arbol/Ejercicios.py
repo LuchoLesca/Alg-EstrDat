@@ -1,9 +1,7 @@
 from TDA_Arbol import *
 from random import randint, choice
 import TDA_Lista as Lista
-import locale
 from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
-import queue
 
 
 r = None
@@ -222,6 +220,9 @@ print("Resultado:\n", calcular(raiz2))
 
 # EJERCICIO 3   <<<< PENDIENTES HASTA QUE ME PASEN LOS PSEUDOCÓDIGOS
 
+
+archivo = abrir("Indices/indice_summerville")
+barridoArchivo(archivo)
 
 
 """

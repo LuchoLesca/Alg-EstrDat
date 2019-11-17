@@ -1,8 +1,8 @@
 import shelve
 
 
-def abrir_lectura(ruta):
-    return shelve.open(ruta, "r")
+def abrir(ruta):
+    return shelve.open(ruta)
 
 
 def cerrar(archivo):
@@ -29,3 +29,10 @@ def modificar(archivo, dato, pos):
         return True
     except Exception:
         raise None
+
+
+def barridoArchivo(archivo):
+    pos = 0
+    while pos < len(archivo):
+        print(leer(archivo, pos))
+        pos += 1
