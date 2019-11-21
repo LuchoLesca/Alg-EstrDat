@@ -6,7 +6,7 @@
 
 # Árbol Completo: Árbol lleno hasta el penúltimo nivel. En el último nivel los
 # nodos están agrupados a la izquierda.
-
+from TDA_Lista import Lista, NodoLista
 from random import randint
 
 
@@ -353,3 +353,63 @@ def arbolLleno(raiz):
     '''Devuelve True, si el ultimo nivel esta lleno'''
     nivel_mas_profundo = nivelMax(raiz)
     return nivelLleno(raiz, nivel_mas_profundo)
+
+
+def eliminarHuffman(l):
+    aux = None
+    if l.tamanio >= 1:
+        aux = l.inicio
+        l.inicio = l.inicio.sig
+        l.tamanio -= 1
+    return aux.info
+
+
+# ------------------- Funciones referidas a arbol de Huffman -----------------
+def insertarHuffman(l, nodoarbol):
+    '''Inserta nuevo nodo en lista de nodosarbol'''
+    nodo = NodoLista()
+    nodo.info = nodoarbol
+
+    if (l.inicio is None) or (nodo.info.info[0] < l.inicio.info.info[0]):
+        nodo.sig = l.inicio
+        l.inicio = nodo
+    else:  # Si va al medio o a lo último
+        anterior = l.inicio
+        actual = l.inicio.sig
+        while (actual is not None) and (actual.info.info[0] <= nodo.info.info[0]):
+            actual = actual.sig
+            anterior = anterior.sig
+        nodo.sig = actual
+        anterior.sig = nodo
+    l.tamanio += 1
+
+
+def tablaToListaNodos(tabla):
+    '''Transforma tabla ingresada en lista de nodos arbol'''
+    tabla.sort(key=lambda x: x[0])
+
+    lista_nodos = Lista()
+
+    for elemento in tabla:
+        insertarHuffman(lista_nodos, Nodoarbol(elemento))
+
+    return lista_nodos
+
+
+def crearArbolHuffman(tabla):
+    '''Devuelve la raiz de un arbol de huffman a partir de tabla de
+    concurrencias dada'''
+
+    lista_nodos = tablaToListaNodos(tabla)
+
+    while lista_nodos.tamanio > 1:
+        nod1 = eliminarHuffman(lista_nodos)
+        nod2 = eliminarHuffman(lista_nodos)
+        info_nueva = [(nod1.info[0]+nod2.info[0]), None]
+        nod3 = Nodoarbol(info_nueva, nod1, nod2)
+
+        insertarHuffman(lista_nodos, nod3)
+
+    return lista_nodos.inicio.info
+
+# ------------------------------------------------------------------------
