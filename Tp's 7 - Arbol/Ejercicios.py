@@ -1,6 +1,5 @@
 from TDA_Arbol import *
 from random import randint, choice
-import TDA_Lista as Lista
 from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
 
 
@@ -220,11 +219,11 @@ print("Resultado:\n", calcular(raiz2))
 
 # EJERCICIO 3   <<<< PENDIENTES HASTA QUE ME PASEN LOS PSEUDOCÓDIGOS
 
-
+"""
 archivo = abrir("Indices/indice_summerville")
 barridoArchivo(archivo)
 
-
+"""
 """
 
 def esNum(car):
@@ -411,6 +410,13 @@ inorden(bosque[1])
 # EJERCICIO 6 <<<<<<<<<<<<<<<<<
 
 
+indice_archivos = [["arduino"], ["documentos"], ["libros"], ["escritorio"],
+                   ["imagenes"], ["musica"], ["nodeProjects"], ["plantillas"],
+                   ["prueba_cluster"], ["PythonProyects"]
+
+]
+
+
 # EJERCICIO 7   HECHO
 """
 imprimirArbol(r)
@@ -420,82 +426,48 @@ print("Info de nodo máximo", nodoMax(r).info)
 """
 
 
-# EJERCICIO 8    <<< falta terminar
+# EJERCICIO 8
+
+
 
 
 # TABLA DE FRECUENCIAS
-
-# tabla = {"A": 0.2, "F": 0.17, "1": 0.13, "3": 0.21, "0": 0.05, "M": 0.09,
-#         "T": 0.15}
-
-"""
-tabla = [["A", 0.2], ["F", 0.17], ["1", 0.13], ["3", 0.21], ["0", 0.05],
-         ["M", 0.09], ["T", 0.15]]
-
-# ORDENA TABLA DE FRECUENCIAS SEGÚN PARÁMETRO
-parametro = 1
-tabla.sort(key=lambda x: x[1])
+tabla = [[0.2, "A"], [0.17, "F"], [0.13, "1"], [0.21, "3"], [0.05, "0"],
+         [0.09, "M"], [0.15, "T"]]
 
 
-def crearArbolHuffman(lista):
-    while(len(lista) >= 2):
-        nod1 = lista.pop()
-        nod2 = lista.pop()
-        nuevo_nodo = Nodoarbol(nod1.info[1] + nod2.info[1], nod1, nod2)
-        lista.append(nuevo_nodo)
-        lista.sort()
-        lista.reverse()
-    return lista.pop()
-"""
-
-# Con tipo de lista del TDA
-"""
-lista = Lista.Lista()
-
-Lista.inserCampo(lista, ["A", 0.2], 1)
-Lista.inserCampo(lista, ["F", 0.17], 1)
-Lista.inserCampo(lista, ["1", 0.13], 1)
-Lista.inserCampo(lista, ["3", 0.21], 1)
-Lista.inserCampo(lista, ["0", 0.05], 1)
-Lista.inserCampo(lista, ["M", 0.09], 1)
-Lista.inserCampo(lista, ["T", 0.15], 1)
+raiz = crearArbolHuffman(tabla)
+imprimirArbol(raiz)
 
 
-Lista.barridoLista(lista)
-"""
+def huffmanToTablaCodificaciones(raiz, tabla, codif=""):
+    if not esHoja(raiz):
+        if hijoIzq(raiz) is not None:
+            huffmanToTablaCodificaciones(raiz.izq, tabla, codif+"0")
+        if hijoDer(raiz) is not None:
+            huffmanToTablaCodificaciones(raiz.der, tabla, codif+"1")
+    else:
+        tabla.append([raiz.info[1], codif])
+
+
+def comprimir(arbol, mensaje):
+    msj_codificado = ""
+    tabla_codif = []
+
+
+
+    huffmanToTablaCodificaciones()
+
+
 
 """
-def crearTabla(palabra):
-    '''Devuelve una tabla de pares de caracteres y peso, por cada dígito de
-    la palabra ingresada'''
-    tabla_aux = []
-    largo_total = len(palabra)
-
-    for letra in palabra:
-        peso = palabra.count(letra)/largo_total
-        peso = round(peso, 3)
-
-        if [letra, peso] not in tabla_aux:
-            tabla_aux.append([letra, peso])
-
-    tabla_aux.sort(key=lambda x: x[1])
-    return tabla_aux
-
-
-pal = "Allá en la fuenta había un chorrito, se hacía grandote, se hacía chiquito"
-tabla = crearTabla(pal)
-
-
-def comprimir(palabra):
-    pass
-
-
-def descomprimir():
-    pass
+imprimirArbol(raiz)
 """
 
 
-# EJERCICIO 9   # HECHO Y PROBADO
+
+
+# EJERCICIO 9
 """
 def calcNodosNivel(nivel):
     '''Calcula la cantidad de nodos que debería haber en el nivel para que
@@ -513,7 +485,7 @@ for i in range(4):  # Dondei representa a cada nivel
           " Faltan:", int(deberia_haber - cant_nodos))
 """
 
-# EJERCICIO 10   # Hecho y PROBADO
+# EJERCICIO 10
 
 # imprimirArbol(r)
 
