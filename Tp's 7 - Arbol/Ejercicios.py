@@ -5,6 +5,7 @@ from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
 
 r = None
 
+
 # EJERCICIO 1  HECHO
 
 # A
@@ -427,43 +428,26 @@ print("Info de nodo máximo", nodoMax(r).info)
 
 
 # EJERCICIO 8
-
-
-
-
+"""
 # TABLA DE FRECUENCIAS
 tabla = [[0.2, "A"], [0.17, "F"], [0.13, "1"], [0.21, "3"], [0.05, "0"],
          [0.09, "M"], [0.15, "T"]]
 
+# A
 
 raiz = crearArbolHuffman(tabla)
 imprimirArbol(raiz)
+print()
 
+# B
 
-def huffmanToTablaCodificaciones(raiz, tabla, codif=""):
-    if not esHoja(raiz):
-        if hijoIzq(raiz) is not None:
-            huffmanToTablaCodificaciones(raiz.izq, tabla, codif+"0")
-        if hijoDer(raiz) is not None:
-            huffmanToTablaCodificaciones(raiz.der, tabla, codif+"1")
-    else:
-        tabla.append([raiz.info[1], codif])
-
-
-def comprimir(arbol, mensaje):
-    msj_codificado = ""
-    tabla_codif = []
-
-
-
-    huffmanToTablaCodificaciones()
-
-
-
+msj_in = "AF130M3TF"
+msj_cod = comprimir(raiz, msj_in)
+print("Mensaje original: ", msj_in)
+print("Mensaje codificado: ", msj_cod)
+msj_dec = decodificar(raiz, msj_cod)
+print("Mensaje decodificado: ", msj_dec)
 """
-imprimirArbol(raiz)
-"""
-
 
 
 
