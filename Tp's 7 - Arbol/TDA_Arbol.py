@@ -412,4 +412,47 @@ def crearArbolHuffman(tabla):
 
     return lista_nodos.inicio.info
 
+
+def huffmanToDicCodificaciones(raiz, diccionario, codif=""):
+    '''Transforma arbol de huffman en diccionario'''
+    if not esHoja(raiz):
+        if hijoIzq(raiz) is not None:
+            huffmanToDicCodificaciones(raiz.izq, diccionario, codif+"0")
+        if hijoDer(raiz) is not None:
+            huffmanToDicCodificaciones(raiz.der, diccionario, codif+"1")
+    else:
+        diccionario.setdefault(raiz.info[1], codif)
+
+
+def comprimir(arbol, mensaje):
+    '''Comprime un mensaje en código binario, según arbol de huffman ingresado'''
+    msj_codificado = ""
+    dicc_codif = {}
+    huffmanToDicCodificaciones(arbol, dicc_codif)
+
+    for caracter in mensaje:
+        msj_codificado += dicc_codif.get(caracter)
+
+    return msj_codificado
+
+
+def decodificar(arbol, mensaje):
+    '''Decodifica un mensaje, según parámetros de arbol de huffman ingresado'''
+    msj_decodificado = ""
+    raiz = arbol
+    
+    while len(mensaje) >= 1:
+        while not esHoja(raiz):
+            car = mensaje[0]
+            mensaje = mensaje[1:]
+            if car == "0":
+                raiz = raiz.izq
+            else:
+                raiz = raiz.der 
+        msj_decodificado += raiz.info[1]
+        raiz = arbol
+
+    return msj_decodificado
+
+
 # ------------------------------------------------------------------------
