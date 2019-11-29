@@ -218,49 +218,127 @@ imprimirArbol(raiz2)
 print("Resultado:\n", calcular(raiz2))
 """
 
-# EJERCICIO 3   <<<< PENDIENTES HASTA QUE ME PASEN LOS PSEUDOCÓDIGOS
-
-"""
-archivo = abrir("Indices/indice_summerville")
-barridoArchivo(archivo)
-
-"""
-"""
-
-def esNum(car):
-    return car.isnumeric()
-
+# EJERCICIO 3
 
 def esTitulo1(linea):
-    if linea[:8].count(".") == 1:
+    if linea.count(".") == 1:
         return True
     else:
         return False
 
 
 def esTitulo2(linea):
-    if linea[:8].count(".") == 2:
+    if linea.count(".") == 2:
         return True
     else:
         return False
 
 
 def esTitulo3(linea):
-    if linea[:8].count(".") == 3:
+    if linea.count(".") == 3:
         return True
     else:
         return False
 
 
-archivo_indice = open('Indice_Summerville.txt', mode='r', encoding='utf-8')
-r = "Indice"
+"""
+lista1, lista2, lista3, lista4 = [], [], [], []
 
-for linea in archivo_indice:
-    #if (len(linea) > 1) and (esTitulo2(linea)):
-    #    print(linea)
+for i in range(len(a_indices)):
+    linea = a_indices[str(i)]
+
+    if esTitulo1(linea):
+        lista1.append(linea)  # Títulos con 1 punto
+    elif esTitulo2(linea):
+        lista2.append(linea)  # Títulos con 2 puntos
+    elif esTitulo3(linea):
+        lista3.append(linea)  # Títulos con 3 puntos
+    else:
+        lista4.append(linea)  # Demás (espacios en blanco)
+
+
+print("Titulo 1: {}\nTitulo 2: {}\nTítulo 3: {}\nTitulo 4: {}"
+      .format(len(lista1), len(lista2), len(lista3), len(lista4)))
+
+# total_lineas = len(lista1) + len(lista2) + len(lista3) + len(lista4)
+# print(len(a_indices) == total_lineas)
+print()
+print()
+print()
 """
 
-# EJERCICIO 4  HECHO
+
+class Nodoknuth():
+
+    def __init__(self, info=None, izq=None, der=[]):
+        self.info = info
+        self.izq = izq
+        self.der = der
+
+
+def fileToVector(archivo, pos=0):
+    '''Devuelve un vector de indice ingresado'''
+    vectori = []
+    while pos < len(archivo):
+        line = leer(archivo, pos)
+        if esTitulo1(line):
+            vectori.append([line, []])
+        if esTitulo2(line):
+            ultimotitulo = vectori[len(vectori)-1]
+            subtitulos = ultimotitulo[1]
+            subtitulos.append([line, []])
+        if esTitulo3(line):
+            ultimotitulo = vectori[len(vectori)-1]
+            subtitulos = ultimotitulo[1]
+            ultimosubtitulo = subtitulos[len(subtitulos)-1]
+            ultimosubtitulo[1].append([line, []])
+        pos += 1
+    return vectori
+
+
+def vectorToBinaryTree(vector):
+    raiz = Nodoknuth("Indice")
+    for titulo in vector:
+        nodo = Nodoknuth(titulo[0])
+        if raiz.izq is None:
+            raiz.izq = nodo
+        else:
+            raiz.der.append(nodo)
+    return raiz
+
+
+def imprimirVector(v):
+    for i in range(len(v)):
+        titulo = v[i]  # vector Titulo
+        subtitulos = titulo[1]  # Lista subtitulos
+        print(titulo[0])  # Nombre titulo
+        for subs in subtitulos:
+            print("   ", subs[0])  # Nombre subtitulo
+            for subs2 in subs[1]:
+                print("        ", subs2[0])   # nombre subtitulo 2
+        print()
+
+
+a_indices = abrir("Indices/indice_summerville")
+
+v = fileToVector(a_indices, 0)
+aknuth = vectorToBinaryTree(v)
+"""
+while aknuth.izq is not None:
+    print("Raiz", aknuth.info)
+    print("1° hij", aknuth.izq.info)
+    for elemento in aknuth.der:
+        print(elemento.info)
+    aknuth = aknuth.izq
+"""
+
+imprimirVector(v)
+
+
+
+cerrar(a_indices)
+
+# EJERCICIO 4
 """
 def arbolIzquierdo(raiz):
     return raiz.izq
