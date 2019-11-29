@@ -3,7 +3,7 @@
 1.1.1. ¿Qué es software? 5
 1.1.2. ¿Qué es la ingeniería del software? 6
 1.1.3. ¿Cuál es la diferencia entre ingeniería del software y ciencia de la computación? 7
-1.1.4. ¿Cuál es la diferencia entre ingeniería del software e ingeniería de sistemas? . 7
+1.1.4. ¿Cuál es la diferencia entre ingeniería del software e ingeniería de sistemas? 7
 1.1.5. ¿Qué es un proceso del software? 7
 1.1.6. ¿Qué es un modelo de procesos del software? 8
 1.1.7. ¿Cuáles son los costos de la ingeniería del software? 9
@@ -13,7 +13,7 @@
 1.1.11. ¿Cuáles son los retos fundamentales que afronta la ingeniería del software? 12
 1.2. Responsabilidad profesional y ética 12
 
-2. Sistemas socio-técnico s 19
+2. Sistemas socio-técnicos 19
 2.1. Propiedades emergentes de los sistemas 21
 2.2. Ingeniería de sistemas 23
 2.2.1. Definición de requerimientos del sistema 24
@@ -27,7 +27,7 @@
 2.3.1. Procesos organizacionales 32
 2.4. Sistemas heredados 35
 
-3. Sistemas crítico s 39
+3. Sistemas críticos 39
 3.1. Un sistema de seguridad crítico sencillo 41
 3.2. Confiabilidad de un sistema 43
 3.3. Disponibilidad y Habilidad 46
@@ -53,7 +53,7 @@
 
 5. Gestió n de proyectos 85
 5.1. Actividades de gestión 87
-5.2. Planificación del proyecto ' 88
+5.2. Planificación del proyecto 88
 5.2.1. El plan del proyecto 89
 5.2.2. Hitos y entregas 90
 5.3. Calendarización del proyecto 91
@@ -67,7 +67,7 @@
 6. Requerimientos del software 107
 6.1. Requerimientos funcionales y no funcionales 109
 6.1.1. Requerimientos funcionales 110
-6.1.2. Requerimientos no funcionales • 111
+6.1.2. Requerimientos no funcionales 111
 6.1.3. Los requerimientos del dominio 115
 6.2. Requerimientos del usuario 116
 6.3. Requerimientos del sistema 118
@@ -99,7 +99,7 @@
 8.4.3. Modelado de comportamiento de objetos 169
 8.5. Métodos estructurados 170
 
-9. Especificació n de sistemas crítico s 175
+9. Especificación de sistemas crítico s 175
 9.1. Especificación dirigida por riesgos 177
 9.1.1. Identificación de riesgos 178
 9.1.2. Análisis y clasificación de riesgos 178
@@ -240,7 +240,7 @@
 23.3.4. Pruebas de caminos 511
 23.4. Automatización de las pruebas 513
 
-24. Validació n de sistemas crítico s 519
+24. Validació n de sistemas críticos 519
 24.1. Validación de la fiabilidad 521
 24.1.1. Perfiles operacionales 522
 24.1.2. Predicción de la fiabilidad 523

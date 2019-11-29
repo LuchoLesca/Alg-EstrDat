@@ -35,9 +35,9 @@ Faltan:
 Probado: Si
 
 8-
-Hechos: Ninguno
-Faltan: Todos
-Probado:
+Hechos: Todos
+Faltan:
+Probado:  Si
 
 9-
 Hechos: Todos

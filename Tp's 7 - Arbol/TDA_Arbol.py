@@ -1,11 +1,3 @@
-# Árbol Estricto: Si un subárbol está vacío, el otro también. Cada nodo puede
-# tener 0 ó 2 hijos.
-
-# Árbol Lleno: Árbol estricto donde en cada nodo la altura del subárbol
-# izquierdo es igual a la del derecho, y ambos subárboles son árboles llenos.
-
-# Árbol Completo: Árbol lleno hasta el penúltimo nivel. En el último nivel los
-# nodos están agrupados a la izquierda.
 from TDA_Lista import Lista, NodoLista
 from random import randint
 
@@ -355,15 +347,6 @@ def arbolLleno(raiz):
     return nivelLleno(raiz, nivel_mas_profundo)
 
 
-def eliminarHuffman(l):
-    aux = None
-    if l.tamanio >= 1:
-        aux = l.inicio
-        l.inicio = l.inicio.sig
-        l.tamanio -= 1
-    return aux.info
-
-
 # ------------------- Funciones referidas a arbol de Huffman -----------------
 def insertarHuffman(l, nodoarbol):
     '''Inserta nuevo nodo en lista de nodosarbol'''
@@ -382,6 +365,15 @@ def insertarHuffman(l, nodoarbol):
         nodo.sig = actual
         anterior.sig = nodo
     l.tamanio += 1
+
+
+def eliminarHuffman(l):
+    aux = None
+    if l.tamanio >= 1:
+        aux = l.inicio
+        l.inicio = l.inicio.sig
+        l.tamanio -= 1
+    return aux.info
 
 
 def tablaToListaNodos(tabla):
@@ -425,7 +417,8 @@ def huffmanToDicCodificaciones(raiz, diccionario, codif=""):
 
 
 def comprimir(arbol, mensaje):
-    '''Comprime un mensaje en código binario, según arbol de huffman ingresado'''
+    '''Comprime un mensaje en código binario, según arbol de huffman
+    ingresado'''
     msj_codificado = ""
     dicc_codif = {}
     huffmanToDicCodificaciones(arbol, dicc_codif)
@@ -440,7 +433,7 @@ def decodificar(arbol, mensaje):
     '''Decodifica un mensaje, según parámetros de arbol de huffman ingresado'''
     msj_decodificado = ""
     raiz = arbol
-    
+
     while len(mensaje) >= 1:
         while not esHoja(raiz):
             car = mensaje[0]
@@ -448,7 +441,7 @@ def decodificar(arbol, mensaje):
             if car == "0":
                 raiz = raiz.izq
             else:
-                raiz = raiz.der 
+                raiz = raiz.der
         msj_decodificado += raiz.info[1]
         raiz = arbol
 
