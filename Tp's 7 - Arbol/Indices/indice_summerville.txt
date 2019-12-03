@@ -283,7 +283,7 @@
 27.5.2. Métricas de producto 602
 27.5.3. Análisis de las mediciones 604
 
-28. Mejor a de procesos 626
+28. Mejora de procesos 626
 28.1. Calidad de producto y de proceso 609
 28.2. Clasificación de los procesos 611
 28.3. Medición del proceso 613
@@ -294,7 +294,7 @@
 28.6.1. El modelo CMM I en etapas 623
 28.6.2. El modelo CMM I continuo 624
 
-29. Gestió n de configuraciones 627
+29. Gestión de configuraciones 627
 29.1. Planificación de la gestión de configuraciones 630
 29.1.1. Identificación de los elementos de configuración 630
 29.1.2. La base de datos de configuraciones 632

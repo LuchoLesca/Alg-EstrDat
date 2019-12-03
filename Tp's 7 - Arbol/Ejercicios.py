@@ -241,33 +241,6 @@ def esTitulo3(linea):
         return False
 
 
-"""
-lista1, lista2, lista3, lista4 = [], [], [], []
-
-for i in range(len(a_indices)):
-    linea = a_indices[str(i)]
-
-    if esTitulo1(linea):
-        lista1.append(linea)  # Títulos con 1 punto
-    elif esTitulo2(linea):
-        lista2.append(linea)  # Títulos con 2 puntos
-    elif esTitulo3(linea):
-        lista3.append(linea)  # Títulos con 3 puntos
-    else:
-        lista4.append(linea)  # Demás (espacios en blanco)
-
-
-print("Titulo 1: {}\nTitulo 2: {}\nTítulo 3: {}\nTitulo 4: {}"
-      .format(len(lista1), len(lista2), len(lista3), len(lista4)))
-
-# total_lineas = len(lista1) + len(lista2) + len(lista3) + len(lista4)
-# print(len(a_indices) == total_lineas)
-print()
-print()
-print()
-"""
-
-
 class Nodoknuth():
 
     def __init__(self, info=None, izq=None, der=[]):
@@ -276,8 +249,9 @@ class Nodoknuth():
         self.der = der
 
 
-def fileToVector(archivo, pos=0):
+def fileToVector(archivo):
     '''Devuelve un vector de indice ingresado'''
+    pos = 0
     vectori = []
     while pos < len(archivo):
         line = leer(archivo, pos)
@@ -299,11 +273,19 @@ def fileToVector(archivo, pos=0):
 def vectorToBinaryTree(vector):
     raiz = Nodoknuth("Indice")
     for titulo in vector:
-        nodo = Nodoknuth(titulo[0])
-        if raiz.izq is None:
-            raiz.izq = nodo
-        else:
-            raiz.der.append(nodo)
+        nodo1 = Nodoknuth(titulo[0])
+
+        for sub in titulo[1]:
+            nodo2 = Nodoknuth(sub[0])
+
+            for sub2 in sub[1]:
+                nodo3 = Nodoknuth(sub2[0])
+                nodo2.der.append(nodo3)
+
+            nodo1.der.append(nodo2)
+
+        raiz.der.append(nodo1)
+
     return raiz
 
 
@@ -315,19 +297,34 @@ def imprimirVector(v):
         for subs in subtitulos:
             print("   ", subs[0])  # Nombre subtitulo
             for subs2 in subs[1]:
-                print("        ", subs2[0])   # nombre subtitulo 2
+                print("   ", subs2[0])   # nombre subtitulo 2
         print()
+
+
+def barridoKnuth(raiz):
+    pass
 
 
 a_indices = abrir("Indices/indice_summerville")
 
-
 v = fileToVector(a_indices)
 aknuth = vectorToBinaryTree(v)
 
-imprimirVector(v)
+# print(aknuth.info)
+# print(aknuth.der)
+
+
+
+
+# barridoKnuth(aknuth)
+
+# imprimirVector(v)
+
 
 cerrar(a_indices)
+
+
+
 
 # EJERCICIO 4
 """
