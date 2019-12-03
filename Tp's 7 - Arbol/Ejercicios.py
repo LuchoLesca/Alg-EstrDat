@@ -276,13 +276,9 @@ class Nodoknuth():
         self.der = der
 
 
-<<<<<<< HEAD
 def fileToVector(archivo, pos=0):
     '''Devuelve un vector de indice ingresado'''
     vectori = []
-=======
-def fileToVector(archivo, pos=0, vectori=[]):
->>>>>>> e7d6eadeb749f05ef5a5dd022053da7ddeb73768
     while pos < len(archivo):
         line = leer(archivo, pos)
         if esTitulo1(line):
@@ -296,7 +292,6 @@ def fileToVector(archivo, pos=0, vectori=[]):
             subtitulos = ultimotitulo[1]
             ultimosubtitulo = subtitulos[len(subtitulos)-1]
             ultimosubtitulo[1].append([line, []])
-<<<<<<< HEAD
         pos += 1
     return vectori
 
@@ -322,46 +317,15 @@ def imprimirVector(v):
             for subs2 in subs[1]:
                 print("        ", subs2[0])   # nombre subtitulo 2
         print()
-=======
-
-        pos += 1
-
-    return vectori
->>>>>>> e7d6eadeb749f05ef5a5dd022053da7ddeb73768
 
 
 a_indices = abrir("Indices/indice_summerville")
 
-<<<<<<< HEAD
-v = fileToVector(a_indices, 0)
+
+v = fileToVector(a_indices)
 aknuth = vectorToBinaryTree(v)
-"""
-while aknuth.izq is not None:
-    print("Raiz", aknuth.info)
-    print("1° hij", aknuth.izq.info)
-    for elemento in aknuth.der:
-        print(elemento.info)
-    aknuth = aknuth.izq
-"""
 
 imprimirVector(v)
-
-=======
-v = []
-fileToVector(a_indices, 0, v)
-
-for i in range(len(v)):
-    titulo = v[i]  # vector Titulo
-    subtitulos = titulo[1]  # Lista subtitulos
-    print(titulo[0])  # Nombre titulo
-    for subs in subtitulos:
-        print("   ", subs[0])  # Nombre subtitulo
-        for subs2 in subs[1]:
-            print("        ", subs2[0])   # nombre subtitulo 2
-    print()
-    print()
->>>>>>> e7d6eadeb749f05ef5a5dd022053da7ddeb73768
-
 
 cerrar(a_indices)
 
