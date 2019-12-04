@@ -1,23 +1,21 @@
 from TDA_Arbol import *
 from random import randint, choice
 from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
+from TDA_Archivo import txtToDat
 
+""" 
+r = None  # Importante no eliminar esta variable, ya que se usará como raíz para la mayoría de los ejercicios
 
-r = None
+lista_numeros = [20, 29, 11, 41, 32, 72, 99, 50, 65, 91]
 
-
-# EJERCICIO 1  HECHO
-
-# A
-
-# for i in range(randint(5, 10)):
-#    num = randint(0, 50)
-#    lista_numeros.append(num)
-#    r = insertar(r, num)
-
+for i in range(randint(5, 10)):
+   num = randint(0, 50)
+   lista_numeros.append(num)
+   r = insertar(r, num)
+ """
 # print("Lista de números ingresados", lista_numeros)
 # 20, 29, 11, 41, 32, 72, 99, 50, 65, 91
-
+""" 
 r = insertar(r, 20)
 r = insertar(r, 29)
 r = insertar(r, 11)
@@ -29,8 +27,13 @@ r = insertar(r, 50)
 r = insertar(r, 65)
 r = insertar(r, 91)
 
+ """
+# EJERCICIO 1  HECHO
 
-"""
+# A
+""" 
+r = arbolAleatorio(10)
+
 print()
 print("Preorden")
 preorden(r)
@@ -46,11 +49,11 @@ print()
 
 
 imprimirArbol(r)
-"""
+ """
 # B
 """
-buscado = lista_numeros[0]
-# buscado = 100
+# buscado = lista_numeros[0]  # este debería necontrarlo
+# buscado = 100  # Este no debería encontrarlo
 
 resultado = busqueda(r, buscado)
 
@@ -124,8 +127,7 @@ print("Pares:", pares, "Impares:", impares)
 
 # EJERCICIO 2   HECHO
 
-"""
-
+""" 
 def operacion(operador, izq, der):
     resultado = 0
     if operador == "+":
@@ -184,28 +186,29 @@ def arbolPruebaB(r=None):
     r.izq.izq.der.der = Nodoarbol(7)
 
     return r
-
-
+ """
+""" 
 raiz1 = arbolPruebaA()
 raiz2 = arbolPruebaB()
-"""
+ """
 # A
-"""
+
+""" 
 print()
 print("En forma de prefijo:")
-preorden(r)
+preorden(raiz1)
 print()
 print("En orden pero sin paréntesis")
-inorden(r)
+inorden(raiz1)
 print()
 print("En orden de postfijo")
-postorden(r)
+postorden(raiz1)
 print()
 print("El barrido inorden muestra la expresión en el orden correcto")
-"""
+ """
 
 # B
-"""
+""" 
 print()
 imprimirArbol(raiz1)
 print("Resultado:\n", calcular(raiz1))
@@ -216,157 +219,67 @@ print()
 
 imprimirArbol(raiz2)
 print("Resultado:\n", calcular(raiz2))
-"""
+ """
 
 # EJERCICIO 3
 
-def esTitulo1(linea):
-    if linea.count(".") == 1:
-        return True
-    else:
-        return False
+# txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
+'''
+a_indices = abrir("Indices/indice_summerville")
+aknuth = fileToBinaryTree(a_indices)
+cerrar(a_indices)
+
+# A
+
+barridoKnuth(aknuth)
 
 
-def esTitulo2(linea):
-    if linea.count(".") == 2:
-        return True
-    else:
-        return False
+# B
 
 
-def esTitulo3(linea):
-    if linea.count(".") == 3:
-        return True
-    else:
-        return False
-
-
-class Nodoknuth():
-
-    def __init__(self, info=None, izq=None, der=[]):
-        self.info = info
-        self.izq = izq
-        self.der = der
-
-
-def fileToVector(archivo):
-    '''Devuelve un vector de indice ingresado'''
-    pos = 0
-    vectori = []
-    while pos < len(archivo):
-        line = leer(archivo, pos)
-        if esTitulo1(line):
-            vectori.append([line, []])
-        if esTitulo2(line):
-            ultimotitulo = vectori[len(vectori)-1]
-            subtitulos = ultimotitulo[1]
-            subtitulos.append([line, []])
-        if esTitulo3(line):
-            ultimotitulo = vectori[len(vectori)-1]
-            subtitulos = ultimotitulo[1]
-            ultimosubtitulo = subtitulos[len(subtitulos)-1]
-            ultimosubtitulo[1].append([line, []])
-        pos += 1
-    return vectori
-
-
-def vectorToBinaryTree(vector):
-    raiz = Nodoknuth("Indice")
-    for titulo in vector:
-        nodo1 = Nodoknuth(titulo[0])
-
-        for sub in titulo[1]:
-            nodo2 = Nodoknuth(sub[0])
-
-            for sub2 in sub[1]:
-                nodo3 = Nodoknuth(sub2[0])
-                nodo2.der.append(nodo3)
-
-            nodo1.der.append(nodo2)
-
-        raiz.der.append(nodo1)
-
-    return raiz
-
-
-def imprimirVector(v):
-    for i in range(len(v)):
-        titulo = v[i]  # vector Titulo
-        subtitulos = titulo[1]  # Lista subtitulos
-        print(titulo[0])  # Nombre titulo
-        for subs in subtitulos:
-            print("   ", subs[0])  # Nombre subtitulo
-            for subs2 in subs[1]:
-                print("   ", subs2[0])   # nombre subtitulo 2
-        print()
-
-
-def barridoKnuth(raiz):
+def busquedaKnuthCampo(raiz, buscado, campo):
     pass
 
-
-a_indices = abrir("Indices/indice_summerville")
-
-v = fileToVector(a_indices)
-aknuth = vectorToBinaryTree(v)
-
-# print(aknuth.info)
-# print(aknuth.der)
-
-
-
-
-# barridoKnuth(aknuth)
-
-# imprimirVector(v)
-
-
-cerrar(a_indices)
+'''
 
 
 
 
 # EJERCICIO 4
-"""
-def arbolIzquierdo(raiz):
-    return raiz.izq
-
-
-def arbolDerecho(raiz):
-    return raiz.der
-
+""" 
+r = arbolAleatorio(10)
 
 print("Arbol original")
 imprimirArbol(r)
 
 print()
 print("Arbol izquierdo")
-imprimirArbol(arbolIzquierdo(r))
+imprimirArbol(hijoIzq(r))
 
 print()
 print("Arbol derecho")
-imprimirArbol(arbolDerecho(r))
-"""
+imprimirArbol(hijoDer(r))
+ """
 
 # EJERCICIO 5  HECHO
 
 # A
-"""
+""" 
 heroes = ["Capitan America", "Iron Man", "Thor", "Hulk", "Black Widow",
           "Hawkeye", "Vision", "Dotor Strange", "Groot", "Spider-man"]
 villanos = ["Thanos", "Yellowjacket", "Ultron", "Red Skull", "Iron Monger",
             "Loki", "Vulture", "Whiplash", "Crossbones", "The Mandarin"]
 
-
 r = None
+
 for i in range(10):
     r = insertar(r, [heroes[i], True])
     r = insertar(r, [villanos[i], False])
-"""
+ """
 
 # B
 
-"""
+""" 
 def mostrarVillanos(raiz):
     if raiz is not None:
         mostrarVillanos(raiz.izq)
@@ -378,10 +291,10 @@ def mostrarVillanos(raiz):
 print()
 print("Villanos ordenados alfabeticamente:")
 mostrarVillanos(r)
-"""
+ """
 # C
 
-"""
+""" 
 def mostrarC(raiz):
     if raiz is not None:
         mostrarC(raiz.izq)
@@ -393,11 +306,11 @@ def mostrarC(raiz):
 print()
 print("Superheroes que empiezan con C")
 mostrarC(r)
-"""
+ """
 
 # D
 
-"""
+""" 
 def contHeores(raiz):
     if raiz is not None:
         if raiz.info[1]:
@@ -410,10 +323,12 @@ def contHeores(raiz):
 
 print()
 print("La cantidad de heroes en el arbol es de:", contHeores(r))
-"""
+ """
 
 # E
-"""
+""" print("Previo a busqueda y modificacion")
+inorden(r)
+
 busc = "Strange"
 buscado = busquedaProximidadCampo(r, busc, 0)
 if buscado is not None:
@@ -425,8 +340,9 @@ else:
     print("No se encontró el personaje por busqueda por proximidad")
 
 print()
+print("Luego busqueda y modificacion")
 inorden(r)
-"""
+ """
 
 # F
 """
@@ -476,28 +392,38 @@ inorden(bosque[1])
 """
 # EJERCICIO 6 <<<<<<<<<<<<<<<<<
 
-
+""" 
 indice_archivos = [["arduino"], ["documentos"], ["libros"], ["escritorio"],
                    ["imagenes"], ["musica"], ["nodeProjects"], ["plantillas"],
                    ["prueba_cluster"], ["PythonProyects"]
 
 ]
-
+ """
 
 # EJERCICIO 7   HECHO
-"""
+""" 
+r = arbolAleatorio(10)
 imprimirArbol(r)
+
 print()
 print("Info de nodo minimo", nodoMin(r).info)
 print("Info de nodo máximo", nodoMax(r).info)
-"""
+ """
 
 
 # EJERCICIO 8
-"""
+
 # TABLA DE FRECUENCIAS
-tabla = [[0.2, "A"], [0.17, "F"], [0.13, "1"], [0.21, "3"], [0.05, "0"],
-         [0.09, "M"], [0.15, "T"]]
+""" 
+tabla = [
+            [0.2, "A"],
+            [0.17, "F"],
+            [0.13, "1"],
+            [0.21, "3"],
+            [0.05, "0"],
+            [0.09, "M"],
+            [0.15, "T"]
+        ]
 
 # A
 
@@ -513,40 +439,39 @@ print("Mensaje original: ", msj_in)
 print("Mensaje codificado: ", msj_cod)
 msj_dec = decodificar(raiz, msj_cod)
 print("Mensaje decodificado: ", msj_dec)
-"""
+ """
 
 
 
 # EJERCICIO 9
-"""
+
+""" 
 def calcNodosNivel(nivel):
     '''Calcula la cantidad de nodos que debería haber en el nivel para que
     esté completo'''
     return pow(2, nivel)
 
-
+r = arbolAleatorio(10)
 imprimirArbol(r)
 
 # PRUEBA DE CALCULAR NODO POR NIVEL
-for i in range(4):  # Dondei representa a cada nivel
+for i in range(altura(r)):  # Dondei representa a cada nivel
     cant_nodos = nodosEnNivel(r, i)
     deberia_haber = calcNodosNivel(i)
     print("Nivel:", i, " Debería haber", deberia_haber, " Hay:", cant_nodos,
           " Faltan:", int(deberia_haber - cant_nodos))
-"""
+ """
 
 # EJERCICIO 10
 
 # imprimirArbol(r)
 
 # A
-"""
-print("Cantidad de nodos en el arbol:", pesoArbol(r))
-"""
+# print("Cantidad de nodos en el arbol:", pesoArbol(r))
+
 # B
-"""
-print("Cantidad de hojas:", cantidadHojas(r))
-"""
+# print("Cantidad de hojas:", cantidadHojas(r))
+
 # C
 """
 def mostrarHojas(raiz):
@@ -560,87 +485,71 @@ def mostrarHojas(raiz):
 print("Información de los nodos hojas")
 mostrarHojas(r)
 """
+
 # D
+""" 
+buscado = int(input("Ingrese valor del que desea determinar el padre: "))
 
-"""
-def determinarPadre(raiz, buscado):
-    '''Devuelve el padre. Si es la raiz, devuelve el mismo valor. Si nodo
-    encuentra el dato al que se está buscado, devuelve None'''
-    aux = None
-    if (raiz is not None):
-        if raiz.info == buscado:
-            aux = buscado
-        elif (raiz.izq is not None and raiz.izq.info == buscado) or (raiz.der is not None and raiz.der.info == buscado):
-            aux = raiz
-        else:
-            if (buscado < raiz.info):
-                aux = determinarPadre(raiz.izq, buscado)
-            else:
-                aux = determinarPadre(raiz.der, buscado)
-    return aux
-
-
-imprimirArbol(r)
-
-buscado = 10
 padre = determinarPadre(r, buscado)
 
 if padre == buscado:
     print("El elemento buscado es la raiz, no tiene padre")
 else:
     if padre is not None:
-        print("El padre de", buscado, " es", padre.info)
+        print("El padre de", buscado, "es", padre.info)
     else:
         print("El elemento buscado no se encuentra. No tiene padre")
-"""
+ """
 
 # E
-"""
-print("Altura de arbol:", r.altura)
-"""
+
+# print("Altura de arbol:", r.altura)
 
 
 # EJERCICIO 11
+""" 
+cant_niveles = 9
+r = generarArbolPorNivel(cant_niveles)
+ """
+# imprimirArbol(r)
 
-"""
-def generarArbol(niveles):
-    raiz = None
-    raiz = insertar(raiz, randint(0, 100))
-    while raiz.altura <= niveles:
-        raiz = insertar(raiz, randint(0, 100))
-    return raiz
-
-
-r = generarArbol(9)
-
-
-imprimirArbol(r)
 
 # A
 # Crea bosque y recorta arbol en nivel deseado
-
+""" 
 nivel_a_cortar = 3
 bosque = []
 recortarArbol(r, bosque, nivel_a_cortar)
+ """
+
+"""
+for arbol in bosque:
+    print("##################")
+    print()
+    imprimirArbol(arbol)
+    print()
+    print("##################")
+ """
 
 # B
 # Muestras los nodos que hay en el bosque
-
+""" 
 print()
 print("Raices")
 for arbol in bosque:
     print("Raiz:", arbol.info, " Cantidad de nodos:", pesoArbol(arbol))
+ """
 
 # C
-
+""" 
 for i in range(len(bosque)):
     print()
     print("Barrido arbol " + str(i+1))
     preorden(bosque[i])
-
+ """
 
 # D
-
+""" 
 if len(bosque) == 0:
     print("No hay arboles en el bosque")
 else:
@@ -654,11 +563,11 @@ else:
 
 print()
 print("Raiz de arbol más pesado", mayor.info, " Cantidad de nodos", cant)
+ """
 
-
-# E     <<<<< Falta este
+# E
 # Indicar qué arboles del bosque están llenos
-
+""" 
 print()
 for arbol in bosque:
     if arbolLleno(arbol):
@@ -666,6 +575,97 @@ for arbol in bosque:
     else:
         print("El arbol que empieza con raíz", arbol, "no esta lleno")
 
-"""
+ """
 
 # EJERCICIO 12
+
+superheroes = ["Guardianes de las galaxias",
+                "Ant-Man",
+                "Hulk",
+                "Capitan America",
+                "Capitana Marvel",
+                "Spiderman",
+                "Black Widow",
+                "Iron Man",
+                "Dr. Strange",
+                "Thor"
+            ]
+
+
+ASIGNACIONES = [
+    {"mision": "Intergalactica", "peso": 1000, "asignado": ["Guardianes de las galaxias", "Capitana Marvel"]},
+    {"mision": "En equipo", "peso": 2000, "asignado": ["Guardinaes de las galaxias"]},
+    {"mision": "Recuperacion", "peso": 3000, "asignado": ["Ant-Man", "Capitan America", "Black Widow"]},
+    {"mision": "Indetectable", "peso": 4000, "asignado": ["Ant-Man", "Spiderman"]},
+    {"mision": "Destructivo", "peso": 5000, "asignado": ["Hulk", "Thor"]},
+    {"mision": "Incorrumpible", "peso": 6000, "asignado": ["Capitan America"]},
+    {"mision": "Defensa", "peso": 7000, "asignado": ["Capitan America", "Spiderman", "Iron Man"]},
+    {"mision": "Poderoso", "peso": 8000, "asignado": ["Capitana Marbel", "Thor"]},
+    {"mision": "Habilidoso", "peso": 9000, "asignado": ["Spiderman", "Dr. Strange"]},
+    {"mision": "Estretegica", "peso": 10000, "asignado": ["Iron Man", "Dr. Strange"]}
+]
+
+
+def arbolDeci():
+    """ Genera arbol de decisiones para este ejercicio """
+    arbol = None
+    for item in ASIGNACIONES:
+        # Inserta pregunta
+        arbol = insertarArbol2(arbol, item.get("mision"), item.get("peso"))
+        # Inserta respuesta de si
+        arbol = insertarArbol2(arbol, item.get("asignado"), item.get("peso")-500)
+
+    return arbol
+
+# imprimirArbol(arbolDeci())
+
+def busquedaHeroes(raiz, mision):
+    aux = None
+
+    if raiz is not None:
+        if raiz.info == mision:
+            aux = raiz.izq.info
+        else:
+            aux = busquedaHeroes(raiz.der, mision)
+        
+    return aux
+
+def asignarHeroe(mision):
+    arbol_dec = arbolDeci()
+    resultados = busquedaHeroes(arbol_dec, mision)
+
+    return resultados
+
+heroes = asignarHeroe("Destructivo")
+if heroes:
+    print(heroes)
+else:
+    print("Tipo de misión inexistente")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+print("FIN ARCHIVO")

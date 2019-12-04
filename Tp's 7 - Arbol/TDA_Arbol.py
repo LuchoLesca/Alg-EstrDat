@@ -1,14 +1,59 @@
 from TDA_Lista import Lista, NodoLista
 from random import randint
+from TDA_Archivo import *
 
+# Grado de nodo = LA cantidad de nodos que hereda(hijo) un nodohuffs
+
+# Grado del arbol(aridad) = es el mayor grado de nodo que posea
+
+# Rama(arista) = camino entre un nodo y el siguiente. Hay un solo camino de
+# ramas para llegar de un nodo a otro
+
+# Nivel de un nodo = Se termina entre la cantidad de ramas que hay entre un
+# nodo y la raíz. Esto más 1. El nodo raíz está en en el nivel 0
+
+# Altura de un nodo = es la mayor cantidad de ramas entre ese nodo y la hoja
+# más lejana. El nodo más abajo tiene altura 1.
+
+# Arbol lleno cuando los nodos internos (no hojas) tienen dos descendientes
+
+# Arbol perfecto cuando todas las hojas están en el mismo nivel
+
+# ----------------------------- #
+# USADOS PARA ARBOL DE DECISION #
+#          (Eejercicio 12)      #
+# ----------------------------- #
+
+class Nodoarbol2():
+
+    def __init__(self, dato, peso=0, izq=None, der=None):
+        self.info = dato
+        self.peso = peso
+        self.izq = izq
+        self.der = der
+
+
+def insertarArbol2(raiz, dato, peso):
+    if raiz is None:
+        raiz = Nodoarbol2(dato, peso)
+    else:
+        if peso < raiz.peso:
+            raiz.izq = insertarArbol2(raiz.izq, dato, peso)
+        else:
+            raiz.der = insertarArbol2(raiz.der, dato, peso)
+    return raiz
+
+
+
+# Continúa normal a partir de acá
 
 class Nodoarbol():
 
     def __init__(self, dato, izq=None, der=None):
+        self.info = dato
         self.izq = izq
         self.der = der
         self.altura = 0
-        self.info = dato
 
 
 def altura(raiz):
@@ -89,10 +134,29 @@ def insertar(raiz, dato):
     return(raiz)
 
 
+def insertarCampo(raiz, dato, campo=0):
+    '''Inserta el elemento en el arbol'''
+    if (raiz is None):
+        raiz = Nodoarbol(dato)
+    else:
+        if (dato[campo] < raiz.info[campo]):
+            raiz.izq = insertar(raiz.izq, dato)
+        else:
+            raiz.der = insertar(raiz.der, dato)
+
+    actualizarAltura(raiz)
+    raiz = balancear(raiz)
+
+    return(raiz)
+
+
 def arbolVacio(raiz):
     return (raiz is None)
 
 
+# ---------------------------------- #
+#       FUNCIONES DE BÚSQUEDA        #
+# ---------------------------------- #
 def busqueda(raiz, buscado):  # o clave
     '''Devuelve el nodo donde encontró la info buscada'''
     aux = None
@@ -145,8 +209,12 @@ def busquedaProximidadCampo(raiz, buscado, campo=0):
             if aux is None:
                 aux = busquedaProximidadCampo(raiz.der, buscado, campo)
     return aux
+# ---------------------------------- #
 
 
+# ---------------------------------- #
+#             RECORRIDOS             #
+# ---------------------------------- #
 def preorden(raiz):  # Va a servir para hacer una búsqueda más facilmente
     if raiz is not None:
         print(raiz.info)
@@ -173,9 +241,11 @@ def invInorden(raiz):
         invInorden(raiz.der)
         print(raiz.info)
         invInorden(raiz.izq)
+# ---------------------------------- #
 
 
 def reemplazar(raiz):  # Va hasta la derecha, hasta que no tenga raiz derecha
+    '''Se utiliza a la hora de eliminar'''
     aux = None         # Encontro el mas gande los menores (porque entro por
     if (raiz.der is not None):  # raiz izquierda)
         raiz.der, aux = reemplazar(raiz.der)
@@ -202,12 +272,13 @@ def eliminar(raiz, clave):  # Si devuleve None es porque no encontro nada
                         x = raiz.info      # obtiene dato y enlaza con unica
                         raiz = raiz.izq    # rama hijo, en este caso, derecha
                     else:  # Si tiene ambas ramas
-                        raiz.izq, aux = reemplazar(raiz.izq)  # Busca de los número mas chicos, la hoja con el valor más alto
+                        raiz.izq, aux = reemplazar(raiz.izq)  # Busca de los número mas chicos, la hoja con el valor más alto. Esta elección fue arbitraría. Por también podría de los números más grandes, elegir el menor valor
                         raiz.info = aux.info  # Reemplaza el valor de ese nodo por el de la hoja que trajo
     return(raiz, x)
 
 
 def nodoMin(raiz):
+    '''Devuelve nodo con información más baja (nodo más a la izquierda)'''
     aux = raiz
     while aux.izq is not None:
         aux = aux.izq
@@ -215,6 +286,7 @@ def nodoMin(raiz):
 
 
 def nodoMax(raiz):
+    '''Devuelve nodo con información más alta (nodo más a la derecha)'''
     aux = raiz
     while aux.der is not None:
         aux = aux.der
@@ -223,10 +295,10 @@ def nodoMax(raiz):
 
 def pesoArbol(raiz):
     '''Cantidad de nodos en el arbol'''
-    if raiz is not None:
-        return 1 + pesoArbol(raiz.izq) + pesoArbol(raiz.der)
-    else:
+    if raiz is None:
         return 0
+    else:
+        return 1 + pesoArbol(raiz.izq) + pesoArbol(raiz.der)
 
 
 def cantidadHojas(raiz):
@@ -265,15 +337,6 @@ def nodosEnAltura(raiz, altura):  # FALTA PROBAR ESTE
         return cont
     else:
         return 0
-
-
-def recortarArbol(raiz, bosque, hasta, nivel_act=0):
-    '''Recorta el arbol y devulve bosque de los nodos del nivel deseado'''
-    if raiz is not None and (nivel_act <= hasta):
-        if nivel_act == hasta:
-            bosque.append(raiz)
-        recortarArbol(raiz.izq, bosque, hasta, nivel_act+1)
-        recortarArbol(raiz.der, bosque, hasta, nivel_act+1)
 
 
 def imprimirNivel(raiz, nivel, nivel_act=0):
@@ -322,13 +385,37 @@ def nivelMax(raiz):
     return raiz.altura - 1
 
 
+# ---------------------------------- #
+#          GENERACIÓN ARBOL          #
+# ---------------------------------- #
+
 def arbolAleatorio(cantidad=randint(5, 20)):
-    '''Crea un arbol aleatorio de la cantidad ingresada'''
+    '''Crea un arbol aleatorio con la cantidad de elementos ingresada'''
     raiz = None
     for i in range(cantidad):
         raiz = insertar(raiz, randint(-100, 100))
     return raiz
 
+
+def generarArbolPorNivel(niveles=0):
+    '''Crea un arbol aleatorio con la cantidad de niveles ingresados'''
+    ra = None
+    ra = insertar(ra, randint(0, 100))
+
+    while ra.altura-1 != niveles:
+        ra = insertar(ra, randint(0, 100))
+    
+    return ra
+
+
+def recortarArbol(raiz, bosque, hasta, nivel_act=0):
+    '''Recorta el arbol y devulve bosque de los nodos del nivel deseado'''
+    if raiz is not None and (nivel_act <= hasta):
+        if nivel_act == hasta:
+            bosque.append(raiz)
+        recortarArbol(raiz.izq, bosque, hasta, nivel_act+1)
+        recortarArbol(raiz.der, bosque, hasta, nivel_act+1)
+#---------------------------------------------------#
 
 def nivelLleno(raiz, nivel):
     '''Devuelve True si el nivel seleccionado está lleno'''
@@ -347,7 +434,132 @@ def arbolLleno(raiz):
     return nivelLleno(raiz, nivel_mas_profundo)
 
 
-# ------------------- Funciones referidas a arbol de Huffman -----------------
+def determinarPadre(raiz, buscado):
+    '''Devuelve el padre. Si es la raiz, devuelve el mismo valor. Si nodo
+    encuentra el dato al que se está buscado, devuelve None'''
+    aux = None
+    if (raiz is not None):
+        if raiz.info == buscado:
+            aux = buscado
+        elif (raiz.izq is not None and raiz.izq.info == buscado) or (raiz.der is not None and raiz.der.info == buscado):
+            aux = raiz
+        else:
+            if (buscado < raiz.info):
+                aux = determinarPadre(raiz.izq, buscado)
+            else:
+                aux = determinarPadre(raiz.der, buscado)
+    return aux
+
+
+# ----------------------------------------------------------------------------#
+# --------------------Funciones referidas a transformada de knuth-------------#
+# --------------------------------------------------------------------------- #
+
+def esTitulo1(linea):
+    if linea.count(".") == 1:
+        return True
+    else:
+        return False
+
+
+def esTitulo2(linea):
+    if linea.count(".") == 2:
+        return True
+    else:
+        return False
+
+
+def esTitulo3(linea):
+    if linea.count(".") == 3:
+        return True
+    else:
+        return False
+
+
+def fileToVector(archivo):
+    '''Devuelve un vector de indice ingresado'''
+    pos = 0
+    vectori = []
+    while pos < len(archivo):
+        line = leer(archivo, pos)
+        if esTitulo1(line):
+            vectori.append([line, []])
+        if esTitulo2(line):
+            ultimotitulo = vectori[len(vectori)-1]
+            subtitulos = ultimotitulo[1]
+            subtitulos.append([line, []])
+        if esTitulo3(line):
+            ultimotitulo = vectori[len(vectori)-1]
+            subtitulos = ultimotitulo[1]
+            ultimosubtitulo = subtitulos[len(subtitulos)-1]
+            ultimosubtitulo[1].append([line, []])
+        pos += 1
+    return vectori
+
+
+def fileToBinaryTree(archivo):
+    '''Convierte archivo en arbol binario a traves de transformada de knuth'''
+    # Primero transforma el archivo directorio en vector con vectores dentro
+    # y luego trabaja ese vector, transformandolo a arbol binario
+    vector = fileToVector(archivo)
+    raiz = Nodoarbol("INDICE", None, [])
+
+    for i in range(len(vector)):
+        titulo = vector[i]  # vector Titulo
+        subtitulos = titulo[1]  # Lista subtitulos
+        nod1 = Nodoarbol(titulo[0], None, [])
+
+        for subs in subtitulos:
+            nod2 = Nodoarbol(subs[0], None, [])
+
+            for subs2 in subs[1]:
+                nod3 = Nodoarbol(subs2[0], None, [])
+
+                if nod2.izq is None:
+                    nod2.izq = nod3
+                else:
+                    nod2.der.append(nod3)
+
+            if nod1.izq is None:
+                nod1.izq = nod2
+            else:
+                nod1.der.append(nod2)
+
+        if raiz.izq is None:
+            raiz.izq = nod1
+        else:
+            raiz.der.append(nod1)
+
+    return raiz
+
+
+def imprimirVectorKnuth(vector):
+    '''Barrido e impresión del vector transformado desde archivo'''
+    for i in range(len(vector)):
+        titulo = vector[i]  # vector Titulo
+        subtitulos = titulo[1]  # Lista subtitulos
+        print(titulo[0])  # Nombre titulo
+        for subs in subtitulos:
+            print("   ", subs[0])  # Nombre subtitulo
+            for subs2 in subs[1]:
+                print("   ", subs2[0])   # nombre subtitulo 2
+        print()
+
+
+def barridoKnuth(raiz):
+    '''Realiza barrido de arbol binario creado con transformada de Knuth'''
+    if raiz is not None:
+        print(raiz.info)
+        barridoKnuth(raiz.izq)
+        for elemento in raiz.der:
+            barridoKnuth(elemento)
+# --------------------------------------------------------------------------- #
+
+
+# --------------------------------------------------------------------------- #
+# ------------------- Funciones referidas a arbol de Huffman -----------------#
+# --------------------------------------------------------------------------- #
+
 def insertarHuffman(l, nodoarbol):
     '''Inserta nuevo nodo en lista de nodosarbol'''
     nodo = NodoLista()
@@ -446,6 +658,5 @@ def decodificar(arbol, mensaje):
         raiz = arbol
 
     return msj_decodificado
-
 
 # ------------------------------------------------------------------------

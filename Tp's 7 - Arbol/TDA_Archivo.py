@@ -36,3 +36,15 @@ def barridoArchivo(archivo):
     while pos < len(archivo):
         print(leer(archivo, pos))
         pos += 1
+
+
+def txtToDat(rutatxt="", rutadat=""):
+    '''Crea archivo.dat a partir de .txt'''
+    # Abrir archivo dir
+    archivodat = abrir(rutadat)
+    # Abre archivo txt
+    archivotxt = open(rutatxt, "r")
+
+    for linea in archivotxt:
+        if len(linea) > 1:
+            guardar(archivodat, linea)

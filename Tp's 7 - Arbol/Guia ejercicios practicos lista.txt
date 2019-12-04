@@ -1,58 +1,12 @@
-1-
-Hechos: todos
-Faltan:
-Probado: Si
-
-
-2-
-Hechos: Todos
-Faltan:
-Probado: Si
-
-3-
+3-  Transformar arbol n-ario a binario no balanceado (Transformada de Knuth)
 Hechos: Ninguno
 Faltan: Todos
 Probado:
-
-4-
-Hechos: Todos
-Faltan:
-Probado: Si
-
-5-
-Hechos: Todos
-Faltan:
-Probado: Si
 
 6-
 Hechos: Ninguno
 Faltan: Todos
 Probado:
-
-7-
-Hechos: Todos
-Faltan:
-Probado: Si
-
-8-
-Hechos: Todos
-Faltan:
-Probado:  Si
-
-9-
-Hechos: Todos
-Faltan:
-Probado: Si
-
-10-
-Hechos: Todos
-Faltan:
-Probado: Si
-
-11-
-Hechos: Todos
-Faltan:
-Probado: Si
 
 12-
 Hechos:
