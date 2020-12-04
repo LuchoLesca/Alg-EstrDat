@@ -1,4 +1,5 @@
 import shelve
+from os import remove
 
 
 def abrir(ruta):
@@ -14,7 +15,6 @@ def leer(archivo, pos):
         return archivo[str(pos)]
     except Exception:
         return None
-
 
 def guardar(archivo, dato):
     try:
@@ -32,10 +32,23 @@ def modificar(archivo, dato, pos):
 
 
 def barridoArchivo(archivo):
+    '''Imprime el dato de cada posición'''
     pos = 0
     while pos < len(archivo):
         print(leer(archivo, pos))
         pos += 1
+
+
+def fileToArray(ruta):
+    '''Devuelve array de elementos'''
+    archivo = abrir(ruta)
+    array = []
+    pos = 0
+    while pos < len(archivo):
+        array.append(leer(archivo, pos))
+        pos += 1
+
+    return array
 
 
 def txtToDat(rutatxt="", rutadat=""):
@@ -48,3 +61,11 @@ def txtToDat(rutatxt="", rutadat=""):
     for linea in archivotxt:
         if len(linea) > 1:
             guardar(archivodat, linea)
+
+
+def limpiar(archivo):
+    try:
+        archivo.clear()
+        return True
+    except Exception:
+        raise None
