@@ -1,3 +1,4 @@
+from string import ascii_uppercase, digits
 from TDA_Arbol import *
 from random import randint, choice
 from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
@@ -578,7 +579,7 @@ for arbol in bosque:
  """
 
 # EJERCICIO 12
-
+""" 
 superheroes = ["Guardianes de las galaxias",
                 "Ant-Man",
                 "Hulk",
@@ -607,7 +608,7 @@ ASIGNACIONES = [
 
 
 def arbolDeci():
-    """ Genera arbol de decisiones para este ejercicio """
+    ''' Genera arbol de decisiones para este ejercicio '''
     arbol = None
     for item in ASIGNACIONES:
         # Inserta pregunta
@@ -642,26 +643,130 @@ if heroes:
 else:
     print("Tipo de misión inexistente")
 
+ """
 
 
+# EJERCICIO 13
+
+lista_morse = [ ['E', 850000],
+                ['T', 2450000],
+                ['I', 450000],
+                ['A', 1250000],
+                ['N', 2050000],
+                ['M', 2850000],
+                ['S', 250000],
+                ['U', 650000],
+                ['R', 1050000],
+                ['W', 1450000],
+                ['D', 1850000],
+                ['K', 2250000],
+                ['G', 2650000],
+                ['O', 3050000],
+                ['H', 150000],
+                ['V', 350000],
+                ['F', 550000],
+                [' ', 750000],
+                ['L', 950000],
+                [' ', 1150000],
+                ['P', 1350000],
+                ['J', 1550000],
+                ['B', 1750000],
+                ['X', 1950000], 
+                ['C', 2150000], 
+                ['Y', 2350000], 
+                ['Z', 2550000], 
+                ['Q', 2750000], 
+                [' ', 2950000], 
+                [' ', 3150000], 
+                ['5', 100000],
+                ['4', 200000],
+                [' ', 300000],
+                ['3', 400000],
+                [' ', 500000],
+                [' ', 600000],
+                [' ', 700000],
+                ['2', 800000],
+                [' ', 900000],
+                [' ', 1000000], 
+                [' ', 1100000], 
+                [' ', 1200000], 
+                [' ', 1300000], 
+                [' ', 1400000], 
+                [' ', 1500000], 
+                ['1', 1600000], 
+                ['6', 1700000],
+                [' ', 1800000], 
+                [' ', 1900000], 
+                [' ', 2000000], 
+                [' ', 2100000], 
+                [' ', 2200000], 
+                [' ', 2300000], 
+                [' ', 2400000],  
+                ['7', 2500000],
+                [' ', 2600000], 
+                [' ', 2700000], 
+                [' ', 2800000], 
+                ['8', 2900000],
+                [' ', 3000000],
+                ['9', 3100000], 
+                ['0', 3200000]
+            ]
+
+def arbolMorse():
+    raiz = Nodoarbol2(' ', 1650000)
+
+    for item in lista_morse:
+        raiz = insertarArbol2(raiz, item[0], item[1])
+    return raiz
 
 
+def desplazarse(raiz, digito):
+    if digito == ".":
+        return raiz.izq
+    elif digito == "-":
+        return raiz.der
+    else:
+        return None
+
+def decodSegm(segmento):
+    arbol = arbolMorse()
+    aux = arbol
+    seg_decod = ""
+
+    for digito in segmento:
+        if digito == " ":
+            seg_decod += aux.info
+            aux = arbol
+        else:
+            aux = desplazarse(aux, digito)
+    
+    seg_decod += aux.info
+    return seg_decod
 
 
+def decodMsj(codigo):
+    msj_decod = ""
+    segmentos = codigo.split("/")
+
+    for segmento in segmentos:
+        msj_decod += decodSegm(segmento)
+
+    return msj_decod
 
 
+msj1 = ".--. .- ... . / .-.. --- / --.- ..- . / .--. .- ... . / -- .- .- -. .- / .--. .-. --- -- . - . -- . / .- .-.. --. --- /--.- ..- . / ...- .- / ... . --. ..- .. .-. / ... .. . -. -.. --- / ..- ... - . -.. / -. --- / ..- -. / ... --- .-.. -.. .- -.. --- / .--. . .-. ..-. . -.-. - --- / ... .. -. --- / ..- -. / -... ..- . -. /.... --- -- -... .-. . .-.-."
+msj2 = "-. --- ... --- - .-. --- ... / ... --- -- --- ... / .-.. --- ... / -- .- .-.. -.. .. - --- ... / --. ..- .- .-. -.. .. .- -. . ... / -.. . / .-.. .- / --. .- .-.. .- -..- .. .- .-.-."
+msj3 = "-.-- --- / ... --- .-.. --- / .- -.-. - ..- --- / -.-. --- -- --- / ... .. / . -. / ...- . .-. -.. .- -.. / .-.. --- / ... ..- .--. .. . .-. .- / - --- -.. --- .-.-."
+msj4 = "-.-. .... .. -.-. --- ... / . ... - --- -.-- / .-.. .-.. . ...- .- -. -.. --- / .-.. .- / ..-. .. . ... - .- / .... .- -.-. .. .- / ..- ... - . -.. . ... .-.-."
+msj5 = ".--. --- -.. .-. .. .- / .... .-  -.-. . .-. / . ... - --- / - --- -.. --- / . .-.. / -.. .. .- .-.-."
 
+arbol = arbolMorse()
 
-
-
-
-
-
-
-
-
-
-
+print("Mensaje 1:", decodMsj(msj1))
+print("Mensaje 2:", decodMsj(msj2))
+print("Mensaje 3:", decodMsj(msj3))
+print("Mensaje 4:", decodMsj(msj4))
+print("Mensaje 5:", decodMsj(msj5))
 
 
 
