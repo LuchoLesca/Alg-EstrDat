@@ -3,7 +3,7 @@ Archivo donde se almacenarán todos lo la mayoría de las funciones creadas
 específicamente para los ejercicios del archivo Ejercicios.py. Exceptuando las que
 están contenidas en TDA_Arbol y TDA_Archivo
 '''
-
+from sys import getsizeof
 from TDA_Arbol import *
 from random import randint, choice, uniform
 from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
@@ -223,11 +223,12 @@ def initArchivoPersonajes(ruta):
     file_starwars = abrir(ruta)
     limpiar(file_starwars)
     personajes = ['Chewbacca', 'Darth Vader', 'Yoda', 'Luke Skywalker', 'R2-D2', 'C3PO', 'Obi-Wan Kenobi', 'Boba Fett']
-
-    for personaje in personajes:
-        altura = round(uniform(0.3, 5.2), 2)
-        peso = round(uniform(1, 150),2)
-        nuevo_personaje = PersonajeStarWars(personaje, altura, peso)
+    alturas = [2.14, 2.03, 0.66, 1.75, 1.1, 1.67, 1.82, 1.83]
+    pesos = [200, 136, 17, 73, 0.37, 85.2, 80, 78.2]
+    
+    for i in range(len(personajes)):
+        nuevo_personaje = PersonajeStarWars(personajes[i], alturas[i], pesos[i])
+        
         guardar(file_starwars, nuevo_personaje)
 
 
@@ -237,29 +238,227 @@ def extraerDataPersonajes(ruta):
     array = []
     pos = 0
     while pos < len(archivo):
-        array.append([leer(archivo, pos), pos])
+        data_personaje = [leer(archivo, pos), pos]
+        array.append(data_personaje)
         pos += 1
 
     return array
 
 
-def generarArbolPersonajesNombre(personajes):
+def generarArbolPersonajesNombre(ruta):
+    ''' Genera arbol de nombre de personajes a partir del array que se obtuvo al
+    extraer la data del archivo'''
+
+    data_personajes = extraerDataPersonajes(ruta)
+
     raiz = None
 
-    for item in personajes:
+    for item in data_personajes:
         dato = [item[0].nombre, item[1]]
         raiz = insertarCampo(raiz, dato, 0)
 
     return raiz
 
 
+def obtenerIndice(arbol, buscado):
+    resultado = busquedaCampo(arbol, buscado, 0)
+    if resultado:
+        return resultado.info[1]
+    else:
+        return -1
 
 
-# EJERCICIO 3
-# EJERCICIO 3
-# EJERCICIO 3
-# EJERCICIO 3
-# EJERCICIO 3
-# EJERCICIO 3
-# EJERCICIO 3
-# EJERCICIO 3
+def altaPersonaje(arbol, ruta_archivo):
+    """Da de alta un personaje en el archivo y actualiza el arbol"""
+    nombre = input('Ingrese el nombre del personaje: ')
+    altura = float(input('Ingrese la altura del personaje: '))
+    peso = float(input('Ingrese el peso del personaje: '))
+
+    personaje = PersonajeStarWars(nombre, altura, peso)
+
+    archivo = abrir(ruta_archivo)
+    guardar(archivo, personaje)
+    cerrar(archivo)
+    
+    arbol = generarArbolPersonajesNombre(ruta_archivo)
+    
+    return arbol
+
+
+def modificarPersonaje(arbol, ruta_archivo):
+    '''Busca un personaje, de encontrarlo, permite su modificación'''
+    archivo = abrir(ruta_archivo)
+    
+    buscado = input("Nombre del personaje buscado: ")
+
+    indice = obtenerIndice(arbol, buscado)
+
+    if indice == -1:
+        print("Personaje no encontrado")
+    else:
+        personaje = leer(archivo, indice)
+        
+        print("1- Nombre:", personaje.nombre)
+        print("2- Altura:", personaje.altura)
+        print("3- Peso:", personaje.peso)
+        opcion = input("Seleccione campo a modificar: ")
+        print()
+
+        if (opcion in ["1", "2", "3"]):
+            nuevo_valor = input("Nuevo valor: ")
+            
+            if opcion == "1":
+                personaje.nombre = nuevo_valor
+            elif opcion == "2":
+                personaje.altura = float(nuevo_valor)
+            elif opcion == "3":
+                personaje.peso = float(nuevo_valor)
+            
+            modificar(archivo, personaje, indice)
+            cerrar(archivo)
+            
+            arbol = generarArbolPersonajesNombre(ruta_archivo)
+            print("Personaje Guardado")
+        else:
+            print("Opcion seleccionada incorrecta")
+
+    return arbol
+
+
+def bajaPersonaje(arbol, ruta_archivo):
+    '''La la baja (lógica) de un personaje'''
+    archivo = abrir(ruta_archivo)
+    
+    buscado = input("Nombre del personaje buscado: ")
+
+    indice = obtenerIndice(arbol, buscado)
+
+    if indice == -1:
+        print("Personaje no encontrado")
+    else:
+        personaje = leer(archivo, indice)
+        personaje.estado = False
+
+        modificar(archivo, personaje, indice)
+        cerrar(archivo)
+
+        print("Personaje dado de baja")
+
+        arbol = generarArbolPersonajesNombre(ruta_archivo)
+
+    return arbol
+
+
+def consultaPersonaje(arbol, buscado, ruta_archivo):
+    archivo = abrir(ruta_archivo)
+
+    indice = obtenerIndice(arbol, buscado)
+
+    if indice == -1:
+        print("El personaje buscado no se encuentra")
+    else:
+        personaje = leer(archivo, indice)
+        print("Nombre:", personaje.nombre)
+        print("Altura:", personaje.altura)
+        print("Peso:", personaje.peso)
+        print()
+    
+
+def listadoIndicesAltura(arbol, archivo):
+    if arbol is not None:        
+        listadoIndicesAltura(arbol.izq, archivo)
+
+        indice = obtenerIndice(arbol, arbol.info[0])
+        if indice != -1:
+            personaje = leer(archivo, indice)
+            if (personaje.estado) and (personaje.altura > 1):
+                print("Nombre:", personaje.nombre)
+                print("Altura:", personaje.altura)
+                print("Peso:", personaje.peso)
+                print()
+
+        listadoIndicesAltura(arbol.der, archivo)
+
+
+def listadoIndicesPeso(arbol, archivo):
+    if arbol is not None:        
+        listadoIndicesPeso(arbol.izq, archivo)
+
+        indice = obtenerIndice(arbol, arbol.info[0])
+        if indice != -1:
+            personaje = leer(archivo, indice)
+            if (personaje.estado) and (personaje.peso < 75):
+                print("Nombre:", personaje.nombre)
+                print("Altura:", personaje.altura)
+                print("Peso:", personaje.peso)
+                print()
+
+        listadoIndicesPeso(arbol.der, archivo)
+
+
+# EJERCICIO 15
+
+def nanoMensaje():
+
+    estado = choice(["Despejado", "Nublado", "Lluvia"])
+    humedad = choice(["Baja", "Alta"])
+    cod1 = str(choice([1, 2]))
+    cod2 = str(choice([3, 5]))
+    cod3 = str(choice([7, 8]))
+
+    mensaje = estado + "-" + humedad + "-" + cod1 + "-" + cod2 + "-" + cod3
+
+    return mensaje
+
+
+def comprimirMedicion(arbol, mensaje):
+    msj_codificado = ""
+    dicc_codif = {}
+    huffmanToDicCodificaciones(arbol, dicc_codif)
+
+    segmentos = mensaje.split("-")
+
+    for segmento in segmentos:
+        
+        msj_codificado += dicc_codif.get(segmento)
+
+    return msj_codificado
+
+
+def descomprimirMedicion(arbol, mensaje):
+    segmentos = []
+    raiz = arbol
+
+    while len(mensaje) >= 1:
+        while not esHoja(raiz):
+            car = mensaje[0]
+            mensaje = mensaje[1:]
+            if car == "0":
+                raiz = raiz.izq
+            else:
+                raiz = raiz.der
+        segmentos.append(raiz.info[1])
+        raiz = arbol
+
+    return "-".join(segmentos)
+
+
+def diferenciaTamano(trama1, trama2):
+    tam1 = getsizeof(trama1)
+    tam2 = getsizeof(trama2)
+
+    return abs(tam1 - tam2)
+
+
+
+# EJERCICIO 16
+
+class Pokemon():
+
+    def __init__(self, nombre="", nro=-1, tipos=[], debilidades=[]):
+        self.nombre = nombre
+        self.nro = nro
+        self.tipos = tipos
+        self.debilidades = debilidades
+
+

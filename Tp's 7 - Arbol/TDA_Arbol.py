@@ -589,11 +589,13 @@ def eliminarHuffman(l):
 
 
 def tablaToListaNodos(tabla):
-    '''Transforma tabla ingresada en lista de nodos arbol'''
+    '''Transforma tabla ingresada en lista de nodos arbol, ordenada'''
     tabla.sort(key=lambda x: x[0])
 
+    # Creación de nodo hoja
     lista_nodos = Lista()
 
+    # Inserción ordenada de nodos en una lista
     for elemento in tabla:
         insertarHuffman(lista_nodos, Nodoarbol(elemento))
 
@@ -609,7 +611,8 @@ def crearArbolHuffman(tabla):
     while lista_nodos.tamanio > 1:
         nod1 = eliminarHuffman(lista_nodos)
         nod2 = eliminarHuffman(lista_nodos)
-        info_nueva = [(nod1.info[0]+nod2.info[0]), None]
+        frec_nueva = nod1.info[0]+nod2.info[0]
+        info_nueva = [frec_nueva, None]
         nod3 = Nodoarbol(info_nueva, nod1, nod2)
 
         insertarHuffman(lista_nodos, nod3)

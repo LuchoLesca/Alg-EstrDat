@@ -1,3 +1,4 @@
+import json
 from TDA_Arbol import *
 from Arbol_Unit import *
 from random import randint, choice, uniform
@@ -585,41 +586,154 @@ print("Mensaje 5:", decodMsj(arbol, msj5))
 
 # EJERCICIO 14
 
-
+# ruta = "./Tp's 7 - Arbol/personajesSW/personajesStarWars"
 
 # Utilizado para inicial el archivo, en caso de que no esté cargado, o recargarlo
 # initArchivoPersonajes(ruta)
 
 
-ruta = "./personajesSW/personajesStarWars"
-data_personajes = extraerDataPersonajes(ruta)
-
 # A
-""" 
-arbol_nombres = generarArbolPersonajesNombre(data_personajes)
-imprimirArbol(arbol_nombres)
- """
 
+# arbol_nombres = generarArbolPersonajesNombre(ruta)
 # B
 
+# arbol_nombres = altaPersonaje(arbol_nombres, ruta)
+# arbol_nombres = modificarPersonaje(arbol_nombres, ruta)
+# arbol_nombres = bajaPeronsaje(arbol_nombres, ruta)
 
 
-
+# C
 """ 
-arr = fileToArray(ruta)
+print("Información de Yoda")
+consultaPersonaje(arbol_nombres, "Yoda", ruta)
+print("Información de Boba Fett")
+consultaPersonaje(arbol_nombres, "Boba Fett", ruta)
+ """
 
-for el in arr:
-    print(el.nombre)
-    print(el.altura)
-    print(el.peso)
-    print()
+# D
+""" 
+archivo = abrir(ruta)
+print("Personajes que miden mas de un metro")
+listadoIndicesAltura(arbol_nombres, archivo)
+print()
+
+# E
+print("Personajes que pesan menos de 75kg")
+listadoIndicesPeso(arbol_nombres, archivo)
+ """
+
+
+# EJERCICIO 15
+""" 
+tabla = [
+            [0.22, "Despejado"],
+            [0.15, "Nublado"],
+            [0.03, "Lluvia"],
+            [0.26, "Baja"],
+            [0.14, "Alta"],
+            [0.05, "1"],
+            [0.01, "2"],
+            [0.035, "3"],
+            [0.06, "5"],
+            [0.02, "7"],
+            [0.025, "8"]
+        ]
+ """
+# B 
+# raiz = crearArbolHuffman(tabla)
+
+# Para controlar
+"""
+dic = {}
+huffmanToDicCodificaciones(raiz, dic)
+print(dic)
+"""
+
+# C 
+""" 
+msj_original = nanoMensaje()
+msj_comprimido = comprimirMedicion(raiz, msj_original)
+msj_descomprimido = descomprimirMedicion(raiz, msj_comprimido)
+ """
+"""
+print()
+print("Mensaje original:", msj_original)
+print("Mensaje comprimido:", msj_comprimido)
+print("Mensaje descomprimido:", msj_descomprimido)
+ """
+
+# D
+""" 
+print("Diferencia en tamaño de memoria ocupada entre mensaje")
+print("comprimido y descomprimido:")
+print(diferenciaTamano(msj_original, msj_comprimido))
  """
 
 
 
+# EJERCICIO 16
+
+
+with open("Pokemons/pokemon.json", "r") as read_file:
+    pokemons = json.load(read_file)
+    
+    
 
 
 
+def obtenerTipos(pokemon):
+    tipos = [pokemon.get("type1")]
+    if len(pokemon.get("type2")) > 0:
+            tipos.append(pokemon.get("type2"))
+    return tipos
+""" 
+def obtenerDebilidades(pokemon):
+                            pokemon.get("against_bug")
+                            pokemon.get("against_dark")
+                            pokemon.get("against_dragon")
+                            pokemon.get("against_electric")
+                            pokemon.get("against_fairy")
+                            pokemon.get("against_fight")
+                            pokemon.get("against_fire")
+                            pokemon.get("against_flying")
+                            pokemon.get("against_ghost")
+                            pokemon.get("against_grass")
+                            pokemon.get("against_ground")
+                            pokemon.get("against_ice")
+                            pokemon.get("against_normal")
+                            pokemon.get("against_poison")
+                            pokemon.get("against_psychic")
+                            pokemon.get("against_rock")
+                            pokemon.get("against_steel")
+                            pokemon.get("against_water)
+    return type(keys)
+ """
+def generarArbolPokeNombre(pokemons):
+    raiz = None
+
+    # print(obtenerDebilidades(pokemons[0]))
+
+    
+    for pokemon in pokemons:
+        nombre = pokemon.get("name")
+        nro = pokemon.get("pokedex_number")        
+        tipos = obtenerTipos(pokemon)
+        # debilidades = obtenerDebilidades(pokemon)
+        
+        nuevo_pokemon = [nombre, nro, tipos]
+
+        raiz = insertarCampo(raiz, nuevo_pokemon, 0)
+        # print(nuevo_pokemon.nombre)
+        # print(nuevo_pokemon.nro)
+        # print(nuevo_pokemon.tipos)
+
+    return raiz
+
+arbolPokeNombre = generarArbolPokeNombre(pokemons)
+arbolPokeNro = generarArbolPokeNombre(pokemons)
+arbolPokeTipo = generarArbolPokeNombre(pokemons)
 
 
+
+print()
 print("FIN ARCHIVO")
