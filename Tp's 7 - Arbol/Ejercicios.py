@@ -777,5 +777,127 @@ for tipo in tipos:
     print("Hay", len(pokemons_tipo), "pokemons de tipo", tipo)
  """
 
+
+
+
+# EJERCICIO 17
+
+# 0: general
+# 1: fecha
+# 2: codigo
+# 3: estado
+# 4: tipo_soldado
+
+
+# B (Necesario generarlo para otros puntos)
+arbolNombreSW, arbolFechaSW, arbolCodigoSW = None, None, None
+
+for i in range(6):
+    reporte = generarReporteAleatorio(i)
+    
+    arbolNombreSW = insertarCampo(arbolNombreSW, reporte, 0)
+    arbolFechaSW = insertarCampo(arbolFechaSW, reporte, 1)
+    arbolCodigoSW = insertarCampo(arbolCodigoSW, reporte, 2)
+
+# C
+""" 
+armasFalladasPorGeneral(arbolNombreSW)
+ """
+
+# D
+""" 
+print("Cantidad de soldados por cada tipo en las misiones de Kylo Ren")
+soldadosCantidadPorGeneral(arbolNombreSW, "Kylo Ren")
+ """
+
+
+# E
+""" 
+determinarSithyFallas(arbolNombreSW)
+ """
+
+# F
+""" 
+codigoDeMisionesFecha(arbolFechaSW, "1/02/2019")
+ """
+
+
+# G 
+# Se ingresa un nuevo reporte con el código solicitado, para poder buscarlo.
+# En este caso solo a arbol de código, ya que los demás no es necesario, pero debería hacerse
+
+codigo_buscado = 75951380
+reporte = generarReporteAleatorio(codigo_buscado)
+
+arbolCodigoSW = insertarCampo(arbolCodigoSW, reporte, 2)
+
+imprimirArbol(arbolCodigoSW)
+buscado = busquedaCampo(arbolCodigoSW, codigo_buscado, 2)
+print(buscado)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 print()
 print("FIN ARCHIVO")

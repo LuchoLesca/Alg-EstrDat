@@ -611,3 +611,129 @@ def listaBusquedaTipoArbol(ruta, arbol, tipo):
     cerrar(archivo)
 
     return lista
+
+
+
+# EJERCICIO 17
+
+def generarReporteAleatorio(codigo=0):
+    generales = ["Kylo Ren", "Hux", "Phasma"]
+    tipos_soldados = ["Imperial Stromtrooper", "Imperial Scout Trooper", "Imprerial Death Trooper", "Sith Trooper", "First Order Stromtrooper"]
+    fechas = [ "1/02/2019",
+                "23/11/2018",
+                "4/4/2006",
+                "13/9/2010",
+                "7/7/2013",
+                "30/12/2015"
+            ]    
+    
+    general = choice(generales)
+    fecha = choice(fechas)
+    estado = choice([True, False])
+    tipo_soldado = choice(tipos_soldados)
+
+    return [general, fecha, codigo, estado, tipo_soldado]
+
+
+def obtenerMismoNombre(arbol, nombre, lista):
+    '''A partir de un indice del arbol, se expande. Devolviendo lista de
+    todos quienes tengan el mismo valor (nombre, en este caso)'''
+    if (arbol is not None) and (arbol.info[0] == nombre):
+        lista.append(arbol.info)
+        obtenerMismoNombre(arbol.izq, nombre, lista)
+        obtenerMismoNombre(arbol.der, nombre, lista)
+
+
+def listadoPorNombre(arbol, nombre):
+    '''Busca el indice con el nombre, y luego se exapande, encontrando en el
+    arbol los que posean el mismo nombre. Devuelve un array de estos'''
+    puntero_resultado = busquedaCampo(arbol, nombre, 0)
+    listado = []
+    if puntero_resultado:
+        obtenerMismoNombre(puntero_resultado, nombre, listado)
+    return listado
+
+
+def armasFalladasPorGeneral(arbol):
+    generales = ["Kylo Ren", "Hux", "Phasma"]
+
+    for general in generales:
+        reportes = listadoPorNombre(arbol, general)
+
+        falladas = 0
+        for reporte in reportes:
+            if reporte[3]:
+                falladas += 1
+        
+        print("Armas falladas por general", general, ":", falladas)
+
+
+def soldadosCantidadPorGeneral(arbol, general):
+    tipos_soldados = ["Imperial Stromtrooper", "Imperial Scout Trooper", "Imprerial Death Trooper", "Sith Trooper", "First Order Stromtrooper"]
+
+    reportes_general = listadoPorNombre(arbol, general)
+
+    # Almacena clave soldado-cantidad
+    soldado_cantidad = {}
+    for soldado in tipos_soldados:
+        soldado_cantidad.setdefault(str(soldado), 0)
+
+    for reporte in reportes_general:
+        soldado = reporte[4]
+
+        soldado_cantidad[soldado] += 1
+
+    print(soldado_cantidad)
+
+
+def cantidadSoldados(arbol, soldado, cant_soldado=0, cant_fallas=0):
+    if arbol is not None:
+        cant_soldado, cant_fallas = cantidadSoldados(arbol.izq, soldado, cant_soldado, cant_fallas)
+        if arbol.info[4] == soldado:
+            if arbol.info[3]:
+                cant_fallas += 1
+            cant_soldado += 1
+        cant_soldado, cant_fallas = cantidadSoldados(arbol.der, soldado, cant_soldado, cant_fallas)
+    return cant_soldado, cant_fallas
+
+
+def determinarSithyFallas(arbol):    
+    cant_sith, cant_fallas = cantidadSoldados(arbol, "Sith Trooper")
+
+    print("Cantidad Sith en misiones:", cant_sith)
+    print("Cant de Sith a quienes le fallaron las armas:", cant_fallas)
+
+        
+def obtenerMismaFecha(arbol, fecha, lista):
+    '''A partir de un indice del arbol, se expande. Devolviendo lista de
+    todos quienes tengan el mismo valor (fecha, en este caso)'''
+    if (arbol is not None) and (arbol.info[1] == fecha):
+        lista.append(arbol.info)
+        obtenerMismaFecha(arbol.izq, fecha, lista)
+        obtenerMismaFecha(arbol.der, fecha, lista)
+
+
+def listadoPorFecha(arbol, fecha):
+    '''Busca el indice con la fecha, y luego se exapande, encontrando en el
+    arbol los que posean la misma fecha. Devuelve un array de estos'''
+    puntero_resultado = busquedaCampo(arbol, fecha, 1)
+    listado = []
+    if puntero_resultado:
+        obtenerMismaFecha(puntero_resultado, fecha, listado)
+    return listado
+
+
+def codigoDeMisionesFecha(arbol, fecha_buscada):
+
+    listado_reportes_fecha = listadoPorFecha(arbol, fecha_buscada)
+
+    print("Códigos de blasters de las misiones en la fecha:", fecha_buscada)
+    for reporte in listado_reportes_fecha:
+        print(reporte[2])
+
+    cant_fallas = 0
+    for reporte in listado_reportes_fecha:
+        if reporte[3]:
+            cant_fallas += 1
+
+    print("Porcentaje  de estas que fallaron:", (cant_fallas * 100) / len(listado_reportes_fecha))

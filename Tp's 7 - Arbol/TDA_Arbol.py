@@ -131,7 +131,7 @@ def insertar(raiz, dato):
     actualizarAltura(raiz)
     raiz = balancear(raiz)
 
-    return(raiz)
+    return raiz
 
 
 def insertarCampo(raiz, dato, campo=0):
@@ -147,7 +147,7 @@ def insertarCampo(raiz, dato, campo=0):
     actualizarAltura(raiz)
     raiz = balancear(raiz)
 
-    return(raiz)
+    return raiz
 
 
 def arbolVacio(raiz):
@@ -415,6 +415,7 @@ def recortarArbol(raiz, bosque, hasta, nivel_act=0):
             bosque.append(raiz)
         recortarArbol(raiz.izq, bosque, hasta, nivel_act+1)
         recortarArbol(raiz.der, bosque, hasta, nivel_act+1)
+
 #---------------------------------------------------#
 
 def nivelLleno(raiz, nivel):
