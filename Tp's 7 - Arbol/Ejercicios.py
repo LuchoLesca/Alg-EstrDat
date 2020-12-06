@@ -673,67 +673,109 @@ print(diferenciaTamano(msj_original, msj_comprimido))
 
 # EJERCICIO 16
 
-
-with open("Pokemons/pokemon.json", "r") as read_file:
-    pokemons = json.load(read_file)
-    
-    
-
-
-
-def obtenerTipos(pokemon):
-    tipos = [pokemon.get("type1")]
-    if len(pokemon.get("type2")) > 0:
-            tipos.append(pokemon.get("type2"))
-    return tipos
 """ 
 def obtenerDebilidades(pokemon):
-                            pokemon.get("against_bug")
-                            pokemon.get("against_dark")
-                            pokemon.get("against_dragon")
-                            pokemon.get("against_electric")
-                            pokemon.get("against_fairy")
-                            pokemon.get("against_fight")
-                            pokemon.get("against_fire")
-                            pokemon.get("against_flying")
-                            pokemon.get("against_ghost")
-                            pokemon.get("against_grass")
-                            pokemon.get("against_ground")
-                            pokemon.get("against_ice")
-                            pokemon.get("against_normal")
-                            pokemon.get("against_poison")
-                            pokemon.get("against_psychic")
-                            pokemon.get("against_rock")
-                            pokemon.get("against_steel")
-                            pokemon.get("against_water)
+                            
     return type(keys)
  """
-def generarArbolPokeNombre(pokemons):
-    raiz = None
 
-    # print(obtenerDebilidades(pokemons[0]))
+# initFilePokemon()
 
-    
-    for pokemon in pokemons:
-        nombre = pokemon.get("name")
-        nro = pokemon.get("pokedex_number")        
-        tipos = obtenerTipos(pokemon)
-        # debilidades = obtenerDebilidades(pokemon)
-        
-        nuevo_pokemon = [nombre, nro, tipos]
+ruta_file = "Pokemons/pokemons"
 
-        raiz = insertarCampo(raiz, nuevo_pokemon, 0)
-        # print(nuevo_pokemon.nombre)
-        # print(nuevo_pokemon.nro)
-        # print(nuevo_pokemon.tipos)
+# A
+arbolPokeNombre = generarArbolPoke(ruta_file, "nombre")  # Generado por campo 0 = Nombre
+arbolPokeNro = generarArbolPoke(ruta_file, "nro")  # Generado por campo 1 = Nro
+arbolPokeTipo = generarArbolPoke(ruta_file, "tipo")  # # Generado por campo 2 = Tipo
 
-    return raiz
+""" 
+def listarArchivoPokemon(ruta):    
+    pokemons = extraerDataPokemons(ruta)
+    for data in pokemons:
+        pokemon = data[0]
+        print(pokemon.nombre)
+        print(pokemon.nro)
+        print(pokemon.tipos)
+        print(pokemon.debilidades)
+        print()
+ listarArchivoPokemon("Pokemons/pokemons")
+ """
 
-arbolPokeNombre = generarArbolPokeNombre(pokemons)
-arbolPokeNro = generarArbolPokeNombre(pokemons)
-arbolPokeTipo = generarArbolPokeNombre(pokemons)
+# B - listar por nombre buscado
+""" 
+buscado = "Bul"
+print("Pokemons encontrados que comiencen o contengan:", buscado)
+lista_poke = listaPokemonsNombre(ruta_file, arbolPokeNombre, buscado)
+
+for pokemon in lista_poke:
+        print(pokemon)
+ """
+
+# B - mostrar dato a partir de número
+""" 
+buscado = 135
+print("Pokemon encontrado con el id de pokedex solicitado:", buscado)
+
+poke_encontrado = busquedaNroPoke(ruta_file, arbolPokeNro, buscado)
+
+if poke_encontrado:
+    print(poke_encontrado)
+else:
+    print("El pokemon con nro", buscado, "ingresado no se encuentra en nuestra pokedex")
+ """
+
+# C
+""" 
+tipo_buscado = "fire"
+pokemons_tipo = listaBusquedaTipoArbol(ruta_file, arbolPokeTipo, tipo_buscado)
+
+print("Todos los pokemons de que tengan tipo ", tipo_buscado, " como principal o secundario")
+for pokemon in pokemons_tipo:
+    print(pokemon)
+ """
+
+# D
+"""
+
+# Se buscan los datos de los tres pokemons, para poder extrae los tipos
+lista_poke = listaPokemonsNombre(ruta_file, arbolPokeNombre, "Jolteon")
+lista_poke += (listaPokemonsNombre(ruta_file, arbolPokeNombre, "Lycanroc"))
+lista_poke += (listaPokemonsNombre(ruta_file, arbolPokeNombre, "Tyrantrum"))
+
+# Se extraen los tipos de todo en una lista
+tipos_a_buscar = []
+for poke in lista_poke:
+    t1 = poke.tipos[0]
+    t2 = poke.tipos[1]
+    tipos_a_buscar.append(t1)
+    if t2 != "":
+        tipos_a_buscar.append(t2)
+
+# Eliminar repetidos
+tipos_a_buscar = list(set(tipos_a_buscar))
+
+# Como el ejercicio no pedía arbol de debilidades, se deduce que se leerá directamente desde el
+# archivo para encontrar cuáles cumplen esta condición
+#  
+data_pokemons = extraerDataPokemons(ruta_file)
+
+for pokemon in data_pokemons:
+    datos = pokemon[0]
+    for tipo in tipos_a_buscar:
+        if tipo in datos.tipos:
+            print(datos)
+            break
+ """
 
 
+# E
+""" 
+tipos = ["bug","dark","dragon","electric","fairy","fight","fire","flying","ghost","grass","ground","ice","normal","poison","psychic","rock","steel","water"]
+
+for tipo in tipos:
+    pokemons_tipo = listaBusquedaTipoArbol(ruta_file, arbolPokeTipo, tipo)
+    print("Hay", len(pokemons_tipo), "pokemons de tipo", tipo)
+ """
 
 print()
 print("FIN ARCHIVO")

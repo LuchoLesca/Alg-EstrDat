@@ -3,6 +3,7 @@ Archivo donde se almacenarán todos lo la mayoría de las funciones creadas
 específicamente para los ejercicios del archivo Ejercicios.py. Exceptuando las que
 están contenidas en TDA_Arbol y TDA_Archivo
 '''
+import json
 from sys import getsizeof
 from TDA_Arbol import *
 from random import randint, choice, uniform
@@ -461,4 +462,152 @@ class Pokemon():
         self.tipos = tipos
         self.debilidades = debilidades
 
+    def __str__(self):
+        return "Nombre: " + str(self.nombre) + " -  Nro: " + str(self.nro) + " -  Tipo/s:" + str(self.tipos) + " -  Debilidad/es:" + str(self.debilidades)
 
+def initFilePokemon():
+    ruta_json = "Pokemons/pokemon.json"
+    ruta_file = "Pokemons/pokemons"
+ 
+    a = abrir(ruta_file)
+    limpiar(a)
+    cerrar(a)
+
+    jsonToFile(ruta_json, ruta_file)
+
+
+def obtenerTipos(pokemon):
+    tipos = [pokemon.get("type1"), pokemon.get("type2")]
+    return tipos
+
+
+def obtenerDebilidades(pokemon):
+    nombres_deb = ["against_bug","against_dark","against_dragon","against_electric","against_fairy","against_fight","against_fire","against_flying","against_ghost","against_grass","against_ground","against_ice","against_normal","against_poison","against_psychic","against_rock","against_steel","against_water"]
+    
+    # Selecciona las debilidades (son las que tienen valor mayor a 2 en el json)
+    lista_deb = []
+    for deb in nombres_deb:
+        valor = pokemon.get(deb)
+        # Si es debilidad, almacena en la lista, eliminando el "against_"
+        if (valor == 2):
+            lista_deb.append(deb.replace("against_", ""))
+    return lista_deb
+
+
+def jsonToFile(ruta_json, ruta_file):
+    '''Extra datos de .json y guarda en archivo, para trabajar con él'''
+    with open(ruta_json, "r") as read_file:
+        pokemons = json.load(read_file)
+
+    archivo = abrir(ruta_file)
+
+    for pokemon in pokemons:
+        nombre = pokemon.get("name")
+        nro = pokemon.get("pokedex_number")        
+        tipos = obtenerTipos(pokemon)
+        debilidades = obtenerDebilidades(pokemon)
+
+        nuevo_pokemon = Pokemon(nombre, nro, tipos, debilidades)
+
+        guardar(archivo, nuevo_pokemon)
+
+
+def extraerDataPokemons(ruta):
+    '''Devuelve array con los datos y la posición de cada pokemon almacenado en el archivo'''
+    archivo = abrir(ruta)
+    array = []
+    pos = 0
+    while pos < len(archivo):
+        data_personaje = [leer(archivo, pos), pos]
+        array.append(data_personaje)
+        pos += 1
+    cerrar(archivo)
+    return array
+
+
+def generarArbolPoke(ruta_file, tipo_gen):
+    '''Genera un arbol binario de pokemons, ordenandolos por tipo de generacion pasada'''
+    raiz = None
+    dataPokemons = extraerDataPokemons(ruta_file)
+
+    for item in dataPokemons:
+        pokemon = item[0]
+        indice = item[1]
+
+        if tipo_gen == "nombre":
+            dato = pokemon.nombre
+        elif tipo_gen == "nro":
+            dato = pokemon.nro
+        elif tipo_gen == "tipo":
+            dato = pokemon.tipos
+
+        nuevo_pokemon = [dato, indice]
+        raiz = insertarCampo(raiz, nuevo_pokemon, 0)
+
+    return raiz
+
+
+def obtenerIndicesPorNombre(raiz, buscado, resultados_arbol):
+    '''Realiza busqueda por proximidad por campo seleccionado
+    Devuelve los pares [dato, indice] de cada uno'''
+    if (raiz is not None):
+        if (buscado.lower() in raiz.info[0].lower()):
+            resultados_arbol.append(raiz.info[1])
+        obtenerIndicesPorNombre(raiz.izq, buscado, resultados_arbol)
+        obtenerIndicesPorNombre(raiz.der, buscado, resultados_arbol)
+
+
+def listaPokemonsNombre(ruta_file, raiz, nombre_buscado):
+    '''Devuelve lista de pokemons que haya encontrado por proximidad'''
+    indices_poke_a_obtener_data = []
+    # En el arbol por nombre, se busca por proximidad, y se devuelve los indices de quienes coincidan
+    obtenerIndicesPorNombre(raiz, nombre_buscado, indices_poke_a_obtener_data)
+
+    # Por cada indice, se busca en el archivo y trae el objeto Pokemon del susodicho
+    datos_pokemons = []
+
+    archivo = abrir(ruta_file)
+    for indice in indices_poke_a_obtener_data:
+        datos_pokemons.append(leer(archivo, indice))
+    cerrar(archivo)
+
+    return datos_pokemons
+
+
+def busquedaNroPoke(ruta_file, raiz, nro_buscado):
+    '''Devuelve pokemon que haya encontrado con nro de pokedex solicitado'''
+    pokemon = None
+
+    encontrado = busquedaCampo(raiz, nro_buscado, 0)
+    if encontrado:
+        indice = encontrado.info[1]
+
+        archivo = abrir(ruta_file)
+        pokemon = leer(archivo, indice)
+        cerrar(archivo)
+
+    return pokemon
+
+
+def busqTipos(raiz, tipo_buscado, lista=[]):
+    '''Devuelve lista de indices de pokemons que sean del tipo indicado'''
+    if (raiz is not None):
+        if (tipo_buscado in raiz.info[0]):
+            lista.append(raiz.info[1])
+        busqTipos(raiz.izq, tipo_buscado, lista)
+        busqTipos(raiz.der, tipo_buscado, lista)
+
+
+def listaBusquedaTipoArbol(ruta, arbol, tipo):
+    '''Devuelve lista de pokemons del tipo especificado, traidos desde el archivo'''
+    lista = []
+    
+    indices_pokemon_tipo = []
+    busqTipos(arbol, tipo, indices_pokemon_tipo)
+
+    archivo = abrir(ruta)
+    for indice in indices_pokemon_tipo:
+        lista.append(leer(archivo, indice))
+    cerrar(archivo)
+
+    return lista
