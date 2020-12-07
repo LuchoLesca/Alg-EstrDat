@@ -737,3 +737,6 @@ def codigoDeMisionesFecha(arbol, fecha_buscada):
             cant_fallas += 1
 
     print("Porcentaje  de estas que fallaron:", (cant_fallas * 100) / len(listado_reportes_fecha))
+
+
+# EJERCICIO 18

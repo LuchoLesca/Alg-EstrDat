@@ -790,15 +790,16 @@ for tipo in tipos:
 
 
 # B (Necesario generarlo para otros puntos)
+""" 
 arbolNombreSW, arbolFechaSW, arbolCodigoSW = None, None, None
 
-for i in range(6):
+for i in range(1000):
     reporte = generarReporteAleatorio(i)
     
     arbolNombreSW = insertarCampo(arbolNombreSW, reporte, 0)
     arbolFechaSW = insertarCampo(arbolFechaSW, reporte, 1)
     arbolCodigoSW = insertarCampo(arbolCodigoSW, reporte, 2)
-
+ """
 # C
 """ 
 armasFalladasPorGeneral(arbolNombreSW)
@@ -825,15 +826,44 @@ codigoDeMisionesFecha(arbolFechaSW, "1/02/2019")
 # G 
 # Se ingresa un nuevo reporte con el código solicitado, para poder buscarlo.
 # En este caso solo a arbol de código, ya que los demás no es necesario, pero debería hacerse
-
+""" 
+print()
 codigo_buscado = 75951380
 reporte = generarReporteAleatorio(codigo_buscado)
 
 arbolCodigoSW = insertarCampo(arbolCodigoSW, reporte, 2)
 
-imprimirArbol(arbolCodigoSW)
-buscado = busquedaCampo(arbolCodigoSW, codigo_buscado, 2)
-print(buscado)
+encontrado = (busquedaCampo(arbolCodigoSW, codigo_buscado, 2))
+if encontrado:
+    print(encontrado.info)
+else:
+    print("No se encontro datos de la blaster con codigo", codigo_buscado, "en alguna mision")
+ """
+
+
+# EJERCICIO 18
+
+class Libro():
+    def __init__(self, isbn, autores, editorial, cant_pag):
+        self.isbn = isbn
+        self.autores = autores
+        self.editorial = editorial
+        self.cant_pag = cant_pag
+
+
+- Cargar 100 libros
+- Data en archivo = Persona()
+- Data en arboles:
+    titulo: [titulo, indice]
+    isbn: [isbn, indice]
+    actores: [actores, indice]
+-Busquedas:
+    Exactitud en arbol isbn
+    Que esté contenido en árbol de autores -es decir, si son más de un autor y busco por uno, debería encontrarlo-
+    Por coinciden en inicio de nombre en el arbol de titulo
+
+
+
 
 
 

@@ -58,17 +58,16 @@ class Nodoarbol():
 
 def altura(raiz):
     if (raiz is None):
-        return 0
+        return -1
     else:
         return raiz.altura
 
 
 def actualizarAltura(raiz):
-    if (altura(raiz.izq) > altura(raiz.der)):
-        raiz.altura = altura(raiz.izq) + 1
+    if altura(raiz.izq) > altura(raiz.der):
+        raiz.altura = altura(raiz.izq)+1
     else:
-        raiz.altura = altura(raiz.der) + 1
-    return raiz
+        raiz.altura = altura(raiz.der)+1
 
 
 def rotacionSimple(raiz, control):  # Si es true rota a la der, sino izq
@@ -128,8 +127,8 @@ def insertar(raiz, dato):
         else:
             raiz.der = insertar(raiz.der, dato)
 
-    actualizarAltura(raiz)
     raiz = balancear(raiz)
+    actualizarAltura(raiz)
 
     return raiz
 
@@ -140,12 +139,12 @@ def insertarCampo(raiz, dato, campo=0):
         raiz = Nodoarbol(dato)
     else:
         if (dato[campo] < raiz.info[campo]):
-            raiz.izq = insertar(raiz.izq, dato)
+            raiz.izq = insertarCampo(raiz.izq, dato, campo)
         else:
-            raiz.der = insertar(raiz.der, dato)
+            raiz.der = insertarCampo(raiz.der, dato, campo)
 
-    actualizarAltura(raiz)
     raiz = balancear(raiz)
+    actualizarAltura(raiz)
 
     return raiz
 
