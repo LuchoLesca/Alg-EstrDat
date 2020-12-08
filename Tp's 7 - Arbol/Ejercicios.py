@@ -684,21 +684,10 @@ def obtenerDebilidades(pokemon):
 ruta_file = "Pokemons/pokemons"
 
 # A
+""" 
 arbolPokeNombre = generarArbolPoke(ruta_file, "nombre")  # Generado por campo 0 = Nombre
 arbolPokeNro = generarArbolPoke(ruta_file, "nro")  # Generado por campo 1 = Nro
 arbolPokeTipo = generarArbolPoke(ruta_file, "tipo")  # # Generado por campo 2 = Tipo
-
-""" 
-def listarArchivoPokemon(ruta):    
-    pokemons = extraerDataPokemons(ruta)
-    for data in pokemons:
-        pokemon = data[0]
-        print(pokemon.nombre)
-        print(pokemon.nro)
-        print(pokemon.tipos)
-        print(pokemon.debilidades)
-        print()
- listarArchivoPokemon("Pokemons/pokemons")
  """
 
 # B - listar por nombre buscado
@@ -735,7 +724,7 @@ for pokemon in pokemons_tipo:
  """
 
 # D
-"""
+""" 
 
 # Se buscan los datos de los tres pokemons, para poder extrae los tipos
 lista_poke = listaPokemonsNombre(ruta_file, arbolPokeNombre, "Jolteon")
@@ -753,11 +742,11 @@ for poke in lista_poke:
 
 # Eliminar repetidos
 tipos_a_buscar = list(set(tipos_a_buscar))
-
+ 
 # Como el ejercicio no pedía arbol de debilidades, se deduce que se leerá directamente desde el
 # archivo para encontrar cuáles cumplen esta condición
 #  
-data_pokemons = extraerDataPokemons(ruta_file)
+data_pokemons = fileToArray(ruta_file)
 
 for pokemon in data_pokemons:
     datos = pokemon[0]
@@ -765,7 +754,7 @@ for pokemon in data_pokemons:
         if tipo in datos.tipos:
             print(datos)
             break
- """
+"""
 
 
 # E
@@ -843,24 +832,201 @@ else:
 
 # EJERCICIO 18
 
-class Libro():
-    def __init__(self, isbn, autores, editorial, cant_pag):
-        self.isbn = isbn
-        self.autores = autores
-        self.editorial = editorial
-        self.cant_pag = cant_pag
+
+ruta_file = "Libros/libros"
+
+# A Se cargan 100 libros
+initFileLibros()
 
 
-- Cargar 100 libros
-- Data en archivo = Persona()
-- Data en arboles:
-    titulo: [titulo, indice]
-    isbn: [isbn, indice]
-    actores: [actores, indice]
--Busquedas:
-    Exactitud en arbol isbn
-    Que esté contenido en árbol de autores -es decir, si son más de un autor y busco por uno, debería encontrarlo-
-    Por coinciden en inicio de nombre en el arbol de titulo
+# B
+
+arbolTitulo = generarArbolLibro(ruta_file, "titulo")
+arbolISBN = generarArbolLibro(ruta_file, "isbn")
+arbolAutores = generarArbolLibro(ruta_file, "autores")
+
+# imprimirArbol(arbolTitulo)
+# imprimirArbol(arbolISBN)
+# imprimirArbol(arbolAutores)
+
+
+# D
+# D - i
+""" 
+isbn_buscado = 10
+res = busquedaPorISBN(arbolISBN, isbn_buscado)
+
+if res:
+    indice = res[1]
+
+    archivo = abrir(ruta_file)
+    libro = leer(archivo, indice)
+    cerrar(archivo)
+    
+    print(libro)
+else:
+    print("Libro con ISBN", isbn_buscado, "no encontrado")
+ """
+
+# D - ii
+""" 
+autor_buscado = "autor3"
+res = busquedaPorAutor(arbolAutores, autor_buscado)
+
+if len(res) > 0:
+    print("Lista de libros que tienen de autor a", autor_buscado)
+
+    archivo = abrir(ruta_file)
+    for item in res:
+        indice = item[1]
+        libro = leer(archivo, indice)
+        print(libro)
+    cerrar(archivo)
+else:
+    print("No se encontraron libros con ese autor")
+ """
+
+# D - iii
+""" 
+inicio_nombre_buscado = "alg"
+imprimirArbol(arbolTitulo)
+res = busquedaPorCoincidenciaTitulo(arbolTitulo, inicio_nombre_buscado)
+
+print(res)
+ """
+
+# A
+""" 
+# Se busca en el arbol todos los libros de los autores deseados
+libros_tanenbaum = busquedaPorAutor(arbolAutores, "Tanenbaum")
+libros_connolly = busquedaPorAutor(arbolAutores, "Connolly")
+libros_rowling = busquedaPorAutor(arbolAutores, "Rowling")
+libros_roirdan = busquedaPorAutor(arbolAutores, "Roirdan")
+
+libros_a_buscar = libros_tanenbaum + libros_connolly + libros_rowling + libros_roirdan
+
+# De la lista anterior se extrane solo los indices, para realizar la búsqueda futura en archivo
+indices = set()
+for libro in libros_a_buscar:
+    indices.add(libro[1])
+
+# Se trae los datos desde el archivo de los libros mencionados anteriormente
+archivo = abrir(ruta_file)
+libros_deseados = leerIndices(archivo, indices)
+cerrar(archivo)
+
+# Muestra dato de todos los libros obtenidos
+for libro in libros_deseados:
+    print(libro)
+
+ """
+
+ # B
+
+""" 
+libros_mineria = busquedaPorCoincidenciaTitulo(arbolTitulo, "Mineria de Datos")
+libros_algoritmos = busquedaPorCoincidenciaTitulo(arbolTitulo, "Algoritmos")
+libros_bbdd = busquedaPorCoincidenciaTitulo(arbolTitulo, "Base de Datos")
+
+libros_a_buscar = libros_mineria + libros_algoritmos + libros_bbdd
+
+# De la lista anterior se extrae solo los indices, para realizar la búsqueda futura en archivo
+indices = set()
+for libro in libros_a_buscar:
+    indices.add(libro[1])
+
+# Se trae los datos desde el archivo de los libros mencionados anteriormente
+archivo = abrir(ruta_file)
+libros_deseados = leerIndices(archivo, indices)
+cerrar(archivo)
+
+print("Libros de Mineria de Datos, Algoritmos y Base de Datos:")
+for libro in libros_deseados:
+    print(libro)
+ """
+
+
+# C
+""" 
+# Creación arbol páginas para que sea más eficiente la búsqueda
+arbolPaginas = generarArbolLibro(ruta_file, "paginas")
+paginas_deseadas = 873
+
+# Se extrae del arbol, los indices de todos aquellos que tengan más de 873
+indices_a_buscar = []
+busqPag(arbolPaginas, paginas_deseadas, indices_a_buscar)
+
+# Lista libros extraída de archivo
+libros = []
+archivo = abrir(ruta_file)
+for indice in indices_a_buscar:
+    libros.append(leer(archivo, indice))
+cerrar(archivo)
+
+print("Libros con más de", paginas_deseadas)
+for libro in libros:
+    print(libro)
+ """
+
+
+# D
+""" 
+isbn_buscado = 9788420546391
+# Carga libro con ISBN especifico, inserta en archivo y actualiza los arboles
+nuevo_libro = Libro("PuntoD", isbn_buscado, ["autorRandom"], "edit2", 203)
+
+archivo = abrir(ruta_file)
+guardar(archivo, nuevo_libro)
+cerrar(archivo)
+
+arbolTitulo = generarArbolLibro(ruta_file, "titulo")
+arbolISBN = generarArbolLibro(ruta_file, "isbn")
+arbolAutores = generarArbolLibro(ruta_file, "autores")
+
+# Busqueda en el arbol
+res = busquedaPorISBN(arbolISBN, isbn_buscado)
+
+# Busqueda en archivo
+if res:
+    indice = res[1]
+
+    archivo = abrir(ruta_file)
+    libro = leer(archivo, indice)
+    cerrar(archivo)
+    
+    print(libro)
+else:
+    print("Libro con ISBN", isbn_buscado, "no encontrado")
+ """
+
+# E
+""" 
+# Carga libro con ISBN especifico, inserta en archivo y actualiza los arboles
+nuevo_libro = Libro("NoSQL for Mere Mortals", 654654654, ["autorRandom"], "edit2", 5071)
+
+archivo = abrir(ruta_file)
+guardar(archivo, nuevo_libro)
+cerrar(archivo)
+
+arbolTitulo = generarArbolLibro(ruta_file, "titulo")
+arbolISBN = generarArbolLibro(ruta_file, "isbn")
+arbolAutores = generarArbolLibro(ruta_file, "autores")
+
+# busqueda por titulo NoSQL
+libros_nosql = busquedaPorCoincidenciaTitulo(arbolTitulo, "NoSQL for Mere Mortals")
+indice_nosql = libros_nosql[0][1]
+
+
+if len(libros_nosql) > 0:
+    archivo = abrir(ruta_file)
+    libro = leer(archivo, indice_nosql)
+    cerrar(archivo)
+
+    print("Autor/es de NoSQL for Mere Mortals")
+    print(libro.autores)
+else:
+    print("No se encontró el libror NoSQL for Mere Mortals")
+ """
 
 
 

@@ -9,6 +9,7 @@ from TDA_Arbol import *
 from random import randint, choice, uniform
 from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
 from TDA_Archivo import txtToDat
+from TDA_Archivo import fileToArray
 
 # EJERCICIO 1
 
@@ -473,7 +474,7 @@ def initFilePokemon():
     limpiar(a)
     cerrar(a)
 
-    jsonToFile(ruta_json, ruta_file)
+    jsonToFilePoke(ruta_json, ruta_file)
 
 
 def obtenerTipos(pokemon):
@@ -494,7 +495,7 @@ def obtenerDebilidades(pokemon):
     return lista_deb
 
 
-def jsonToFile(ruta_json, ruta_file):
+def jsonToFilePoke(ruta_json, ruta_file):
     '''Extra datos de .json y guarda en archivo, para trabajar con él'''
     with open(ruta_json, "r") as read_file:
         pokemons = json.load(read_file)
@@ -512,23 +513,10 @@ def jsonToFile(ruta_json, ruta_file):
         guardar(archivo, nuevo_pokemon)
 
 
-def extraerDataPokemons(ruta):
-    '''Devuelve array con los datos y la posición de cada pokemon almacenado en el archivo'''
-    archivo = abrir(ruta)
-    array = []
-    pos = 0
-    while pos < len(archivo):
-        data_personaje = [leer(archivo, pos), pos]
-        array.append(data_personaje)
-        pos += 1
-    cerrar(archivo)
-    return array
-
-
 def generarArbolPoke(ruta_file, tipo_gen):
     '''Genera un arbol binario de pokemons, ordenandolos por tipo de generacion pasada'''
     raiz = None
-    dataPokemons = extraerDataPokemons(ruta_file)
+    dataPokemons = fileToArray(ruta_file)
 
     for item in dataPokemons:
         pokemon = item[0]
@@ -740,3 +728,123 @@ def codigoDeMisionesFecha(arbol, fecha_buscada):
 
 
 # EJERCICIO 18
+
+class Libro():
+    def __init__(self, titulo, isbn, autores, editorial, cant_pag):
+        self.titulo = titulo
+        self.isbn = isbn
+        self.autores = autores
+        self.editorial = editorial
+        self.cant_pag = cant_pag
+
+    def __str__(self):
+        return ("Titulo: " + str(self.titulo) + " - ISBN: " + str(self.isbn) + " - Autores: "
+                + str(self.autores) + " - Editorial: " + str(self.editorial) + " - Paginas: " + str(self.cant_pag))
+
+
+def definirAutores(autores):
+    lista_autores = []
+
+    cant = randint(1, 3)
+    while (len(lista_autores) < cant):
+        nuevo_autor = choice(autores)
+        if nuevo_autor not in lista_autores:
+            lista_autores.append(nuevo_autor)
+    
+    return lista_autores
+
+
+def initFileLibros():
+    ruta_file = "Libros/libros"
+    titulos = ["Algoritmos", "Algol", "Mineria de Datos", "Base de Datos", "Sistemas y organizaciones", "Calculo", "Redes"]
+    autores = ["autor1", "autor2", "autor3", "autor4", "autor5", "autor6", "autor7", "Tanenbaum", "Connolly", "Rowling", "Riordan"]
+    editoriales = ["edit1", "edit2", "edit3", "edit4", "edit5"]
+ 
+    archivo = abrir(ruta_file)
+    limpiar(archivo)
+
+    for i in range(100):
+        titulo = choice(titulos)
+        isbn = i
+        autor = definirAutores(autores)
+        
+        editorial = choice(editoriales)
+        cant_pag = randint(100, 2000)
+
+        libro = Libro(titulo, isbn, autor, editorial, cant_pag)
+        guardar(archivo, libro)
+
+    cerrar(archivo)
+
+
+def generarArbolLibro(ruta_file, tipo_gen):
+    '''Genera un arbol binario de pokemons, ordenandolos por tipo de generacion pasada'''
+    raiz = None
+    dataLibros = fileToArray(ruta_file)
+
+    for item in dataLibros:
+        libro = item[0]
+        indice = item[1]
+
+        if tipo_gen == "titulo":
+            dato = libro.titulo
+        elif tipo_gen == "isbn":
+            dato = libro.isbn
+        elif tipo_gen == "autores":
+            dato = libro.autores
+        elif tipo_gen == "paginas":
+            dato = libro.cant_pag
+
+        nuevo_libro = [dato, indice]
+        raiz = insertarCampo(raiz, nuevo_libro, 0)
+
+    return raiz
+
+
+def busquedaPorISBN(arbol, buscado):
+    resultado = busquedaCampo(arbol, buscado, 0)
+
+    if resultado:
+        return resultado.info
+    else:
+        return None
+
+
+def proximidadAutor(arbol, buscado, lista=[]):
+    if arbol is not None:
+        if buscado in arbol.info[0]:
+            lista.append(arbol.info)
+        proximidadAutor(arbol.izq, buscado, lista)
+        proximidadAutor(arbol.der, buscado, lista)
+
+def busquedaPorAutor(arbol, buscado):
+    lista_con_autor = []
+    proximidadAutor(arbol, buscado, lista_con_autor)
+
+    return lista_con_autor
+
+
+def proximidadTitulo(arbol, buscado, lista=[]):
+    if arbol is not None:
+        if(arbol.info[0][0:len(buscado)].lower() == buscado.lower()):
+            lista.append(arbol.info)
+        proximidadTitulo(arbol.izq, buscado, lista)
+        proximidadTitulo(arbol.der, buscado, lista)
+    return lista
+
+def busquedaPorCoincidenciaTitulo(arbol, buscado):
+    lista_coincidenca_inicio = []
+    proximidadTitulo(arbol, buscado, lista_coincidenca_inicio)
+
+    return lista_coincidenca_inicio
+
+
+def busqPag(arbol, cantidad, lista=[]):
+    '''Devuelve una lista de indices de aquellos nodos que tengan más pag que la pasada'''
+    if (arbol is not None):
+        libro = arbol.info
+        if libro[0] > cantidad:
+            lista.append(libro[1])
+        busqPag(arbol.izq, cantidad, lista)
+        busqPag(arbol.der, cantidad, lista)
+        

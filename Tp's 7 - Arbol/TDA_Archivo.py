@@ -16,6 +16,13 @@ def leer(archivo, pos):
     except Exception:
         return None
 
+def leerIndices(archivo, indices=[]):
+    '''Devuelve una lista de los elementos del archivo que pudo leer en las posiciones dadas'''
+    resultados = []
+    for indice in indices:
+        resultados.append(leer(archivo, indice))
+    return resultados
+
 def guardar(archivo, dato):
     try:
         archivo[str(len(archivo))] = dato
@@ -40,14 +47,15 @@ def barridoArchivo(archivo):
 
 
 def fileToArray(ruta):
-    '''Devuelve array de elementos'''
+    '''Devuelve array con los datos y la posición de cada pokemon almacenado en el archivo'''
     archivo = abrir(ruta)
     array = []
     pos = 0
     while pos < len(archivo):
-        array.append(leer(archivo, pos))
+        data_elemento = [leer(archivo, pos), pos]
+        array.append(data_elemento)
         pos += 1
-
+    cerrar(archivo)
     return array
 
 
