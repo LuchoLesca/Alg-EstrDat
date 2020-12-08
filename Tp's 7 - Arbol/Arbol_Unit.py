@@ -908,7 +908,7 @@ def definirPronostico(arbol, registro):
         else:
             key = arbol.info[0][0]
             umbral = arbol.info[0][1]
-            
+
             valor = asignarValorRegistro(registro, key)
             if valor <= umbral:
                 arbol = arbol.izq
@@ -916,3 +916,73 @@ def definirPronostico(arbol, registro):
                 arbol = arbol.der
 
     return arbol[0]
+
+
+#EJERCICIO 20
+
+
+# EJERCICIO 21
+
+def agregarDescripcion(arbol, criatura, descripcion):
+    res = busquedaCampo(arbol, criatura, 0)
+    if res:
+        res.info[2] = descripcion
+    else:
+        print("No se encontró criatura", criatura, " por lo que no se le pudo asignar descripcion")
+
+def arbolToArrayCriaturas(arbol, lista=[]):
+    '''Pasa el arbol a array, pasando solo los que han sido derrotados'''
+    if arbol is not None:
+        if arbol.info[1] != '':
+            lista.append(arbol.info)
+        arbolToArrayCriaturas(arbol.izq, lista)
+        arbolToArrayCriaturas(arbol.der, lista)
+
+def eliminarDuplicados(lista):
+    lista_aux = []
+    for item in lista:
+        if item not in lista_aux:
+            lista_aux.append(item)
+    return lista_aux
+
+def vencedores(arbol):
+    criaturas_derrotadas = []
+    arbolToArrayCriaturas(arbol, criaturas_derrotadas)
+    
+    # Se crea lista solo de vencedores:
+    vencedores = []
+    for criatura in criaturas_derrotadas:
+        vencedores.append(criatura[1])
+
+    return vencedores
+
+def criaturasDerrotadasPor(arbol, heroe, lista=[]):
+    if arbol is not None:
+        if arbol.info[1] == heroe:
+            lista.append(arbol.info)
+        criaturasDerrotadasPor(arbol.izq, heroe, lista)
+        criaturasDerrotadasPor(arbol.der, heroe, lista)
+
+
+def busquedaProximidadCriatura(raiz, buscado, lista=[]):
+    '''Realiza busqueda por proximidad por campo seleccionado. Devuelve lista'''
+    if (raiz is not None):
+        if (buscado.lower() in raiz.info[0].lower()):
+            lista.append(raiz.info)
+        busquedaProximidadCriatura(raiz.izq, buscado, lista)
+        busquedaProximidadCriatura(raiz.der, buscado, lista)
+
+
+def modificarDerrotadoPor(arbol, criatura, nombre):
+    res = busquedaCampo(arbol, criatura, 0)
+    if res:
+        res.info[1] = nombre
+    else:
+        print("No se encontró criatura", criatura, " por lo que no se le pudo modificar el campo derrotado por")
+
+def modificarnombreCriatura(arbol, nombre_old, nombre_new):
+    res = busquedaCampo(arbol, nombre_old, 0)
+    if res:
+        res.info[0] = nombre_new
+    else:
+        print("No se encontró criatura", nombre_old, " por lo que no se le pudo modificar su nombre")

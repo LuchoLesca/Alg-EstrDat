@@ -276,6 +276,28 @@ def eliminar(raiz, clave):  # Si devuleve None es porque no encontro nada
     return(raiz, x)
 
 
+def eliminarCampo(raiz, clave, campo):  # Si devuleve None es porque no encontro nada
+    x = None
+    if (raiz is not None):  # Mientras no llegue a hoja, se llama recursivament
+        if (raiz.info[campo] > clave):  # Si buscado es menor, recursivo para izquierda
+            raiz.izq, x = eliminarCampo(raiz.izq, clave, campo)
+        else:  # Si es mayor o igual
+            if(raiz.info[campo] < clave):  # Si es mayor, recursivo a derecha
+                raiz.der, x = eliminarCampo(raiz.der, clave, campo)
+            else:  # Si es igual
+                if (raiz.izq is None):  # Si no tiene rama izquierda
+                    x = raiz.info       # Saca info y enlaza con única rama
+                    raiz = raiz.der     # hijo. En este caso, derecha
+                else:  # Si tiene rama izquierda
+                    if(raiz.der is None):  # Si no tiene rama derecha
+                        x = raiz.info      # obtiene dato y enlaza con unica
+                        raiz = raiz.izq    # rama hijo, en este caso, derecha
+                    else:  # Si tiene ambas ramas
+                        raiz.izq, aux = reemplazar(raiz.izq)  # Busca de los número mas chicos, la hoja con el valor más alto. Esta elección fue arbitraría. Por también podría de los números más grandes, elegir el menor valor
+                        raiz.info = aux.info  # Reemplaza el valor de ese nodo por el de la hoja que trajo
+    return (raiz, x)
+
+
 def nodoMin(raiz):
     '''Devuelve nodo con información más baja (nodo más a la izquierda)'''
     aux = raiz

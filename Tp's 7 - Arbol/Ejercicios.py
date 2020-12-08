@@ -1091,11 +1091,30 @@ for criatura in criatura_derrotado:
     arbolCriaturas = insertarCampo(arbolCriaturas, criatura, 0)
 
 # A
+""" 
 inorden(arbolCriaturas)
-
+ """
 # B
+""" 
+criatura = "Dino"
+print("Antes de agregar la descripcion")
 
+res = busquedaCampo(arbolCriaturas, criatura, 0)
+print("Nombre:", res.info[0])
+print("Derrotado por:", res.info[1])
+print("Descripcion:", res.info[2])
+
+agregarDescripcion(arbolCriaturas, criatura, "Descripcon random")
+print()
+
+print("Despues de agregar la descripcion")
+res = busquedaCampo(arbolCriaturas, criatura, 0)
+print("Nombre:", res.info[0])
+print("Derrotado por:", res.info[1])
+print("Descripcion:", res.info[2])
+ """
 # C
+""" 
 nombre_criatura = "Talos"
 res = busquedaCampo(arbolCriaturas, nombre_criatura, 0)
 print()
@@ -1105,17 +1124,90 @@ if res:
     print("Descripcion:", res.info[2])
 else:
     print("No se encontró datos de la criatura", nombre_criatura)
-    
+ """    
 
 
+# D 
+""" 
+# Lista de todos los vencedores (repetidos)  
+lista_vencedores = vencedores(arbolCriaturas)
+# Vencedores ordenados por cantidad de apariciones/victorias
+vencedores = sorted(lista_vencedores, key=lambda x: lista_vencedores.count(x), reverse=True)
+# Lista sin duplicados
+mayores_vencedores = eliminarDuplicados(vencedores)
+
+print("Mayores 3 heroes/dioses vencedores")
+for i in range(3):
+    print(mayores_vencedores[i])
+ """
 
 
+# E
+""" 
+nombre = "Heracles"
 
+criaturas_derrotadas_heroe = []
+criaturasDerrotadasPor(arbolCriaturas, nombre, criaturas_derrotadas_heroe)
 
+print("Criaturas derrotadas por Hermes:")
+for criatura in criaturas_derrotadas_heroe:
+    print(criatura[0])
+ """
+# F
+""" 
+no_derrotadas = []
+criaturasDerrotadasPor(arbolCriaturas, "", no_derrotadas)
 
+print("Criaturas no derrotadas")
+for criatura in no_derrotadas:
+    print(criatura[0])
+ """
 
+# G
+""" 
+nombre_criatura = "tr"
 
+criaturas_encontradas = []
+busquedaProximidadCriatura(arbolCriaturas, nombre_criatura, criaturas_encontradas)
 
+print("Lista de criatura coincidentes con '{}'".format(nombre_criatura))
+for criatura in criaturas_encontradas:
+    print(criatura[0])
+ """
+
+# H
+""" 
+print("Antes de elimar Basilisco y Sirenas")
+imprimirArbol(arbolCriaturas)
+
+arbolCriaturas, data_basilisco = eliminarCampo(arbolCriaturas, "Basilisco", 0)
+arbolCriaturas, data_sirenas = eliminarCampo(arbolCriaturas, "Sirenas", 0)
+
+print()
+print("Despues de eliminarlos:")
+
+imprimirArbol(arbolCriaturas)
+ """
+
+# I
+""" 
+print("Antes de modificar el derrotado por de Aves del Estinfalo")
+imprimirArbol(arbolCriaturas)
+
+modificarDerrotadoPor(arbolCriaturas, "Aves del Estinfalo", "Heracles")
+print()
+
+print("Despues de modificar el derrotado por de Aves del Estinfalo")
+imprimirArbol(arbolCriaturas)
+ """
+
+# J
+""" 
+modificarnombreCriatura(arbolCriaturas, "Ladon", "Dragon Ladon")
+
+print("Se modificó Ladon por Dragon Ladon")
+imprimirArbol(arbolCriaturas)
+ """
 
 
 
