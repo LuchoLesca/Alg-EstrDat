@@ -1044,7 +1044,7 @@ print("Pronostico:", pronostico)
 # 0: Criatura
 # 1: Derrotado por
 # 2: descripcion
-
+""" 
 criatura_derrotado = [
             ['Ceto', '', ''],
             ['Tifon', 'Zeus', ''],
@@ -1089,7 +1089,7 @@ criatura_derrotado = [
 arbolCriaturas = None
 for criatura in criatura_derrotado:
     arbolCriaturas = insertarCampo(arbolCriaturas, criatura, 0)
-
+ """
 # A
 """ 
 inorden(arbolCriaturas)
@@ -1210,14 +1210,67 @@ imprimirArbol(arbolCriaturas)
  """
 
 
+# EJERICIO 22
+def iimprimir(raiz, espacios=0):
+    if raiz is not None:
+            espacios += 5
+            iimprimir(raiz.der, espacios)
+            print(" " * espacios, str(raiz.info[1]))
+            iimprimir(raiz.izq, espacios)
+
+tabla = [
+    ["A", 11, 0],
+    ["B", 2, 0],
+    ["C", 4, 0],
+    ["D", 3, 0],
+    ["E", 14, 0],
+    ["G", 3, 0],
+    ["I", 6, 0],
+    ["L", 6, 0],
+    ["M", 3, 0],
+    ["N", 6, 0],
+    ["O", 7, 0],
+    ["P", 4, 0],
+    ["Q", 1, 0],
+    ["R", 10, 0],
+    ["S", 4, 0],
+    ["T", 3, 0],
+    ["U", 4, 0],
+    ["V", 2, 0],
+    [" ", 17, 0],
+    [",", 2, 0]
+]
+
+asignarFrecuencias(tabla)
+
+# Creamos la tabla con el formato que necesita el arbol de Huffman para crease
+# Agregando el espacio y coma anteultimo y ultimo respectivamente
+tabla_para_huffman = formatearTablaParaHuffman(tabla)
+
+for e in tabla_para_huffman:
+    print(e)
+
+arbol_huffman = crearArbolHuffman(tabla_para_huffman)
+# iimprimir(arbol_huffman)
 
 
+""" 
+dic = {}
+huffmanToDicCodificaciones(arbol_huffman, dic)
 
+for key in dic:
+    print(key, ":", dic.get(key))
+ """
+""" 
+msj1 = '10001011101011000010111010001110000011011000000111100111101001011000011010011100110100010111010111111101000011110011111100111101000110001100000010110101111011111110111010110110111001110110111100111111100101001010010100000101101011000101100110100011100100101100001100100011010110101011111111111011011101110010000100101011000111111100010001110110011001011010001101111101011010001101110000000111001001010100011111100001100101101011100110011110100011000110000001011010111110011100'
+msj2 = '0110101011011100101000111101011100110111010110110100001000111010100101111010011111110111001010001111010111001101110101100001100010011010001110010010001100010110011001110010010000111101111010'
 
+msj1_decodificado = decodificar2(arbol_huffman, msj1)
+msj2_decodificado = decodificar2(arbol_huffman, msj2)
 
-
-
-
+print(msj1_decodificado)
+print(msj2_decodificado)
+ """
 
 
 

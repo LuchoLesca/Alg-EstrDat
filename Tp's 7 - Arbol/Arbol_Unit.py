@@ -986,3 +986,60 @@ def modificarnombreCriatura(arbol, nombre_old, nombre_new):
         res.info[0] = nombre_new
     else:
         print("No se encontró criatura", nombre_old, " por lo que no se le pudo modificar su nombre")
+
+
+# EJERCICIO 22
+
+def formatearTablaParaHuffman(tabla):
+    tabla_para_huffman = []
+
+    for elemento in tabla:
+        if elemento[0] not in [" ", ","]:
+            nuevo = [elemento[2], elemento[0]]
+            tabla_para_huffman.append(nuevo)
+
+    # Ordenamos de menor a mayor
+    tabla_para_huffman.sort()
+
+    # Agregamos la coma y el espacio
+    espacio_y_coma = filter(lambda x: x[0] in [" ", ","], tabla)
+    for elemento in espacio_y_coma:
+        simbolo_con_formato_para_huffman = [elemento[2], elemento[0]]
+        # tabla_para_huffman.append(simbolo_con_formato_para_huffman)
+        if elemento == ",":
+            tabla_para_huffman.insert(3, simbolo_con_formato_para_huffman)
+        else:
+            tabla_para_huffman.insert(10, simbolo_con_formato_para_huffman)
+
+    return tabla_para_huffman
+
+def obtenerLargoTotal(tabla):
+    total = 0
+    for item in tabla:
+        total += item[1]
+    return total
+
+def asignarFrecuencias(tabla):
+    largo_total = obtenerLargoTotal(tabla)
+
+    for item in tabla:
+        item[2] = item[1] / largo_total
+
+def moverse(raiz, digito):
+    if digito == '0':
+        return raiz.izq
+    else:
+        return raiz.der
+
+def decodificar2(arbol, mensaje):
+    msj_decodificado = ""
+    raiz = arbol
+
+    for caracter in mensaje:
+        raiz = moverse(raiz, caracter)
+
+        if esHoja(raiz):
+            msj_decodificado += raiz.info[1]
+            raiz = arbol
+        
+    return msj_decodificado
