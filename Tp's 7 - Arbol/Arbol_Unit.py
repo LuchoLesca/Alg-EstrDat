@@ -848,3 +848,71 @@ def busqPag(arbol, cantidad, lista=[]):
         busqPag(arbol.izq, cantidad, lista)
         busqPag(arbol.der, cantidad, lista)
         
+
+# Ejercicio 19
+
+class RegistroMeteorologico():
+
+    def __init__(self, temp, presion, humedad, visibilidad, viento):
+        self.temp = temp
+        self.presion = presion
+        self.humedad = humedad
+        self.visibilidad = visibilidad
+        self.viento = viento
+
+    def __str__(self):
+        return "Temp: {} - Presion: {} - Humedad: {} - Visib: {} - Viento: {}".format(self.temp, self.presion, self.humedad, self.visibilidad, self.viento)
+
+def genRegistroMeteorologico():
+    temp = round(uniform(2,40), 2)
+    presion = round(uniform(900, 1100), 2)
+    humedad = randint(50, 99)
+    visibilidad = round(uniform(5, 20), 2)
+    viento =round(uniform(1, 15), 2)
+
+    return RegistroMeteorologico(temp, presion, humedad, visibilidad, viento)
+
+def genArbolMeteorologico():
+    arbol = None
+
+    datos = [['Visibilidad', 15], ['Humedad', 70], 'Despejado', ['Viento', 8.7], ['Visibilidad', 8], ['Viento', 5], 'Parcialmente Nublado', ['Presion', 1013], ['Humedad', 92], 'Despejado', 'Nublado', ['Humedad', 96], ['Viento', 7.2], ['Visibilidad', 12], ['Viento', 12.2], 'Nublado', 'Mayormente Nublado', ['Presion', 1018], 'Nublado', 'Despejado', 'Mayormente Nublado', 'Lluvia', 'Nublado', ['Visibilidad', 1], 'Nublado', 'Lluvia', 'Mayormente Nublado']
+    codigo = [3000, 2000, 3010, 1000, 2800, 800, 1500, 2500, 2960, 700, 900, 2400, 2700, 2950, 2990, 2300, 2450, 2600, 2750, 2925, 2955, 2980, 2995, 2550, 2650, 2525, 2578]
+
+    for i in range(len(datos)):
+        arbol = insertarCampo(arbol, [datos[i], codigo[i]], 1)
+
+    return arbol
+
+
+def asignarValorRegistro(registro, key):
+    '''Devuelve el valor de un atributo del registro, dependiendo la clave pasada'''
+    valor = 0
+    if key == "Temperatura":
+        valor = registro.temp
+    elif key == "Presion":
+        valor = registro.presion
+    elif key == "Humedad":
+        valor = registro.humedad
+    elif key == "Visibilidad":
+        valor = registro.visibilidad
+    elif key == "Viento":
+        valor = registro.viento
+    return valor    
+
+
+def definirPronostico(arbol, registro):
+
+    while arbol is not None:
+        if esHoja(arbol):
+            return arbol.info[0]
+        else:
+            key = arbol.info[0][0]
+            umbral = arbol.info[0][1]
+            
+            valor = asignarValorRegistro(registro, key)
+            if valor <= umbral:
+                arbol = arbol.izq
+            else:
+                arbol = arbol.der
+
+    return arbol[0]

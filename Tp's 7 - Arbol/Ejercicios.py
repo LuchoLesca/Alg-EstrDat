@@ -681,7 +681,7 @@ def obtenerDebilidades(pokemon):
 
 # initFilePokemon()
 
-ruta_file = "Pokemons/pokemons"
+# ruta_file = "Pokemons/pokemons"
 
 # A
 """ 
@@ -833,18 +833,18 @@ else:
 # EJERCICIO 18
 
 
-ruta_file = "Libros/libros"
-
 # A Se cargan 100 libros
+""" 
+ruta_file = "Libros/libros"
 initFileLibros()
-
+ """
 
 # B
-
+""" 
 arbolTitulo = generarArbolLibro(ruta_file, "titulo")
 arbolISBN = generarArbolLibro(ruta_file, "isbn")
 arbolAutores = generarArbolLibro(ruta_file, "autores")
-
+ """
 # imprimirArbol(arbolTitulo)
 # imprimirArbol(arbolISBN)
 # imprimirArbol(arbolAutores)
@@ -1030,8 +1030,82 @@ else:
 
 
 
+# EJERCICIO 19
+""" 
+arbolRegistros = genArbolMeteorologico()
 
+registro = genRegistroMeteorologico()
+print("Registro analizado:", registro)
+pronostico = definirPronostico(arbolRegistros, registro)
+print("Pronostico:", pronostico)
+ """
 
+# EJERCICIO 20
+# 0: Criatura
+# 1: Derrotado por
+# 2: descripcion
+
+criatura_derrotado = [
+            ['Ceto', '', ''],
+            ['Tifon', 'Zeus', ''],
+            ['Equidna', 'Argos Panoptes', ''],
+            ['Dino', '', ''],
+            ['Pefredo', '', ''],
+            ['Enio', '', ''],
+            ['Escila', '', ''],
+            ['Caribdis', '', ''],
+            ['Euriale', '', ''],
+            ['Esteno', '', ''],
+            ['Medusa', 'Perseo', ''],
+            ['Ladon', 'Heracles', ''],
+            ['Aguila del Caucaso', '', ''],
+            ['Quimera', 'Belerofonte', ''],
+            ['Hidra de Lerna', 'Heracles', ''],
+            ['Leon de Nemea', 'Heracles', ''],
+            ['Esfinge', 'Edipo', ''],
+            ['Dragon de la Colquida', '', ''],
+            ['Cerbero', '', ''],
+            ['Cerda de Cromion', 'Teseo', ''],
+            ['Ortro', 'Heracles', ''],
+            ['Toro de Creta', 'Teseo', ''],
+            ['Jabali de Calidon', 'Atalanta', ''],
+            ['Carcinos ', '', ''],
+            ['Gerion', 'Heracles', ''],
+            ['Cloto', '', ''],
+            ['Laquesis', '', ''],
+            ['Atropos', '', ''],
+            ['Minotauro de Creta', 'Teseo', ''],
+            ['Harpias', '', ''],
+            ['Argos Panoptes', 'Hermes', ''],
+            ['Aves del Estinfalo', '', ''],
+            ['Talos', 'Medea', ''],
+            ['Sirenas', '', ''],
+            ['Piton', 'Apolo', ''],
+            ['Cierva de Cerinea', '', ''],
+            ['Basilisco', '', ''],
+            ['Jabali de Erimanto', '', '']
+        ]
+
+arbolCriaturas = None
+for criatura in criatura_derrotado:
+    arbolCriaturas = insertarCampo(arbolCriaturas, criatura, 0)
+
+# A
+inorden(arbolCriaturas)
+
+# B
+
+# C
+nombre_criatura = "Talos"
+res = busquedaCampo(arbolCriaturas, nombre_criatura, 0)
+print()
+if res:
+    print("Nombre:", res.info[0])
+    print("Derrotado por:", res.info[1])
+    print("Descripcion:", res.info[2])
+else:
+    print("No se encontró datos de la criatura", nombre_criatura)
+    
 
 
 

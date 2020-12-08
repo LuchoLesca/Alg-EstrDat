@@ -1,3 +1,7 @@
+N-ario y transformada Knuth
+
 3- Transformar arbol n-ario a binario no balanceado (Transformada de Knuth)
 
 6- Transformada Knuth
+
+20 - Transformada Knuth
