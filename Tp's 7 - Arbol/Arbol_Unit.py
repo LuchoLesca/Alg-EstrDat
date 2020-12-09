@@ -439,7 +439,7 @@ def descomprimirMedicion(arbol, mensaje):
                 raiz = raiz.izq
             else:
                 raiz = raiz.der
-        segmentos.append(raiz.info[1])
+        segmentos.append(raiz.info)
         raiz = arbol
 
     return "-".join(segmentos)

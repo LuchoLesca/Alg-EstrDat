@@ -1,5 +1,5 @@
 import random
-
+from math import sqrt
 
 class NodoCola():
     info, sig = None, None
@@ -98,7 +98,7 @@ def primo(num):
         return True
     else:
         i = 2
-        while (i <= math.sqrt(num)) and pri:
+        while (i <= sqrt(num)) and pri:
             if (i != num) and (num % i == 0):
                 pri = False
             i += 1

@@ -27,7 +27,7 @@ def guardar(archivo, dato):
     try:
         archivo[str(len(archivo))] = dato
     except Exception:
-        raise None
+        raise Exception
 
 
 def modificar(archivo, dato, pos):
@@ -35,7 +35,7 @@ def modificar(archivo, dato, pos):
         archivo[str(pos)] = dato
         return True
     except Exception:
-        raise None
+        raise Exception
 
 
 def barridoArchivo(archivo):
@@ -76,4 +76,4 @@ def limpiar(archivo):
         archivo.clear()
         return True
     except Exception:
-        raise None
+        raise Exception

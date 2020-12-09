@@ -319,15 +319,15 @@ tabla = [
             [0.09, "M"],
             [0.15, "T"]
         ]
-
+ """
 # A
-
+""" 
 raiz = crearArbolHuffman(tabla)
 imprimirArbol(raiz)
 print()
-
+ """
 # B
-
+""" 
 msj_in = "AF130M3TF"
 msj_cod = comprimir(raiz, msj_in)
 print("Mensaje original: ", msj_in)
@@ -624,7 +624,7 @@ listadoIndicesPeso(arbol_nombres, archivo)
 
 
 # EJERCICIO 15
-""" 
+
 tabla = [
             [0.22, "Despejado"],
             [0.15, "Nublado"],
@@ -638,9 +638,9 @@ tabla = [
             [0.02, "7"],
             [0.025, "8"]
         ]
- """
+
 # B 
-# raiz = crearArbolHuffman(tabla)
+raiz = crearArbolHuffman(tabla)
 
 # Para controlar
 """
@@ -654,8 +654,8 @@ print(dic)
 msj_original = nanoMensaje()
 msj_comprimido = comprimirMedicion(raiz, msj_original)
 msj_descomprimido = descomprimirMedicion(raiz, msj_comprimido)
- """
-"""
+
+
 print()
 print("Mensaje original:", msj_original)
 print("Mensaje comprimido:", msj_comprimido)
