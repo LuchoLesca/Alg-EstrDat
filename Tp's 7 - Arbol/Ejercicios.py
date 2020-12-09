@@ -144,7 +144,7 @@ print("Resultado:\n", calcular(raiz2))
 # EJERCICIO 3
 
 # txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
-'''
+
 a_indices = abrir("Indices/indice_summerville")
 aknuth = fileToBinaryTree(a_indices)
 cerrar(a_indices)
@@ -160,7 +160,7 @@ barridoKnuth(aknuth)
 def busquedaKnuthCampo(raiz, buscado, campo):
     pass
 
-'''
+
 
 
 

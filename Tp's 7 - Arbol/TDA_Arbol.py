@@ -584,11 +584,21 @@ def barridoKnuth(raiz):
         barridoKnuth(raiz.izq)
         for elemento in raiz.der:
             barridoKnuth(elemento)
+
+
+def busquedaKnuth(raiz):
+    aux = None
+    if raiz is not None:
+        if raiz.info
+        barridoKnuth(raiz.izq)
+        for elemento in raiz.der:
+            barridoKnuth(elemento)
+
+            
 # --------------------------------------------------------------------------- #
-
-
 # --------------------------------------------------------------------------- #
 # ------------------- Funciones referidas a arbol de Huffman -----------------#
+# --------------------------------------------------------------------------- #
 # --------------------------------------------------------------------------- #
 
 def crearArbolHuffman(tabla, comparacion=None):
@@ -612,6 +622,7 @@ def crearArbolHuffman(tabla, comparacion=None):
         if comparacion:
             lista_nodos.sort(key=comparacion)
         else:
+
             lista_nodos.sort(key=lambda x: x.valor)
 
     return lista_nodos[0]
