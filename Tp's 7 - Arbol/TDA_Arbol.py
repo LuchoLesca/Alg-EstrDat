@@ -56,6 +56,15 @@ class Nodoarbol():
         self.altura = 0
 
 
+class NodoArbolHuffman():
+
+    def __init__(self, valor, dato, izq=None, der=None):
+        self.izq = izq
+        self.der = der
+        self.info = dato
+        self.valor = valor
+
+
 def altura(raiz):
     if (raiz is None):
         return -1
@@ -582,64 +591,30 @@ def barridoKnuth(raiz):
 # ------------------- Funciones referidas a arbol de Huffman -----------------#
 # --------------------------------------------------------------------------- #
 
-def insertarHuffman(l, nodoarbol):
-    '''Inserta nuevo nodo en lista de nodosarbol'''
-    nodo = NodoLista()
-    nodo.info = nodoarbol
-
-    if (l.inicio is None) or (nodo.info.info[0] < l.inicio.info.info[0]):
-        nodo.sig = l.inicio
-        l.inicio = nodo
-    else:  # Si va al medio o a lo último
-        anterior = l.inicio
-        actual = l.inicio.sig
-        while (actual is not None) and (actual.info.info[0] <= nodo.info.info[0]):
-            actual = actual.sig
-            anterior = anterior.sig
-        nodo.sig = actual
-        anterior.sig = nodo
-    l.tamanio += 1
-
-
-def eliminarHuffman(l):
-    aux = None
-    if l.tamanio >= 1:
-        aux = l.inicio
-        l.inicio = l.inicio.sig
-        l.tamanio -= 1
-    return aux.info
-
-
-def tablaToListaNodos(tabla):
-    '''Transforma tabla ingresada en lista de nodos arbol, ordenada'''
-    tabla.sort(key=lambda x: x[0])
-
-    # Creación de nodo hoja
-    lista_nodos = Lista()
-
-    # Inserción ordenada de nodos en una lista
-    for elemento in tabla:
-        insertarHuffman(lista_nodos, Nodoarbol(elemento))
-
-    return lista_nodos
-
-
-def crearArbolHuffman(tabla):
+def crearArbolHuffman(tabla, comparacion=None):
     '''Devuelve la raiz de un arbol de huffman a partir de tabla de
     concurrencias dada'''
+    # Nodo va a ser info, frec
+    lista_nodos = []
 
-    lista_nodos = tablaToListaNodos(tabla)
+    for item in tabla:
+        nodo = NodoArbolHuffman(item[0], item[1])
+        lista_nodos.append(nodo)
 
-    while lista_nodos.tamanio > 1:
-        nod1 = eliminarHuffman(lista_nodos)
-        nod2 = eliminarHuffman(lista_nodos)
-        frec_nueva = nod1.info[0]+nod2.info[0]
-        info_nueva = [frec_nueva, None]
-        nod3 = Nodoarbol(info_nueva, nod1, nod2)
+    while len(lista_nodos) > 1:
+        nodo1 = lista_nodos.pop(0)
+        nodo2 = lista_nodos.pop(0)
+        
+        frec_nueva = nodo1.valor + nodo2.valor
+        nodo3 = NodoArbolHuffman(frec_nueva, None, nodo1, nodo2)
+        lista_nodos.append(nodo3)
 
-        insertarHuffman(lista_nodos, nod3)
+        if comparacion:
+            lista_nodos.sort(key=comparacion)
+        else:
+            lista_nodos.sort(key=lambda x: x.valor)
 
-    return lista_nodos.inicio.info
+    return lista_nodos[0]
 
 
 def huffmanToDicCodificaciones(raiz, diccionario, codif=""):
@@ -650,7 +625,7 @@ def huffmanToDicCodificaciones(raiz, diccionario, codif=""):
         if hijoDer(raiz) is not None:
             huffmanToDicCodificaciones(raiz.der, diccionario, codif+"1")
     else:
-        diccionario.setdefault(raiz.info[1], codif)
+        diccionario.setdefault(raiz.info, codif)
 
 
 def comprimir(arbol, mensaje):
@@ -662,8 +637,14 @@ def comprimir(arbol, mensaje):
 
     for caracter in mensaje:
         msj_codificado += dicc_codif.get(caracter)
-
     return msj_codificado
+
+
+def moverse(raiz, caracter):
+    if caracter == "0":
+        return raiz.izq
+    else:
+        return raiz.der
 
 
 def decodificar(arbol, mensaje):
@@ -673,13 +654,14 @@ def decodificar(arbol, mensaje):
 
     while len(mensaje) >= 1:
         while not esHoja(raiz):
-            car = mensaje[0]
-            mensaje = mensaje[1:]
+            if len(mensaje) > 0:
+                car = mensaje[0]
+                mensaje = mensaje[1:]
             if car == "0":
                 raiz = raiz.izq
             else:
                 raiz = raiz.der
-        msj_decodificado += raiz.info[1]
+        msj_decodificado += raiz.info
         raiz = arbol
 
     return msj_decodificado
