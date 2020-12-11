@@ -1,6 +1,7 @@
 from TDA_Lista import Lista, NodoLista
 from random import randint
 from TDA_Archivo import *
+from TDA_Pila_Nodo import * 
 
 # Grado de nodo = LA cantidad de nodos que hereda(hijo) un nodohuffs
 
@@ -19,10 +20,13 @@ from TDA_Archivo import *
 
 # Arbol perfecto cuando todas las hojas están en el mismo nivel
 
+
+# ----------------------------- #
 # ----------------------------- #
 # USADOS PARA ARBOL DE DECISION #
-#          (Eejercicio 12)      #
 # ----------------------------- #
+# ----------------------------- #
+
 
 class Nodoarbol2():
 
@@ -44,8 +48,8 @@ def insertarArbol2(raiz, dato, peso):
     return raiz
 
 
+# ------------------------------------------------------ #
 
-# Continúa normal a partir de acá
 
 class Nodoarbol():
 
@@ -54,15 +58,6 @@ class Nodoarbol():
         self.izq = izq
         self.der = der
         self.altura = 0
-
-
-class NodoArbolHuffman():
-
-    def __init__(self, valor, dato, izq=None, der=None):
-        self.izq = izq
-        self.der = der
-        self.info = dato
-        self.valor = valor
 
 
 def altura(raiz):
@@ -486,6 +481,14 @@ def determinarPadre(raiz, buscado):
 # --------------------Funciones referidas a transformada de knuth-------------#
 # --------------------------------------------------------------------------- #
 
+class NodoArbolKnuth():
+
+    def __init__(self, info, izq=None, der=None):
+        self.info = info
+        self.izq = izq
+        self.der = der
+
+
 def esTitulo1(linea):
     if linea.count(".") == 1:
         return True
@@ -507,62 +510,49 @@ def esTitulo3(linea):
         return False
 
 
+def tieneHijos(array):
+    return len(array[1]) > 0
+
+
+def fileToDict(archivo):
+    '''Devuelve un diccionario de indice ingresado'''
+    pass
+
 def fileToVector(archivo):
     '''Devuelve un vector de indice ingresado'''
     pos = 0
-    vectori = []
-    while pos < len(archivo):
+    vector = []
+    tam_file = len(archivo)
+
+    while pos < tam_file:
         line = leer(archivo, pos)
+        line = line.replace("\n", '')
+        # print(line)
+
         if esTitulo1(line):
-            vectori.append([line, []])
+            vector.append([line, []])
+        
         if esTitulo2(line):
-            ultimotitulo = vectori[len(vectori)-1]
-            subtitulos = ultimotitulo[1]
-            subtitulos.append([line, []])
+            ultimotitulo1 = vector[-1]
+            titulos2 = ultimotitulo1[1]
+            titulos2.append([line, []])
+        
         if esTitulo3(line):
-            ultimotitulo = vectori[len(vectori)-1]
-            subtitulos = ultimotitulo[1]
-            ultimosubtitulo = subtitulos[len(subtitulos)-1]
-            ultimosubtitulo[1].append([line, []])
+            ultimotitulo1 = vector[-1]
+            titulos2 = ultimotitulo1[1]
+            ultimotitulos2 = titulos2[-1]
+            titulos3 = ultimotitulos2[1]
+            titulos3.append([line, []])
+        
+        
         pos += 1
-    return vectori
+        line = leer(archivo, pos)
+    return vector
 
 
 def fileToBinaryTree(archivo):
     '''Convierte archivo en arbol binario a traves de transformada de knuth'''
-    # Primero transforma el archivo directorio en vector con vectores dentro
-    # y luego trabaja ese vector, transformandolo a arbol binario
-    vector = fileToVector(archivo)
-    raiz = Nodoarbol("INDICE", None, [])
-
-    for i in range(len(vector)):
-        titulo = vector[i]  # vector Titulo
-        subtitulos = titulo[1]  # Lista subtitulos
-        nod1 = Nodoarbol(titulo[0], None, [])
-
-        for subs in subtitulos:
-            nod2 = Nodoarbol(subs[0], None, [])
-
-            for subs2 in subs[1]:
-                nod3 = Nodoarbol(subs2[0], None, [])
-
-                if nod2.izq is None:
-                    nod2.izq = nod3
-                else:
-                    nod2.der.append(nod3)
-
-            if nod1.izq is None:
-                nod1.izq = nod2
-            else:
-                nod1.der.append(nod2)
-
-        if raiz.izq is None:
-            raiz.izq = nod1
-        else:
-            raiz.der.append(nod1)
-
-    return raiz
-
+    pass
 
 def imprimirVectorKnuth(vector):
     '''Barrido e impresión del vector transformado desde archivo'''
@@ -589,8 +579,8 @@ def barridoKnuth(raiz):
 def busquedaKnuth(raiz):
     aux = None
     if raiz is not None:
-        if raiz.info
-        barridoKnuth(raiz.izq)
+        if raiz.info:
+            barridoKnuth(raiz.izq)
         for elemento in raiz.der:
             barridoKnuth(elemento)
 
@@ -600,6 +590,16 @@ def busquedaKnuth(raiz):
 # ------------------- Funciones referidas a arbol de Huffman -----------------#
 # --------------------------------------------------------------------------- #
 # --------------------------------------------------------------------------- #
+
+
+class NodoArbolHuffman():
+
+    def __init__(self, valor, dato, izq=None, der=None):
+        self.izq = izq
+        self.der = der
+        self.info = dato
+        self.valor = valor
+
 
 def crearArbolHuffman(tabla, comparacion=None):
     '''Devuelve la raiz de un arbol de huffman a partir de tabla de
@@ -678,3 +678,110 @@ def decodificar(arbol, mensaje):
     return msj_decodificado
 
 # ------------------------------------------------------------------------
+
+
+
+# --------------------------------------------------------------------------- #
+# --------------------------------------------------------------------------- #
+# ------------------- Funciones referidas a arbol n-ario----------------------#
+# --------------------------------------------------------------------------- #
+# --------------------------------------------------------------------------- #
+
+
+class NodoNario(object):
+
+    def __init__(self, info):
+        self.info = info
+        self.hijos = []
+
+""" 
+def busquedaNario(raiz, buscado):
+    '''Busqueda iterativa, ya que sino supero el stack de recursividad'''
+    aux = None
+    revisar = []
+    
+    # Si el arbol está vacío, retorno vacío, sino agrega en revisar y comienza el while
+    if raiz is not None:
+        revisar.append(raiz)
+    else:
+        return None
+    
+    while (len(revisar) > 0) and (aux is None):
+        nodo = revisar.pop(0)
+        if(nodo.info == buscado):
+            aux = nodo
+        else:
+            for hijo in nodo.hijos:
+                revisar.append(hijo)
+    return aux
+ """
+
+def insertarNario(raiz, info_padre, info):
+    '''Busca el nodo padre. Si lo encuentra, inserta el nodo hijo en él'''
+    if raiz is None:
+        raiz = NodoNario(info)
+    else:
+        nodo_padre = busquedaNario(raiz, info_padre)
+    
+        if nodo_padre:
+            hijo = NodoNario(info)
+            nodo_padre.hijos.append(hijo)
+            # print("Se inserto", info, "en", info_padre)
+    
+    return raiz
+
+
+def busquedaNario(raiz, buscado, aux=None):
+    '''Busqueda recursiva de un nodo'''
+    
+    if (raiz is not None) and (aux is None):
+        if (raiz.info == buscado):
+            aux = raiz
+        else:
+            for hijo in raiz.hijos:
+                aux = busquedaNario(hijo, buscado, aux)
+    return aux
+
+
+def barridoNario(raiz):
+    if raiz is not None:
+        print(raiz.info)
+        for hijo in raiz.hijos:
+            barridoNario(hijo)
+
+
+def fileToNario(archivo):
+    arbol = None
+    pos = 0
+
+    arbol = insertarNario(arbol, None, "INDICE")
+    largo_archivo = len(archivo)
+
+    ultimo_titulo1 = None
+    ultimo_titulo2 = None
+
+
+    while pos < largo_archivo:
+        line = leer(archivo, pos)
+        line = line.replace("\n", "")
+
+        if esTitulo1(line):
+            arbol = insertarNario(arbol, "INDICE", line)
+            
+            ultimo_titulo1 = line
+
+        if esTitulo2(line):
+            padre = ultimo_titulo1
+            arbol = insertarNario(arbol, padre, line)
+            
+            ultimo_titulo2 = line
+
+        if esTitulo3(line):
+            padre = ultimo_titulo2
+            arbol = insertarNario(arbol, padre, line)
+
+        pos += 1
+        line = leer(archivo, pos)
+
+
+    return arbol
