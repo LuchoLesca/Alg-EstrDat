@@ -1,7 +1,8 @@
 from TDA_Lista import Lista, NodoLista
 from random import randint
 from TDA_Archivo import *
-from TDA_Pila_Nodo import * 
+from TDA_Pila_Nodo import *
+from TDA_Cola_Nodo import Cola, arribo, atencion, cola_vacia, barridoC, colaToList
 
 # Grado de nodo = LA cantidad de nodos que hereda(hijo) un nodohuffs
 
@@ -53,8 +54,8 @@ def insertarArbol2(raiz, dato, peso):
 
 class Nodoarbol():
 
-    def __init__(self, dato, izq=None, der=None):
-        self.info = dato
+    def __init__(self, info, izq=None, der=None):
+        self.info = info
         self.izq = izq
         self.der = der
         self.altura = 0
@@ -443,6 +444,7 @@ def recortarArbol(raiz, bosque, hasta, nivel_act=0):
 
 #---------------------------------------------------#
 
+
 def nivelLleno(raiz, nivel):
     '''Devuelve True si el nivel seleccionado está lleno'''
     return nodosEnNivel(raiz, nivel) == calcNodosNivel(nivel)
@@ -476,115 +478,7 @@ def determinarPadre(raiz, buscado):
                 aux = determinarPadre(raiz.der, buscado)
     return aux
 
-
-# ----------------------------------------------------------------------------#
-# --------------------Funciones referidas a transformada de knuth-------------#
-# --------------------------------------------------------------------------- #
-
-class NodoArbolKnuth():
-
-    def __init__(self, info, izq=None, der=None):
-        self.info = info
-        self.izq = izq
-        self.der = der
-
-
-def esTitulo1(linea):
-    if linea.count(".") == 1:
-        return True
-    else:
-        return False
-
-
-def esTitulo2(linea):
-    if linea.count(".") == 2:
-        return True
-    else:
-        return False
-
-
-def esTitulo3(linea):
-    if linea.count(".") == 3:
-        return True
-    else:
-        return False
-
-
-def tieneHijos(array):
-    return len(array[1]) > 0
-
-
-def fileToDict(archivo):
-    '''Devuelve un diccionario de indice ingresado'''
-    pass
-
-def fileToVector(archivo):
-    '''Devuelve un vector de indice ingresado'''
-    pos = 0
-    vector = []
-    tam_file = len(archivo)
-
-    while pos < tam_file:
-        line = leer(archivo, pos)
-        line = line.replace("\n", '')
-        # print(line)
-
-        if esTitulo1(line):
-            vector.append([line, []])
-        
-        if esTitulo2(line):
-            ultimotitulo1 = vector[-1]
-            titulos2 = ultimotitulo1[1]
-            titulos2.append([line, []])
-        
-        if esTitulo3(line):
-            ultimotitulo1 = vector[-1]
-            titulos2 = ultimotitulo1[1]
-            ultimotitulos2 = titulos2[-1]
-            titulos3 = ultimotitulos2[1]
-            titulos3.append([line, []])
-        
-        
-        pos += 1
-        line = leer(archivo, pos)
-    return vector
-
-
-def fileToBinaryTree(archivo):
-    '''Convierte archivo en arbol binario a traves de transformada de knuth'''
-    pass
-
-def imprimirVectorKnuth(vector):
-    '''Barrido e impresión del vector transformado desde archivo'''
-    for i in range(len(vector)):
-        titulo = vector[i]  # vector Titulo
-        subtitulos = titulo[1]  # Lista subtitulos
-        print(titulo[0])  # Nombre titulo
-        for subs in subtitulos:
-            print("   ", subs[0])  # Nombre subtitulo
-            for subs2 in subs[1]:
-                print("   ", subs2[0])   # nombre subtitulo 2
-        print()
-
-
-def barridoKnuth(raiz):
-    '''Realiza barrido de arbol binario creado con transformada de Knuth'''
-    if raiz is not None:
-        print(raiz.info)
-        barridoKnuth(raiz.izq)
-        for elemento in raiz.der:
-            barridoKnuth(elemento)
-
-
-def busquedaKnuth(raiz):
-    aux = None
-    if raiz is not None:
-        if raiz.info:
-            barridoKnuth(raiz.izq)
-        for elemento in raiz.der:
-            barridoKnuth(elemento)
-
-            
+          
 # --------------------------------------------------------------------------- #
 # --------------------------------------------------------------------------- #
 # ------------------- Funciones referidas a arbol de Huffman -----------------#
@@ -694,6 +588,28 @@ class NodoNario(object):
         self.info = info
         self.hijos = []
 
+
+def esTitulo1(linea):
+    if linea.count(".") == 1:
+        return True
+    else:
+        return False
+
+
+def esTitulo2(linea):
+    if linea.count(".") == 2:
+        return True
+    else:
+        return False
+
+
+def esTitulo3(linea):
+    if linea.count(".") == 3:
+        return True
+    else:
+        return False
+
+
 """ 
 def busquedaNario(raiz, buscado):
     '''Busqueda iterativa, ya que sino supero el stack de recursividad'''
@@ -783,5 +699,94 @@ def fileToNario(archivo):
         pos += 1
         line = leer(archivo, pos)
 
-
     return arbol
+
+
+# ----------------------------------------------------------------------------#
+# ----------------------------------------------------------------------------#
+# --------------------Funciones referidas a transformada de knuth-------------#
+# --------------------------------------------------------------------------- #
+# --------------------------------------------------------------------------- #
+
+
+def busquedaKnuth(raiz, buscado):
+    aux = None
+    if raiz is not None:
+        # print("Paso por:", raiz.info)
+        if raiz.info == buscado:
+            # print("Lo encontré dentro de busquedaknuth")
+            return raiz
+        else:
+            aux = busquedaKnuth(raiz.izq, buscado)
+            if not aux:
+                aux = busquedaKnuth(raiz.der, buscado)
+    return aux
+
+
+def getHijosEnlazados(nodo_nario):
+    '''Devuelve una lista de los nodos hijos, pero en vez de como nodoNario, como nodosarbol'''
+    inicio, aux = None, None
+
+    # Si tiene hijos, se extrae la data del primero y empaqueta en un nodo
+    if len(nodo_nario.hijos) > 0:
+        info_hijo = nodo_nario.hijos.pop(0).info
+        nodo_b = Nodoarbol(info_hijo)
+        
+        inicio = nodo_b
+        aux = inicio
+
+    # Si tiene más de un hijo, se extrae la data de todos y enlazan los nodos
+    for hijo_restante in nodo_nario.hijos:
+        info = hijo_restante.info
+        nodo_b = Nodoarbol(info)
+        
+        aux.der = nodo_b
+        aux = nodo_b
+    return inicio
+
+def narioToCola(arbol_n, cola):
+    if arbol_n is not None:
+        arribo(cola, arbol_n)
+
+        for hijo in arbol_n.hijos:
+            narioToCola(hijo, cola)
+
+""" 
+def recDer(nodo):
+    aux = nodo
+    while aux:
+        print(aux.info)
+        aux = aux.der """
+
+
+def narioToBinario(raiz):
+    arbol_k = Nodoarbol("INDICE")
+    cola = Cola()
+    narioToCola(raiz, cola)
+    nodos_n = colaToList(cola)
+
+    for nodo in nodos_n:
+        # print(nodo.info)
+        hijos_puntero_inicio = getHijosEnlazados(nodo)
+        
+        if hijos:
+            # print("Busqueda de", nodo.info)
+            respuesta = busquedaKnuth(arbol_k, nodo.info)
+            # print("Fuerda de busqudaKnuth, respuesta", respuesta)
+            if respuesta:
+                respuesta.izq = hijos_puntero_inicio
+    
+        # input()
+
+
+
+    return arbol_k
+
+
+def barridoKnuth(arbol):
+    '''Realiza un recorrido, imprimiendo el arbol en el orden original'''
+    if arbol is not None:
+        print(arbol.info)
+        barridoKnuth(arbol.izq)
+        barridoKnuth(arbol.der)
+    

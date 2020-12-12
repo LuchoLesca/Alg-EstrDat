@@ -143,35 +143,24 @@ print("Resultado:\n", calcular(raiz2))
 
 # EJERCICIO 3
 
+def recDer(nodo):
+    aux = nodo
+    while aux:
+        print(aux.info)
+        aux = aux.der
+
 # txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
 
 a_indices = abrir("Indices/indice_summerville")
-
-
-arbol = fileToNario(a_indices)
-# barridoNario(arbol)
-
-print()
-print()
-
-barridoNario(arbol)
-
+arbol_nario = fileToNario(a_indices)
 cerrar(a_indices)
 
-# Barrido con el vector, lo pasa a dic y hace el barrido ahí
-""" 
-vec = dict(vec)
-for key in vec.keys():
-    print(key)
-    values = dict(vec[key])
-    for key in values.keys():
-        print("  ", key)
-        values2 = dict(values[key])
-        for key in values2.keys():
-            print("    ", key)
- """
-# barridoKnuth(aknuth)
+arbol_b = narioToBinario(arbol_nario)
 
+# A
+""" 
+barridoKnuth(arbol_b)
+ """
 
 # B
 
