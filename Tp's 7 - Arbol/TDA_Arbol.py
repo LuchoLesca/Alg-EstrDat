@@ -712,15 +712,27 @@ def fileToNario(archivo):
 def busquedaKnuth(raiz, buscado):
     aux = None
     if raiz is not None:
-        # print("Paso por:", raiz.info)
         if raiz.info == buscado:
-            # print("Lo encontré dentro de busquedaknuth")
             return raiz
         else:
             aux = busquedaKnuth(raiz.izq, buscado)
             if not aux:
                 aux = busquedaKnuth(raiz.der, buscado)
     return aux
+
+
+def busquedaCoincidenciasKnuth(raiz, buscado, lista_coincidencias=[]):
+    # aux = None
+    if raiz is not None:
+        if buscado in raiz.info:
+            lista_coincidencias.append(raiz)
+        busquedaCoincidenciasKnuth(raiz.izq, buscado, lista_coincidencias)
+        busquedaCoincidenciasKnuth(raiz.der, buscado, lista_coincidencias)
+        # else:
+            # aux = busquedaCoincidenciasKnuth(raiz.izq, buscado, lista_coincidencias)
+            # if not aux:
+                # aux = busquedaCoincidenciasKnuth(raiz.der, lista_coincidencias)
+    # return aux
 
 
 def getHijosEnlazados(nodo_nario):
@@ -744,6 +756,7 @@ def getHijosEnlazados(nodo_nario):
         aux = nodo_b
     return inicio
 
+
 def narioToCola(arbol_n, cola):
     if arbol_n is not None:
         arribo(cola, arbol_n)
@@ -751,34 +764,21 @@ def narioToCola(arbol_n, cola):
         for hijo in arbol_n.hijos:
             narioToCola(hijo, cola)
 
-""" 
-def recDer(nodo):
-    aux = nodo
-    while aux:
-        print(aux.info)
-        aux = aux.der """
-
 
 def narioToBinario(raiz):
-    arbol_k = Nodoarbol("INDICE")
+    arbol_k = Nodoarbol(raiz.info)
     cola = Cola()
     narioToCola(raiz, cola)
     nodos_n = colaToList(cola)
 
     for nodo in nodos_n:
-        # print(nodo.info)
         hijos_puntero_inicio = getHijosEnlazados(nodo)
         
         if hijos:
-            # print("Busqueda de", nodo.info)
             respuesta = busquedaKnuth(arbol_k, nodo.info)
-            # print("Fuerda de busqudaKnuth, respuesta", respuesta)
+            
             if respuesta:
                 respuesta.izq = hijos_puntero_inicio
-    
-        # input()
-
-
 
     return arbol_k
 

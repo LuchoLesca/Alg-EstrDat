@@ -119,6 +119,7 @@ def mostrarParte(arbol, buscado):
     else:
         print("El subtitulo", buscado, "no se encuentra registrado")
 
+# C
 
 def getPagina(arbol, buscado):
     respuesta = busquedaKnuth(arbol, buscado)
@@ -127,11 +128,14 @@ def getPagina(arbol, buscado):
         info = respuesta.info
         fragmentos = info.split(" ")
         pagina = fragmentos[-1]
+
+        if pagina.isnumeric():
+            return pagina
+        else:
+            return -1
     
     else:
-        pagina = -1
-
-    return pagina
+        return -1
 
 
 

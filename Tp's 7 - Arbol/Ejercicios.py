@@ -163,13 +163,30 @@ mostrarParte(arbol_b, buscado)
  """
 
 # C
-
-buscado = "15. Disenio de software de tiempo real 309"
+""" 
+buscado = "16.4. Prototipado de la interfaz de usuario 348"
 pag = getPagina(arbol_b, buscado)
-print(pag)
+if pag != -1:
+    print(pag)
+else:
+    print("No se pudo obtener la pagina de", buscado)
+ """
 
 
+# E
+""" 
+lista_coincidencias = []
+buscados = ["modelo", "metrica"]
 
+for buscado in buscados:
+    busquedaCoincidenciasKnuth(arbol_b, buscado, lista_coincidencias)
+
+if len(lista_coincidencias) > 0:
+    for nodo_coincidente in lista_coincidencias:
+        print(nodo_coincidente.info)
+else:
+    print("No se encontraron tema que contentan la/s palabra/s buscada/s")
+ """
 
 
 # EJERCICIO 4
