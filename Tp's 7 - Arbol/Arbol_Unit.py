@@ -97,6 +97,45 @@ def arbolPruebaB(r=None):
     return r
 
 
+
+# EJERCICIO 3
+
+# B
+
+def recDer(nodo):
+    ''' Realiza el recorrido hacia la derecha del nodo pasado'''
+    aux = nodo
+    while aux:
+        print(aux.info)
+        aux = aux.der
+
+
+def mostrarParte(arbol, buscado):
+    respuesta = busquedaKnuth(arbol, buscado)
+
+    if respuesta:
+        print(respuesta.info)
+        barridoKnuth(respuesta.izq)
+    else:
+        print("El subtitulo", buscado, "no se encuentra registrado")
+
+
+def getPagina(arbol, buscado):
+    respuesta = busquedaKnuth(arbol, buscado)
+
+    if respuesta:
+        info = respuesta.info
+        fragmentos = info.split(" ")
+        pagina = fragmentos[-1]
+    
+    else:
+        pagina = -1
+
+    return pagina
+
+
+
+
 # EJERCICIO 5
 
 def mostrarVillanos(raiz):

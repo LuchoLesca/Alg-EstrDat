@@ -143,12 +143,6 @@ print("Resultado:\n", calcular(raiz2))
 
 # EJERCICIO 3
 
-def recDer(nodo):
-    aux = nodo
-    while aux:
-        print(aux.info)
-        aux = aux.der
-
 # txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
 
 a_indices = abrir("Indices/indice_summerville")
@@ -163,6 +157,19 @@ barridoKnuth(arbol_b)
  """
 
 # B
+""" 
+buscado = "15. Disenio de software de tiempo real 309"
+mostrarParte(arbol_b, buscado)
+ """
+
+# C
+
+buscado = "15. Disenio de software de tiempo real 309"
+pag = getPagina(arbol_b, buscado)
+print(pag)
+
+
+
 
 
 # EJERCICIO 4
