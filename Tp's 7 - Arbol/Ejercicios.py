@@ -172,6 +172,11 @@ else:
     print("No se pudo obtener la pagina de", buscado)
  """
 
+# D
+""" 
+cantidad_capitulos = contarCantidadCapitulos(arbol_b)
+print("El indice tiene", cantidad_capitulos, "capitulos")
+ """
 
 # E
 """ 

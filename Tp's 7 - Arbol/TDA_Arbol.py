@@ -728,11 +728,6 @@ def busquedaCoincidenciasKnuth(raiz, buscado, lista_coincidencias=[]):
             lista_coincidencias.append(raiz)
         busquedaCoincidenciasKnuth(raiz.izq, buscado, lista_coincidencias)
         busquedaCoincidenciasKnuth(raiz.der, buscado, lista_coincidencias)
-        # else:
-            # aux = busquedaCoincidenciasKnuth(raiz.izq, buscado, lista_coincidencias)
-            # if not aux:
-                # aux = busquedaCoincidenciasKnuth(raiz.der, lista_coincidencias)
-    # return aux
 
 
 def getHijosEnlazados(nodo_nario):

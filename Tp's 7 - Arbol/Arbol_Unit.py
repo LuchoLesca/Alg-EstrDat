@@ -138,6 +138,17 @@ def getPagina(arbol, buscado):
         return -1
 
 
+# D
+
+def contarCantidadCapitulos(inicio_indice):
+    cantidad = 0
+
+    aux = inicio_indice.izq
+    while aux is not None:
+        cantidad += 1
+        aux = aux.der
+    return cantidad
+
 
 
 # EJERCICIO 5
