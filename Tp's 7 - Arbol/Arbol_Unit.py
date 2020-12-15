@@ -179,6 +179,89 @@ def contHeores(raiz):
         return 0
 
 
+# EJERCICIO 6
+
+def esNombreDeArchivo(nombre):
+    '''Retorna si es el nombre corresponde a un archivo'''
+    return nombre.count(".") > 0
+        
+
+def indiceDirectorioToNario(archivo):
+    '''Retorna un arbol nario del archivo (con formato específico) pasado. Cada nodo.info contiene un array'''
+    arbol = None
+    pos = 0
+
+    arbol = insertarNario(arbol, None, "INDICE")
+    largo_archivo = len(archivo)
+
+    ultimo_titulo1 = None
+    ultimo_titulo2 = None
+
+
+    while pos < largo_archivo:
+        line = leer(archivo, pos)
+        line = line.replace("\n", "")
+
+        nombre = "/" + line[line.find(" "):]
+        nombre = nombre.replace(" ", "")
+        condicion = esNombreDeArchivo(nombre)
+
+        info = [nombre, condicion]
+
+        if esTitulo1(line):
+            arbol = insertarNario(arbol, "INDICE", info)
+            
+            ultimo_titulo1 = info
+
+        if esTitulo2(line):
+            padre = ultimo_titulo1
+            arbol = insertarNario(arbol, padre, info)
+            
+            ultimo_titulo2 = info
+
+        if esTitulo3(line):
+            padre = ultimo_titulo2
+            arbol = insertarNario(arbol, padre, info)
+
+        pos += 1
+        line = leer(archivo, pos)
+
+    return arbol
+
+
+def busquedaContenidoDirectorio(raiz, buscado):
+    '''Retorna el primer nodo array contenga a buscado'''
+    aux = None
+    if raiz is not None:
+        if buscado in raiz.info:
+            return raiz
+        else:
+            aux = busquedaContenidoDirectorio(raiz.izq, buscado)
+            if not aux:
+                aux = busquedaContenidoDirectorio(raiz.der, buscado)
+    return aux
+
+
+def contarArchivos(raiz, cont=0):
+    '''Retorna la cantidad de archivos en una carpeta'''
+    if raiz is not None:
+        if raiz.info[1]:
+            cont += 1
+        cont = contarArchivos(raiz.izq, cont)
+        cont = contarArchivos(raiz.der, cont)
+    return cont
+
+
+def cantidadArchivosEnCarpeta(raiz, buscado):
+    respuesta = busquedaCampoKnuth(raiz, buscado, 0)
+
+    if respuesta:
+        cant_archivos = contarArchivos(respuesta.izq)
+        print("El directorio", buscado, "tiene", cant_archivos, "archivo/s")
+    else:
+        print("El directorio", buscado, "no fue encontrado")
+
+
 
 # EJERCICIO 10
 

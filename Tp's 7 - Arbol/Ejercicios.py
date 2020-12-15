@@ -179,7 +179,7 @@ print("El indice tiene", cantidad_capitulos, "capitulos")
  """
 
 # E
-
+""" 
 lista_coincidencias = []
 buscados = ["modelo", "metrica"]
 
@@ -191,7 +191,7 @@ if len(lista_coincidencias) > 0:
         print(nodo_coincidente.info)
 else:
     print("No se encontraron tema que contentan la/s palabra/s buscada/s")
-
+ """
 
 
 # EJERCICIO 4
@@ -325,14 +325,24 @@ cerrar(a_indices)
 
 indices_binario = transformarKnuth(indices_nario)
  """
-# B 
-# barridoKnuth(indices_binario)
-# inorden(indices_binario)
 
+# txtToDat("Prueba/prueba.txt", "Prueba/prueba")
+
+a_indices = abrir("Prueba/prueba")
+indices_nario = indiceDirectorioToNario(a_indices)
+cerrar(a_indices)
+indices_binario = transformarKnuth(indices_nario)
+
+# B 
+""" 
+print("Barrido inorden del arbol binario")
+inorden(indices_binario)
+ """
 # C
 """ 
-buscado = "Imagenes"
-respuesta = busquedaProximidadKnuth(indices_binario, buscado)
+buscado = "/Imagenes"
+print("Contenido de la carpeta", buscado)
+respuesta = busquedaContenidoDirectorio(indices_binario, buscado)
 if respuesta:
     print(respuesta.info)
     barridoKnuth(respuesta.izq)
@@ -341,8 +351,12 @@ else:
  """
 
 # D 
-
-
+""" 
+buscado = "/Escritorio"
+cantidadArchivosEnCarpeta(indices_binario, buscado)
+buscado = "/Imagenes"
+cantidadArchivosEnCarpeta(indices_binario, buscado)
+ """
 
 
 

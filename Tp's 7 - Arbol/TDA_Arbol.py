@@ -633,7 +633,6 @@ def insertarNario(raiz, info_padre, info):
         if nodo_padre:
             hijo = NodoNario(info)
             nodo_padre.hijos.append(hijo)
-            # print("Se inserto", info, "en", info_padre)
     
     return raiz
 
@@ -648,7 +647,6 @@ def insertarCampoNario(raiz, info_padre, info, campo=0):
         if nodo_padre:
             hijo = NodoNario(info)
             nodo_padre.hijos.append(hijo)
-            # print("Se inserto", info, "en", info_padre)
     
     return raiz
 
@@ -721,43 +719,6 @@ def fileToNario(archivo):
     return arbol
 
 
-def fileArrayToNario(archivo):
-    '''Retorna un arbol nario del archivo (con formato específico) pasado. Cada nodo.info contiene un array'''
-    arbol = None
-    pos = 0
-
-    arbol = insertarNario(arbol, None, "INDICE")
-    largo_archivo = len(archivo)
-
-    ultimo_titulo1 = None
-    ultimo_titulo2 = None
-
-
-    while pos < largo_archivo:
-        line = leer(archivo, pos)
-        line = line.replace("\n", "")
-
-        if esTitulo1(line):
-            arbol = insertarNario(arbol, "INDICE", line)
-            
-            ultimo_titulo1 = line
-
-        if esTitulo2(line):
-            padre = ultimo_titulo1
-            arbol = insertarNario(arbol, padre, line)
-            
-            ultimo_titulo2 = line
-
-        if esTitulo3(line):
-            padre = ultimo_titulo2
-            arbol = insertarNario(arbol, padre, line)
-
-        pos += 1
-        line = leer(archivo, pos)
-
-    return arbol
-
-
 def narioToCola(arbol_n, cola):
     ''' Encola todos los nodos de un arbol nario. Util para luego realizar la transformación a Binario '''
     if arbol_n is not None:
@@ -784,19 +745,6 @@ def busquedaKnuth(raiz, buscado):
             aux = busquedaKnuth(raiz.izq, buscado)
             if not aux:
                 aux = busquedaKnuth(raiz.der, buscado)
-    return aux
-
-
-def busquedaProximidadKnuth(raiz, buscado):
-    '''Retorna el primer nodo cuya info contenga a buscado'''
-    aux = None
-    if raiz is not None:
-        if buscado in raiz.info:
-            return raiz
-        else:
-            aux = busquedaProximidadKnuth(raiz.izq, buscado)
-            if not aux:
-                aux = busquedaProximidadKnuth(raiz.der, buscado)
     return aux
 
 
