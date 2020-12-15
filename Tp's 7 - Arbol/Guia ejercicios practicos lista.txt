@@ -1,13 +1,3 @@
-N-ario y transformada Knuth
-
-6- Transformada Knuth
-
-a.El nodo deberá tener un campo que indique si es un directorio o un archivo
-b.Realizar un barrido inorden del árbol
-c.Listar el contenido de la carpeta /Imágenes
-d.Contar cuantos archivos hay en cada carpeta
-e.Mostrar todos los archivos
-
 
 
 

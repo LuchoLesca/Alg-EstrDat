@@ -1,0 +1,60 @@
+1. Ouranos;Descripcion;-
+1.1. Themis;Descripcion;Gaia
+1.2. Mnemosyne;Descripcion;Gaia
+1.3. Hyperon;Descripcion;Gaia
+1.4. Tehia;Descripcion;Gaia
+1.5. Krios;Descripcion;Gaia
+1.6. Kronos;Descripcion;Gaia
+1.7. Rhea;Descripcion;Gaia
+1.8. Kdios;Descripcion;Gaia
+1.9. Phobe;Descripcion;Gaia
+1.10. Iapetos;Descripcion;Gaia
+1.11. Okeanos;Descripcion;Gaia
+1.12. Thethys;Descripcion;Gaia
+
+2. Hyperon;Descripcion;Gaia
+2.1. Helios;Descripcion;Theia
+2.2. Eos;Descripcion;Theia
+2.3. Selene;Descripcion;Theia
+
+3. Kronos;Descripcion;Gaia
+3.1. Hades;Descripcion;Rhea
+3.2. Demeter;Descripcion;Rhea
+3.3. Poseidon;Descripcion;Rhea
+3.4. Hestia;Descripcion;Rhea
+3.5. Hera;Descripcion;Rhea
+3.6. Zeus;Descripcion;Rhea
+
+4. Kdios;Descripcion;Gaia
+4.1. Leto;Descripcion;Phobe
+
+5. Iapetos;Descripcion;Gaia
+5.1. Prometheus;Descripcion;-
+5.2. Epimetheus;Descripcion;-
+5.3. Atlas;Descripcion;-
+
+6. Okeanos;Descripcion;Gaia
+6.1. Pleione;Descripcion;Tethys
+
+7. Atlas;Descripcion;-
+7.1. Maia;Descripcion;Pleione
+
+8. Zeus;Descripcion;Rhea
+8.1. Persephone;Descripcion;Demeter
+8.2. Ares;Descripcion;Hera
+8.3. Hephaistos;Descripcion;Hera
+8.4. Athena;Descripcion;-
+8.5. Apolo;Descripcion;Leto
+8.6. Artemis;Descripcion;Leto
+8.7. Dionysos;Descripcion;Semele
+8.8. Hermes;Descripcion;Maia
+
+9. Ares;Descripcion;Hera
+9.1. Phobes;Descripcion;Aphrodite
+9.2. Deimos;Descripcion;Aphrodite
+9.3. Eros;Descripcion;Aphrodite
+9.4. Humerios;Descripcion;Aphrodite
+
+10. Hermes;Descripcion;Maia
+10.1. Hermaphrodite;Descripcion;Aphrodite
+10.2. Pan;Descripcion;Penelope

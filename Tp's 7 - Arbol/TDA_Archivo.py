@@ -63,12 +63,16 @@ def txtToDat(rutatxt="", rutadat=""):
     '''Crea archivo.dat a partir de .txt'''
     # Abrir archivo dir
     archivodat = abrir(rutadat)
+    #Si ya existe, limpiamos el .dat
+    limpiar(archivodat)
     # Abre archivo txt
     archivotxt = open(rutatxt, "r")
 
     for linea in archivotxt:
         if len(linea) > 1:
             guardar(archivodat, linea)
+
+    cerrar(archivodat)
 
 
 def limpiar(archivo):

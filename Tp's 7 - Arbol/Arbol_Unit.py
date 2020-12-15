@@ -1061,7 +1061,123 @@ def definirPronostico(arbol, registro):
     return arbol[0]
 
 
-#EJERCICIO 20
+# EJERCICIO 20
+
+# 0: nombredios
+# 1: descripcion
+# 2: madre
+
+
+def busquedaCampoNario(raiz, buscado, campo=0, aux=None):
+    '''Busqueda por campo recursiva de un nodo'''
+    if (raiz is not None) and (aux is None):
+        if (raiz.info[campo] == buscado[campo]):
+            aux = raiz
+        else:
+            for hijo in raiz.hijos:
+                aux = busquedaCampoNario(hijo, buscado, campo, aux)
+    return aux
+
+
+def insertarCampoNario(raiz, info_padre, info, campo=0):
+    '''Busca el nodo padre por campo. Si lo encuentra, inserta el nodo hijo en él'''
+    if raiz is None:
+        raiz = NodoNario(info)
+    else:
+        nodo_padre = busquedaCampoNario(raiz, info_padre, campo)
+    
+        if nodo_padre:
+            hijo = NodoNario(info)
+            nodo_padre.hijos.append(hijo)
+    
+    return raiz
+
+
+def indiceDiosesToNario(archivo):
+    '''Retorna un arbol nario del archivo (con formato específico) pasado. Cada nodo.info contiene un array'''
+    raiz = None
+    pos = 0
+
+    raiz = insertarCampoNario(raiz, None, ["INDICE"])
+    largo_archivo = len(archivo)
+
+    ultimo_titulo1 = None
+    ultimo_titulo2 = None
+
+
+    while pos < largo_archivo:
+        line = leer(archivo, pos)
+        line = line.replace("\n", "")
+
+        line_sin_numeros = line[line.find(" "):]
+
+        datos_dios = line_sin_numeros.split(";")
+        
+        nombre = datos_dios[0].replace(" ", "")
+        descripcion = datos_dios[1]
+        madre = datos_dios[2]
+        info = [nombre, descripcion, madre]
+
+        if esTitulo1(line):
+            raiz = insertarCampoNario(raiz, raiz.info, info, 0)
+            ultimo_titulo1 = info
+
+        if esTitulo2(line):
+            info_del_padre = ultimo_titulo1
+
+            raiz = insertarCampoNario(raiz, info_del_padre, info, 0)
+            ultimo_titulo2 = info
+
+        if esTitulo3(line):
+            info_del_padre = ultimo_titulo2
+            raiz = insertarCampoNario(raiz, info_del_padre, info, 0)
+
+        pos += 1
+        line = leer(archivo, pos)
+
+    return raiz
+
+
+def transformadaDioses(raiz_nario, campo=0):
+    arbol_k = NodoArbol(raiz_nario.info)
+    cola = Cola()
+    narioToCola(raiz_nario, cola)
+    nodos_n = colaToList(cola)
+
+    for nodo in nodos_n:
+        hijos_puntero_inicio = getHijosEnlazados(nodo)
+        
+        if hijos:     
+            respuesta = busquedaCampoKnuth(arbol_k, nodo, campo)
+            print("Buscado", nodo.info)
+            print("respuesta:", respuesta)
+            input()
+
+            if respuesta:
+                respuesta.izq = hijos_puntero_inicio
+
+    return arbol_k
+
+
+""" 
+def barridoHermanos(raiz):
+    '''Realiza un barrido por nivel del arbol binario transformado por knuth'''
+    cola = Cola()
+    arribo(cola, raiz)
+    while(not cola_vacia(cola)):
+        nodo = atencion(cola)
+        print(nodo.info[0])
+        if(nodo.izq is not None):
+            arribo(cola, nodo.izq)
+        hno = nodo.der
+        while(hno is not None):
+            print(hno.info[0])
+            if(hno.izq is not None):
+                arribo(cola, hno.izq)
+            hno = hno.der
+
+ """
+
 
 
 # EJERCICIO 21

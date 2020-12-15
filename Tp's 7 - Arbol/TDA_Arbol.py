@@ -637,20 +637,6 @@ def insertarNario(raiz, info_padre, info):
     return raiz
 
 
-def insertarCampoNario(raiz, info_padre, info, campo=0):
-    '''Busca el nodo padre por campo. Si lo encuentra, inserta el nodo hijo en él'''
-    if raiz is None:
-        raiz = NodoNario(info)
-    else:
-        nodo_padre = busquedaCampoNario(raiz, info_padre, campo)
-    
-        if nodo_padre:
-            hijo = NodoNario(info)
-            nodo_padre.hijos.append(hijo)
-    
-    return raiz
-
-
 def busquedaNario(raiz, buscado, aux=None):
     '''Busqueda recursiva de un nodo'''
     
@@ -660,17 +646,6 @@ def busquedaNario(raiz, buscado, aux=None):
         else:
             for hijo in raiz.hijos:
                 aux = busquedaNario(hijo, buscado, aux)
-    return aux
-
-
-def busquedaCampoNario(raiz, buscado, campo=0, aux=None):
-    '''Busqueda por campo recursiva de un nodo'''
-    if (raiz is not None) and (aux is None):
-        if (raiz.info[campo] == buscado):
-            aux = raiz
-        else:
-            for hijo in raiz.hijos:
-                aux = busquedaCampoNario(hijo, buscado, campo, aux)
     return aux
 
 

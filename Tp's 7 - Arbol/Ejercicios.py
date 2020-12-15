@@ -696,7 +696,7 @@ listadoIndicesPeso(arbol_nombres, archivo)
 
 
 # EJERCICIO 15
-
+""" 
 tabla = [
             [0.22, "Despejado"],
             [0.15, "Nublado"],
@@ -710,10 +710,11 @@ tabla = [
             [0.02, "7"],
             [0.025, "8"]
         ]
-
+ """
 # B 
+""" 
 raiz = crearArbolHuffman(tabla)
-
+ """
 # Para controlar
 """
 dic = {}
@@ -1112,7 +1113,26 @@ pronostico = definirPronostico(arbolRegistros, registro)
 print("Pronostico:", pronostico)
  """
 
+
 # EJERCICIO 20
+
+# 0: nombre dios
+# 1: madre
+# 2: descripcion
+
+
+# txtToDat("Dioses/dioses.txt", "Dioses/dioses")
+
+a = abrir("Dioses/dioses")
+
+arbol_nario_dioses = indiceDiosesToNario(a)
+
+arbol_binario_dioses = transformadaDioses(arbol_nario_dioses)
+
+cerrar(a)
+
+
+# EJERCICIO 21
 # 0: Criatura
 # 1: Derrotado por
 # 2: descripcion
