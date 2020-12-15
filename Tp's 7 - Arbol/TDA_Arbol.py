@@ -638,6 +638,21 @@ def insertarNario(raiz, info_padre, info):
     return raiz
 
 
+def insertarCampoNario(raiz, info_padre, info, campo=0):
+    '''Busca el nodo padre por campo. Si lo encuentra, inserta el nodo hijo en él'''
+    if raiz is None:
+        raiz = NodoNario(info)
+    else:
+        nodo_padre = busquedaCampoNario(raiz, info_padre, campo)
+    
+        if nodo_padre:
+            hijo = NodoNario(info)
+            nodo_padre.hijos.append(hijo)
+            # print("Se inserto", info, "en", info_padre)
+    
+    return raiz
+
+
 def busquedaNario(raiz, buscado, aux=None):
     '''Busqueda recursiva de un nodo'''
     
@@ -647,6 +662,17 @@ def busquedaNario(raiz, buscado, aux=None):
         else:
             for hijo in raiz.hijos:
                 aux = busquedaNario(hijo, buscado, aux)
+    return aux
+
+
+def busquedaCampoNario(raiz, buscado, campo=0, aux=None):
+    '''Busqueda por campo recursiva de un nodo'''
+    if (raiz is not None) and (aux is None):
+        if (raiz.info[campo] == buscado):
+            aux = raiz
+        else:
+            for hijo in raiz.hijos:
+                aux = busquedaCampoNario(hijo, buscado, campo, aux)
     return aux
 
 
@@ -660,6 +686,43 @@ def barridoNario(raiz):
 
 def fileToNario(archivo):
     '''Retorna un arbol nario del archivo (con formato específico) pasado'''
+    arbol = None
+    pos = 0
+
+    arbol = insertarNario(arbol, None, "INDICE")
+    largo_archivo = len(archivo)
+
+    ultimo_titulo1 = None
+    ultimo_titulo2 = None
+
+
+    while pos < largo_archivo:
+        line = leer(archivo, pos)
+        line = line.replace("\n", "")
+
+        if esTitulo1(line):
+            arbol = insertarNario(arbol, arbol.info, line)
+            
+            ultimo_titulo1 = line
+
+        if esTitulo2(line):
+            padre = ultimo_titulo1
+            arbol = insertarNario(arbol, padre, line)
+            
+            ultimo_titulo2 = line
+
+        if esTitulo3(line):
+            padre = ultimo_titulo2
+            arbol = insertarNario(arbol, padre, line)
+
+        pos += 1
+        line = leer(archivo, pos)
+
+    return arbol
+
+
+def fileArrayToNario(archivo):
+    '''Retorna un arbol nario del archivo (con formato específico) pasado. Cada nodo.info contiene un array'''
     arbol = None
     pos = 0
 

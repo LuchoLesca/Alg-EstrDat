@@ -144,13 +144,13 @@ print("Resultado:\n", calcular(raiz2))
 # EJERCICIO 3
 
 # txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
-""" 
+
 a_indices = abrir("Indices/indice_summerville")
 arbol_nario = fileToNario(a_indices)
 cerrar(a_indices)
 
 arbol_b = transformarKnuth(arbol_nario)
- """
+
 # A
 """ 
 barridoKnuth(arbol_b)
@@ -167,7 +167,7 @@ mostrarParte(arbol_b, buscado)
 buscado = "16.4. Prototipado de la interfaz de usuario 348"
 pag = getPagina(arbol_b, buscado)
 if pag != -1:
-    print(pag)
+    print("La pagina de", buscado, "es", pag)
 else:
     print("No se pudo obtener la pagina de", buscado)
  """
@@ -179,7 +179,7 @@ print("El indice tiene", cantidad_capitulos, "capitulos")
  """
 
 # E
-""" 
+
 lista_coincidencias = []
 buscados = ["modelo", "metrica"]
 
@@ -191,7 +191,7 @@ if len(lista_coincidencias) > 0:
         print(nodo_coincidente.info)
 else:
     print("No se encontraron tema que contentan la/s palabra/s buscada/s")
- """
+
 
 
 # EJERCICIO 4
@@ -318,13 +318,13 @@ inorden(bosque[1])
 # EJERCICIO 6
 
 # txtToDat("Directorios/indice_directorio.txt", "Directorios/indice_directorios")
-
+""" 
 a_indices = abrir("Directorios/indice_directorios")
 indices_nario = fileToNario(a_indices)
 cerrar(a_indices)
 
 indices_binario = transformarKnuth(indices_nario)
-
+ """
 # B 
 # barridoKnuth(indices_binario)
 # inorden(indices_binario)
