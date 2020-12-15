@@ -52,7 +52,7 @@ def insertarArbol2(raiz, dato, peso):
 # ------------------------------------------------------ #
 
 
-class Nodoarbol():
+class NodoArbol():
 
     def __init__(self, info, izq=None, der=None):
         self.info = info
@@ -125,7 +125,7 @@ def balancear(raiz):
 def insertar(raiz, dato):
     '''Inserta el elemento en el arbol'''
     if (raiz is None):
-        raiz = Nodoarbol(dato)
+        raiz = NodoArbol(dato)
     else:
         if (dato < raiz.info):
             raiz.izq = insertar(raiz.izq, dato)
@@ -141,7 +141,7 @@ def insertar(raiz, dato):
 def insertarCampo(raiz, dato, campo=0):
     '''Inserta el elemento en el arbol'''
     if (raiz is None):
-        raiz = Nodoarbol(dato)
+        raiz = NodoArbol(dato)
     else:
         if (dato[campo] < raiz.info[campo]):
             raiz.izq = insertarCampo(raiz.izq, dato, campo)
@@ -603,7 +603,7 @@ def esTitulo3(linea):
 
 """ 
 def busquedaNario(raiz, buscado):
-    '''Busqueda iterativa, ya que sino supero el stack de recursividad'''
+    '''Busqueda iterativa, por si ocurren problemas al superar el stack de recursividad'''
     aux = None
     revisar = []
     
@@ -695,6 +695,15 @@ def fileToNario(archivo):
     return arbol
 
 
+def narioToCola(arbol_n, cola):
+    ''' Encola todos los nodos de un arbol nario. Util para luego realizar la transformación a Binario '''
+    if arbol_n is not None:
+        arribo(cola, arbol_n)
+
+        for hijo in arbol_n.hijos:
+            narioToCola(hijo, cola)
+
+
 # ----------------------------------------------------------------------------#
 # ----------------------------------------------------------------------------#
 # --------------------Funciones referidas a transformada de knuth-------------#
@@ -728,6 +737,15 @@ def busquedaProximidadKnuth(raiz, buscado):
     return aux
 
 
+def busquedaCoincidenciasKnuth(raiz, buscado, lista_coincidencias=[]):
+    '''Devuelve todos los nodos que contengan el buscado en su info'''
+    if raiz is not None:
+        if buscado in raiz.info:
+            lista_coincidencias.append(raiz)
+        busquedaCoincidenciasKnuth(raiz.izq, buscado, lista_coincidencias)
+        busquedaCoincidenciasKnuth(raiz.der, buscado, lista_coincidencias)
+
+
 def busquedaCampoKnuth(raiz, buscado, campo=0):
     '''Retorna el primer nodo cuya info de campo especificado sea igual a buscado'''
     aux = None
@@ -741,15 +759,6 @@ def busquedaCampoKnuth(raiz, buscado, campo=0):
     return aux
 
 
-def busquedaCoincidenciasKnuth(raiz, buscado, lista_coincidencias=[]):
-    '''Devuelve todos los nodos que contengan el buscado en su info'''
-    if raiz is not None:
-        if buscado in raiz.info:
-            lista_coincidencias.append(raiz)
-        busquedaCoincidenciasKnuth(raiz.izq, buscado, lista_coincidencias)
-        busquedaCoincidenciasKnuth(raiz.der, buscado, lista_coincidencias)
-
-
 def getHijosEnlazados(nodo_nario):
     '''Retorna una lista de los nodos hijos, pero en vez de como nodoNario, como nodosarbol'''
     inicio, aux = None, None
@@ -757,7 +766,7 @@ def getHijosEnlazados(nodo_nario):
     # Si tiene hijos, se extrae la data del primero y empaqueta en un nodo
     if len(nodo_nario.hijos) > 0:
         info_hijo = nodo_nario.hijos.pop(0).info
-        nodo_b = Nodoarbol(info_hijo)
+        nodo_b = NodoArbol(info_hijo)
         
         inicio = nodo_b
         aux = inicio
@@ -765,27 +774,18 @@ def getHijosEnlazados(nodo_nario):
     # Si tiene más de un hijo, se extrae la data de todos y enlazan los nodos
     for hijo_restante in nodo_nario.hijos:
         info = hijo_restante.info
-        nodo_b = Nodoarbol(info)
+        nodo_b = NodoArbol(info)
         
         aux.der = nodo_b
         aux = nodo_b
     return inicio
 
 
-def narioToCola(arbol_n, cola):
-    ''' Encola todos los nodos de un arbol nario. Util para luego realizar la transformación a Binario '''
-    if arbol_n is not None:
-        arribo(cola, arbol_n)
-
-        for hijo in arbol_n.hijos:
-            narioToCola(hijo, cola)
-
-
-def narioToBinario(raiz):
+def transformarKnuth(raiz_nario):
     '''Transformada Knuth. Transforma un arbol nario a uno binario'''
-    arbol_k = Nodoarbol(raiz.info)
+    arbol_k = NodoArbol(raiz_nario.info)
     cola = Cola()
-    narioToCola(raiz, cola)
+    narioToCola(raiz_nario, cola)
     nodos_n = colaToList(cola)
 
     for nodo in nodos_n:
@@ -801,7 +801,7 @@ def narioToBinario(raiz):
 
 
 def barridoKnuth(arbol):
-    '''Realiza un recorrido del arbol binario (knuth), imprimiendo el arbol en el orden original'''
+    '''Realiza un recorrido del arbol binario (knuth), imprimiendo el arbol en el orden'''
     if arbol is not None:
         print(arbol.info)
         barridoKnuth(arbol.izq)

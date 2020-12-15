@@ -149,7 +149,7 @@ a_indices = abrir("Indices/indice_summerville")
 arbol_nario = fileToNario(a_indices)
 cerrar(a_indices)
 
-arbol_b = narioToBinario(arbol_nario)
+arbol_b = transformarKnuth(arbol_nario)
  """
 # A
 """ 
@@ -323,7 +323,7 @@ a_indices = abrir("Directorios/indice_directorios")
 indices_nario = fileToNario(a_indices)
 cerrar(a_indices)
 
-indices_binario = narioToBinario(indices_nario)
+indices_binario = transformarKnuth(indices_nario)
 
 # B 
 # barridoKnuth(indices_binario)
@@ -341,7 +341,6 @@ else:
  """
 
 # D 
-
 
 
 

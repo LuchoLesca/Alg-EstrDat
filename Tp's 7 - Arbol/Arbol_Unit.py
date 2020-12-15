@@ -62,13 +62,13 @@ def arbolPruebaA(r=None):
     # Expresión 1
     # Expresión original: ((2 + 3) * 4) + 26
 
-    r = Nodoarbol("+")
-    r.der = Nodoarbol(26)
-    r.izq = Nodoarbol("*")
-    r.izq.der = Nodoarbol(4)
-    r.izq.izq = Nodoarbol("+")
-    r.izq.izq.izq = Nodoarbol(2)
-    r.izq.izq.der = Nodoarbol(3)
+    r = NodoArbol("+")
+    r.der = NodoArbol(26)
+    r.izq = NodoArbol("*")
+    r.izq.der = NodoArbol(4)
+    r.izq.izq = NodoArbol("+")
+    r.izq.izq.izq = NodoArbol(2)
+    r.izq.izq.der = NodoArbol(3)
 
     return r
 
@@ -78,21 +78,21 @@ def arbolPruebaB(r=None):
     # Expresión 2
     # Expresión original: (((2*7) + 8) / 5) / ((4*(-1)) - 3)
 
-    r = Nodoarbol("/")
+    r = NodoArbol("/")
 
-    r.der = Nodoarbol("-")
-    r.der.der = Nodoarbol(3)
-    r.der.izq = Nodoarbol("*")
-    r.der.izq.izq = Nodoarbol(4)
-    r.der.izq.der = Nodoarbol(-1)
+    r.der = NodoArbol("-")
+    r.der.der = NodoArbol(3)
+    r.der.izq = NodoArbol("*")
+    r.der.izq.izq = NodoArbol(4)
+    r.der.izq.der = NodoArbol(-1)
 
-    r.izq = Nodoarbol("/")
-    r.izq.izq = Nodoarbol("+")
-    r.izq.der = Nodoarbol(5)
-    r.izq.izq.izq = Nodoarbol(8)
-    r.izq.izq.der = Nodoarbol("*")
-    r.izq.izq.der.izq = Nodoarbol(2)
-    r.izq.izq.der.der = Nodoarbol(7)
+    r.izq = NodoArbol("/")
+    r.izq.izq = NodoArbol("+")
+    r.izq.der = NodoArbol(5)
+    r.izq.izq.izq = NodoArbol(8)
+    r.izq.izq.der = NodoArbol("*")
+    r.izq.izq.der.izq = NodoArbol(2)
+    r.izq.izq.der.der = NodoArbol(7)
 
     return r
 
