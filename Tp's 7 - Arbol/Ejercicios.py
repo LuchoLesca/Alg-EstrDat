@@ -142,7 +142,7 @@ print("Resultado:\n", calcular(raiz2))
  """
 
 # EJERCICIO 3
-
+""" 
 # txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
 
 a_indices = abrir("Indices/indice_summerville")
@@ -150,7 +150,7 @@ arbol_nario = fileToNario(a_indices)
 cerrar(a_indices)
 
 arbol_b = narioToBinario(arbol_nario)
-
+ """
 # A
 """ 
 barridoKnuth(arbol_b)
@@ -210,7 +210,7 @@ print("Arbol derecho")
 imprimirArbol(hijoDer(r))
  """
 
-# EJERCICIO 5  HECHO
+# EJERCICIO 5
 
 # A
 """ 
@@ -314,6 +314,7 @@ print("Arbol de villanos:")
 inorden(bosque[1])
 
 """
+
 # EJERCICIO 6
 
 """ 
@@ -323,6 +324,12 @@ indice_archivos = [["arduino"], ["documentos"], ["libros"], ["escritorio"],
 
 ]
  """
+
+
+
+
+
+
 
 # EJERCICIO 7 
 """ 
