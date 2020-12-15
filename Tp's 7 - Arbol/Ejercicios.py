@@ -142,9 +142,9 @@ print("Resultado:\n", calcular(raiz2))
  """
 
 # EJERCICIO 3
-""" 
-# txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
 
+# txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
+""" 
 a_indices = abrir("Indices/indice_summerville")
 arbol_nario = fileToNario(a_indices)
 cerrar(a_indices)
@@ -317,14 +317,30 @@ inorden(bosque[1])
 
 # EJERCICIO 6
 
-""" 
-indice_archivos = [["arduino"], ["documentos"], ["libros"], ["escritorio"],
-                   ["imagenes"], ["musica"], ["nodeProjects"], ["plantillas"],
-                   ["prueba_cluster"], ["PythonProyects"]
+# txtToDat("Directorios/indice_directorio.txt", "Directorios/indice_directorios")
 
-]
+a_indices = abrir("Directorios/indice_directorios")
+indices_nario = fileToNario(a_indices)
+cerrar(a_indices)
+
+indices_binario = narioToBinario(indices_nario)
+
+# B 
+# barridoKnuth(indices_binario)
+# inorden(indices_binario)
+
+# C
+""" 
+buscado = "Imagenes"
+respuesta = busquedaProximidadKnuth(indices_binario, buscado)
+if respuesta:
+    print(respuesta.info)
+    barridoKnuth(respuesta.izq)
+else:
+    print("No se encontro", buscado, "en el indice")
  """
 
+# D 
 
 
 

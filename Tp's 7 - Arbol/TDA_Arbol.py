@@ -590,24 +590,15 @@ class NodoNario(object):
 
 
 def esTitulo1(linea):
-    if linea.count(".") == 1:
-        return True
-    else:
-        return False
+    return linea[:10].count(".") == 1
 
 
 def esTitulo2(linea):
-    if linea.count(".") == 2:
-        return True
-    else:
-        return False
+    return linea[:10].count(".") == 2
 
 
 def esTitulo3(linea):
-    if linea.count(".") == 3:
-        return True
-    else:
-        return False
+    return linea[:10].count(".") == 3
 
 
 """ 
@@ -660,6 +651,7 @@ def busquedaNario(raiz, buscado, aux=None):
 
 
 def barridoNario(raiz):
+    '''Realiza un recorrido e impresión del arbol nario'''
     if raiz is not None:
         print(raiz.info)
         for hijo in raiz.hijos:
@@ -667,6 +659,7 @@ def barridoNario(raiz):
 
 
 def fileToNario(archivo):
+    '''Retorna un arbol nario del archivo (con formato específico) pasado'''
     arbol = None
     pos = 0
 
@@ -710,6 +703,7 @@ def fileToNario(archivo):
 
 
 def busquedaKnuth(raiz, buscado):
+    '''Retorna el primer nodo cuya info sea igual a buscado'''
     aux = None
     if raiz is not None:
         if raiz.info == buscado:
@@ -721,8 +715,34 @@ def busquedaKnuth(raiz, buscado):
     return aux
 
 
+def busquedaProximidadKnuth(raiz, buscado):
+    '''Retorna el primer nodo cuya info contenga a buscado'''
+    aux = None
+    if raiz is not None:
+        if buscado in raiz.info:
+            return raiz
+        else:
+            aux = busquedaProximidadKnuth(raiz.izq, buscado)
+            if not aux:
+                aux = busquedaProximidadKnuth(raiz.der, buscado)
+    return aux
+
+
+def busquedaCampoKnuth(raiz, buscado, campo=0):
+    '''Retorna el primer nodo cuya info de campo especificado sea igual a buscado'''
+    aux = None
+    if raiz is not None:
+        if raiz.info[campo] == buscado:
+            return raiz
+        else:
+            aux = busquedaCampoKnuth(raiz.izq, buscado, campo)
+            if not aux:
+                aux = busquedaCampoKnuth(raiz.der, buscado, campo)
+    return aux
+
+
 def busquedaCoincidenciasKnuth(raiz, buscado, lista_coincidencias=[]):
-    # aux = None
+    '''Devuelve todos los nodos que contengan el buscado en su info'''
     if raiz is not None:
         if buscado in raiz.info:
             lista_coincidencias.append(raiz)
@@ -731,7 +751,7 @@ def busquedaCoincidenciasKnuth(raiz, buscado, lista_coincidencias=[]):
 
 
 def getHijosEnlazados(nodo_nario):
-    '''Devuelve una lista de los nodos hijos, pero en vez de como nodoNario, como nodosarbol'''
+    '''Retorna una lista de los nodos hijos, pero en vez de como nodoNario, como nodosarbol'''
     inicio, aux = None, None
 
     # Si tiene hijos, se extrae la data del primero y empaqueta en un nodo
@@ -753,6 +773,7 @@ def getHijosEnlazados(nodo_nario):
 
 
 def narioToCola(arbol_n, cola):
+    ''' Encola todos los nodos de un arbol nario. Util para luego realizar la transformación a Binario '''
     if arbol_n is not None:
         arribo(cola, arbol_n)
 
@@ -761,6 +782,7 @@ def narioToCola(arbol_n, cola):
 
 
 def narioToBinario(raiz):
+    '''Transformada Knuth. Transforma un arbol nario a uno binario'''
     arbol_k = Nodoarbol(raiz.info)
     cola = Cola()
     narioToCola(raiz, cola)
@@ -779,7 +801,7 @@ def narioToBinario(raiz):
 
 
 def barridoKnuth(arbol):
-    '''Realiza un recorrido, imprimiendo el arbol en el orden original'''
+    '''Realiza un recorrido del arbol binario (knuth), imprimiendo el arbol en el orden original'''
     if arbol is not None:
         print(arbol.info)
         barridoKnuth(arbol.izq)

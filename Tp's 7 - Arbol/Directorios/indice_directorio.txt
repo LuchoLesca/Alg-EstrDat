@@ -1,0 +1,49 @@
+1. Arduino
+1.1. libraries
+1.1.1. readme.txt
+
+2. Documentos
+2.1. archivo.pdf
+2.2. colores arduino
+
+3. libros
+3.1. 9781782175858 - THINKING IN JAVASCRIPT.pdf
+3.2. Python for Google App Engine.pdf
+3.3. Python para todos.pdf
+3.4. redis.pdf
+3.5. The Majesty of Vue.js.pdf
+
+4. Escritorio
+4.1. prueba
+
+5. Imagenes
+5.1. github.png
+5.2. master_yoda.jpg
+5.3. star_wars_saga-png
+
+6. Musica
+
+7. nodeProjects
+7.1. api
+7.1.1. package-lock.json
+7.2. star_wars
+7.2.1. api
+7.2.2. docker-compose.yml
+7.2.3. Dockerfile
+
+8. Plantillas
+
+9. prueba_cluster
+9.1. 7000
+9.1.1. cluster-config.conf
+9.2. redis.config
+
+10. PythonProjects
+10.1. libro alg
+10.2. prueba_apis
+10.2.1. autocomplete.py
+10.3. vue.flask
+10.3.1. app.py
+10.3.2. README.md
+10.3.3. static
+10.3.4. templates
