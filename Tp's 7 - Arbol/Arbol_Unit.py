@@ -262,6 +262,12 @@ def cantidadArchivosEnCarpeta(raiz, buscado):
         print("El directorio", buscado, "no fue encontrado")
 
 
+def mostrarTodosArchivos(raiz):
+    if raiz:
+        if raiz.info[1]:
+            print(raiz.info[0])
+        mostrarTodosArchivos(raiz.izq)
+        mostrarTodosArchivos(raiz.der)
 
 # EJERCICIO 10
 

@@ -143,14 +143,15 @@ print("Resultado:\n", calcular(raiz2))
 
 # EJERCICIO 3
 
+# Solo usar txtToDat no existen los demás archivos, aparte del txt
 # txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
 
+""" 
 a_indices = abrir("Indices/indice_summerville")
 arbol_nario = fileToNario(a_indices)
 cerrar(a_indices)
-
 arbol_b = transformarKnuth(arbol_nario)
-
+ """
 # A
 """ 
 barridoKnuth(arbol_b)
@@ -317,18 +318,13 @@ inorden(bosque[1])
 
 # EJERCICIO 6
 
+# Solo usar txtToDat no existen los demás archivos, aparte del txt
 # txtToDat("Directorios/indice_directorio.txt", "Directorios/indice_directorios")
-""" 
+
+
+# A
+
 a_indices = abrir("Directorios/indice_directorios")
-indices_nario = fileToNario(a_indices)
-cerrar(a_indices)
-
-indices_binario = transformarKnuth(indices_nario)
- """
-
-# txtToDat("Prueba/prueba.txt", "Prueba/prueba")
-
-a_indices = abrir("Prueba/prueba")
 indices_nario = indiceDirectorioToNario(a_indices)
 cerrar(a_indices)
 indices_binario = transformarKnuth(indices_nario)
@@ -336,8 +332,10 @@ indices_binario = transformarKnuth(indices_nario)
 # B 
 """ 
 print("Barrido inorden del arbol binario")
+print()
 inorden(indices_binario)
  """
+
 # C
 """ 
 buscado = "/Imagenes"
@@ -352,12 +350,21 @@ else:
 
 # D 
 """ 
+buscado = "/Perla"
+cantidadArchivosEnCarpeta(indices_binario, buscado)
+print()
 buscado = "/Escritorio"
 cantidadArchivosEnCarpeta(indices_binario, buscado)
+print()
 buscado = "/Imagenes"
 cantidadArchivosEnCarpeta(indices_binario, buscado)
  """
 
+# E
+""" 
+print("Listado de todos los archivos:")
+mostrarTodosArchivos(indices_binario.izq)
+ """
 
 
 # EJERCICIO 7 
