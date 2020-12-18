@@ -1240,6 +1240,17 @@ def ancestrosDios(arbol, dios_buscado):
     return ancestros
 
 
+# J
+
+def mostrarHijosDeMadre(arbol, nombre_madre):
+    
+    lista_hijos = []
+
+    busquedaCoincidenciasKnuthCampo(arbol, nombre_madre, 2, lista_hijos)
+
+    print("Hijos de", nombre_madre)
+    for hijo in lista_hijos:
+        print(hijo.info[0])
 
 
 

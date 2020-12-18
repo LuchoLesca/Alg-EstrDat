@@ -732,6 +732,15 @@ def busquedaCoincidenciasKnuth(raiz, buscado, lista_coincidencias=[]):
         busquedaCoincidenciasKnuth(raiz.der, buscado, lista_coincidencias)
 
 
+def busquedaCoincidenciasKnuthCampo(raiz, buscado, campo,lista_coincidencias=[]):
+    '''Devuelve todos los nodos que contengan el buscado en su info'''
+    if raiz is not None:
+        if buscado in raiz.info[campo]:
+            lista_coincidencias.append(raiz)
+        busquedaCoincidenciasKnuthCampo(raiz.izq, buscado, campo, lista_coincidencias)
+        busquedaCoincidenciasKnuthCampo(raiz.der, buscado, campo, lista_coincidencias)
+
+
 def busquedaCampoKnuth(raiz, buscado, campo=0):
     '''Retorna el primer nodo cuya info de campo especificado sea igual a buscado'''
     aux = None

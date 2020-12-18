@@ -1276,6 +1276,7 @@ barridoInordenDiosesMadres(arbol_binario_dioses)
  """
 
 # H
+""" 
 dios_buscado = "Eros"
 ancestros = ancestrosDios(arbol_binario_dioses, dios_buscado)
 
@@ -1285,6 +1286,18 @@ if len(ancestros) != 0:
         print(ancestro.info[0])
 else:
     print(dios_buscado, "no posee ancestros")
+ """
+
+
+# I
+
+
+
+# J
+""" 
+nombre_madre = "Theia"
+mostrarHijosDeMadre(arbol_binario_dioses, nombre_madre)
+ """
 
 
 # EJERCICIO 21
