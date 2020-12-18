@@ -1210,7 +1210,55 @@ dios_buscado = "Zeus"
 imprimirHijosDe(arbol_binario_dioses, dios_buscado)
  """
 
+# E
+""" 
+dios_buscado = "Ares"
+ """
+# Nombre del padre
+""" 
+nodo_padre = encontrarPadre(arbol_binario_dioses, dios_buscado)
+if nodo_padre:
+    print("El padre de {} es {}".format(dios_buscado, nodo_padre.info[0]))
+else:
+    print("No se encontro el padre de", dios_buscado)
+ """
+# Nombre de la madre
+""" 
+nodo_buscado = busquedaCampoKnuth(arbol_binario_dioses, dios_buscado, 0)
 
+if nodo_buscado:
+    madre = nodo_buscado.info[2]
+    if madre:
+        print("La madre de {} es {}".format(dios_buscado, madre))
+    else:
+        print(dios_buscado, "no tiene madre")
+else:
+    print(dios_buscado, "no encontrado")
+ """
+# Hermanos
+""" 
+nodo_padre = encontrarPadre(arbol_binario_dioses, dios_buscado)
+if nodo_padre:
+    hijo = nodo_padre.izq
+    print("Hermanos de", dios_buscado)
+    while hijo:
+        if hijo.info[0] != dios_buscado:
+            print(hijo.info[0])
+        hijo = hijo.der
+ """
+ # Hijos
+ """ 
+nodo_buscado = busquedaCampoKnuth(arbol_binario_dioses, dios_buscado, 0)
+
+if nodo_buscado:
+    print("Hijos de {}:".format(dios_buscado))
+    hijo = nodo_buscado.izq
+    while hijo:
+        print(hijo.info[0])
+        hijo = hijo.der
+else:
+    print(dios_buscado, "no encontrado")
+ """
 
 
 

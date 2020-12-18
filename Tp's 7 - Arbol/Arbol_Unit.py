@@ -1152,14 +1152,6 @@ def transformadaDioses(raiz_nario, campo=0):
             respuesta = busquedaCampoKnuth(arbol_k, nombre_padre, campo)
 
             if respuesta:
-                # print(respuesta)
-                """
-                print('Se busco {} y se encontro'.format(nombre_padre))
-                print("Se agragan sus hijos")
-                recDer(hijos_puntero_inicio)
-                print()
-                input()
-                """
                 respuesta.izq = hijos_puntero_inicio
 
     return arbol_k
@@ -1206,6 +1198,27 @@ def imprimirHijosDe(arbol, dios_buscado):
             print("- No posee hijos -")
     else:
         print("Dios no encontrado")
+
+
+# E
+
+def encontrarPadre(raiz, dios_buscado, padre=None):
+    '''Devuelve el nodo del padre del dios buscado'''
+
+    if raiz is not None:
+        hijos = raiz.izq
+        if hijos:
+            aux_hijo = hijos
+            while aux_hijo:
+                if aux_hijo.info[0] == dios_buscado and raiz.info[0] != "INDICE":
+                    padre = raiz
+                aux_hijo = aux_hijo.der
+
+        padre = encontrarPadre(raiz.izq, dios_buscado, padre)
+        padre = encontrarPadre(raiz.der, dios_buscado, padre)
+        
+    return padre
+
 
 
 
