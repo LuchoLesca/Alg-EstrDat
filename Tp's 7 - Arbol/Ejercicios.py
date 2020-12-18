@@ -1245,9 +1245,9 @@ if nodo_padre:
         if hijo.info[0] != dios_buscado:
             print(hijo.info[0])
         hijo = hijo.der
- """
+"""
  # Hijos
- """ 
+""" 
 nodo_buscado = busquedaCampoKnuth(arbol_binario_dioses, dios_buscado, 0)
 
 if nodo_buscado:
@@ -1261,7 +1261,21 @@ else:
  """
 
 
+# F
+""" 
+print("Barrido Inorden:")
+inorden(arbol_binario_dioses)
+print()
+print("Barrido Preorden:")
+preorden(arbol_binario_dioses)
+ """
 
+# G
+""" 
+barridoInordenDiosesMadres(arbol_binario_dioses)
+ """
+
+# H
 
 
 # EJERCICIO 21

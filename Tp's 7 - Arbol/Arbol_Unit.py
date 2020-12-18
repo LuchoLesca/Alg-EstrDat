@@ -1098,7 +1098,7 @@ def indiceDiosesToNario(archivo):
     raiz = None
     pos = 0
 
-    raiz = insertarCampoNario(raiz, None, ["INDICE"])
+    raiz = insertarCampoNario(raiz, None, ["INDICE", "-", "-"])
     largo_archivo = len(archivo)
 
     ultimo_titulo1 = None
@@ -1218,6 +1218,15 @@ def encontrarPadre(raiz, dios_buscado, padre=None):
         padre = encontrarPadre(raiz.der, dios_buscado, padre)
         
     return padre
+
+# G
+
+def barridoInordenDiosesMadres(arbol):
+    if arbol is not None:
+        barridoInordenDiosesMadres(arbol.izq)
+        if arbol.info[0] != "INDICE":
+          print('Dios: {}   - Madre: {}'.format(arbol.info[0], arbol.info[2]))
+        barridoInordenDiosesMadres(arbol.der)
 
 
 
