@@ -1229,6 +1229,17 @@ def barridoInordenDiosesMadres(arbol):
         barridoInordenDiosesMadres(arbol.der)
 
 
+# H
+
+def ancestrosDios(arbol, dios_buscado):
+    ancestros = []
+    ancestro = encontrarPadre(arbol, dios_buscado)
+    while ancestro:
+        ancestros.append(ancestro)
+        ancestro = encontrarPadre(arbol, ancestro.info[0])
+    return ancestros
+
+
 
 
 
