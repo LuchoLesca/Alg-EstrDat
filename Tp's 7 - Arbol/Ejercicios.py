@@ -1121,15 +1121,99 @@ print("Pronostico:", pronostico)
 # 2: descripcion
 
 
+""" 
+dioses = [
+    "Ouranos",
+    "Themis",
+    "Mnemosyne",
+    "Hyperon",
+    "Tehia",
+    "Krios",
+    "Kronos",
+    "Rhea",
+    "Kdios",
+    "Phobe",
+    "Iapetos",
+    "Okeanos",
+    "Thethys",
+    "Hyperon",
+    "Helios",
+    "Eos",
+    "Selene",
+    "Kronos",
+    "Hades",
+    "Demeter",
+    "Poseidon",
+    "Hestia",
+    "Hera",
+    "Zeus",
+    "Kdios",
+    "Leto",
+    "Iapetos",
+    "Prometheus",
+    "Epimetheus",
+    "Atlas",
+    "Okeanos",
+    "Pleione",
+    "Atlas",
+    "Maia",
+    "Zeus",
+    "Persephone",
+    "Ares",
+    "Hephaistos",
+    "Athena",
+    "Apolo",
+    "Artemis",
+    "Dionysos",
+    "Hermes",
+    "Ares",
+    "Phobes",
+    "Deimos",
+    "Eros",
+    "Humerios",
+    "Hermes",
+    "Hermaphrodite",
+    "Pan"
+]
+ """
+
+# A
+
 # txtToDat("Dioses/dioses.txt", "Dioses/dioses")
 
 a = abrir("Dioses/dioses")
-
 arbol_nario_dioses = indiceDiosesToNario(a)
+cerrar(a)
+# barridoNario(arbol_nario_dioses)
 
 arbol_binario_dioses = transformadaDioses(arbol_nario_dioses)
+# barridoKnuth(arbol_binario_dioses)
 
-cerrar(a)
+""" 
+for dios in list(set(dioses)):
+    respuesta = busquedaCampoKnuth(arbol_binario_dioses, dios, 0)
+    if respuesta:
+        print(respuesta.info)
+        print("hijos")
+        recDer(respuesta.izq)
+        print()
+ """
+
+# B
+""" 
+barridoHermanos(arbol_binario_dioses)
+ """
+
+# D
+""" 
+dios_buscado = "Zeus"
+imprimirHijosDe(arbol_binario_dioses, dios_buscado)
+ """
+
+
+
+
+
 
 
 # EJERCICIO 21

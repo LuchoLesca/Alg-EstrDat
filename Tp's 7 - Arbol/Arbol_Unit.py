@@ -1070,7 +1070,7 @@ def definirPronostico(arbol, registro):
 
 def busquedaCampoNario(raiz, buscado, campo=0, aux=None):
     '''Busqueda por campo recursiva de un nodo'''
-    if (raiz is not None) and (aux is None):
+    if (raiz is not None):
         if (raiz.info[campo] == buscado[campo]):
             aux = raiz
         else:
@@ -1079,15 +1079,15 @@ def busquedaCampoNario(raiz, buscado, campo=0, aux=None):
     return aux
 
 
-def insertarCampoNario(raiz, info_padre, info, campo=0):
+def insertarCampoNario(raiz, info_padre, info_hijo, campo=0):
     '''Busca el nodo padre por campo. Si lo encuentra, inserta el nodo hijo en él'''
     if raiz is None:
-        raiz = NodoNario(info)
+        raiz = NodoNario(info_hijo)
     else:
         nodo_padre = busquedaCampoNario(raiz, info_padre, campo)
     
         if nodo_padre:
-            hijo = NodoNario(info)
+            hijo = NodoNario(info_hijo)
             nodo_padre.hijos.append(hijo)
     
     return raiz
@@ -1147,36 +1147,66 @@ def transformadaDioses(raiz_nario, campo=0):
     for nodo in nodos_n:
         hijos_puntero_inicio = getHijosEnlazados(nodo)
         
-        if hijos:     
-            respuesta = busquedaCampoKnuth(arbol_k, nodo, campo)
-            print("Buscado", nodo.info)
-            print("respuesta:", respuesta)
-            input()
+        if hijos:
+            nombre_padre = nodo.info[0]
+            respuesta = busquedaCampoKnuth(arbol_k, nombre_padre, campo)
 
             if respuesta:
+                # print(respuesta)
+                """
+                print('Se busco {} y se encontro'.format(nombre_padre))
+                print("Se agragan sus hijos")
+                recDer(hijos_puntero_inicio)
+                print()
+                input()
+                """
                 respuesta.izq = hijos_puntero_inicio
 
     return arbol_k
 
+# B
 
-""" 
 def barridoHermanos(raiz):
     '''Realiza un barrido por nivel del arbol binario transformado por knuth'''
     cola = Cola()
     arribo(cola, raiz)
-    while(not cola_vacia(cola)):
+    while not cola_vacia(cola):
         nodo = atencion(cola)
         print(nodo.info[0])
-        if(nodo.izq is not None):
-            arribo(cola, nodo.izq)
-        hno = nodo.der
-        while(hno is not None):
-            print(hno.info[0])
-            if(hno.izq is not None):
-                arribo(cola, hno.izq)
-            hno = hno.der
 
- """
+        if nodo.izq:
+            arribo(cola, nodo.izq)
+        
+        hermano = nodo.der
+        
+        while hermano:
+            print(hermano.info[0])
+           
+            if(hermano.izq):
+                arribo(cola, hermano.izq)
+            
+            hermano = hermano.der
+
+
+# D
+
+def imprimirHijosDe(arbol, dios_buscado):
+    '''Imprime el nombre de todos los hijos del dios buscado'''
+    respuesta = busquedaCampoKnuth(arbol, dios_buscado, 0)
+    
+    if respuesta:
+        print("Hijo de {}:".format(dios_buscado))
+        if respuesta.izq:
+            aux = respuesta.izq
+            print(aux.info[0])
+            while aux.der:
+                aux = aux.der
+                print(aux.info[0])
+        else:
+            print("- No posee hijos -")
+    else:
+        print("Dios no encontrado")
+
 
 
 
