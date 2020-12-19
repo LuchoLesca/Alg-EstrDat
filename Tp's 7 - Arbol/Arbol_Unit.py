@@ -621,6 +621,25 @@ class Pokemon():
     def __str__(self):
         return "Nombre: " + str(self.nombre) + " -  Nro: " + str(self.nro) + " -  Tipo/s:" + str(self.tipos) + " -  Debilidad/es:" + str(self.debilidades)
 
+
+def jsonToFilePoke(ruta_json, ruta_file):
+    '''Extra datos de .json y guarda en archivo, para trabajar con él'''
+    with open(ruta_json, "r") as read_file:
+        pokemons = json.load(read_file)
+
+    archivo = abrir(ruta_file)
+
+    for pokemon in pokemons:
+        nombre = pokemon.get("name")
+        nro = pokemon.get("pokedex_number")        
+        tipos = obtenerTipos(pokemon)
+        debilidades = obtenerDebilidades(pokemon)
+
+        nuevo_pokemon = Pokemon(nombre, nro, tipos, debilidades)
+
+        guardar(archivo, nuevo_pokemon)
+
+
 def initFilePokemon():
     ruta_json = "Pokemons/pokemon.json"
     ruta_file = "Pokemons/pokemons"
@@ -648,24 +667,6 @@ def obtenerDebilidades(pokemon):
         if (valor == 2):
             lista_deb.append(deb.replace("against_", ""))
     return lista_deb
-
-
-def jsonToFilePoke(ruta_json, ruta_file):
-    '''Extra datos de .json y guarda en archivo, para trabajar con él'''
-    with open(ruta_json, "r") as read_file:
-        pokemons = json.load(read_file)
-
-    archivo = abrir(ruta_file)
-
-    for pokemon in pokemons:
-        nombre = pokemon.get("name")
-        nro = pokemon.get("pokedex_number")        
-        tipos = obtenerTipos(pokemon)
-        debilidades = obtenerDebilidades(pokemon)
-
-        nuevo_pokemon = Pokemon(nombre, nro, tipos, debilidades)
-
-        guardar(archivo, nuevo_pokemon)
 
 
 def generarArbolPoke(ruta_file, tipo_gen):

@@ -340,7 +340,6 @@ print("Mensaje decodificado: ", msj_dec)
  """
 
 
-
 # EJERCICIO 9
 
 """ 
@@ -355,22 +354,23 @@ for i in range(altura(r)):  # Dondei representa a cada nivel
           " Faltan:", int(deberia_haber - cant_nodos))
  """
 
+
 # EJERCICIO 10
 
 # imprimirArbol(r)
-
 # A
-# print("Cantidad de nodos en el arbol:", pesoArbol(r))
-
+""" 
+print("Cantidad de nodos en el arbol:", pesoArbol(r))
+ """
 # B
-# print("Cantidad de hojas:", cantidadHojas(r))
-
+""" 
+print("Cantidad de hojas:", cantidadHojas(r))
+ """
 # C
 """
 print("Información de los nodos hojas")
 mostrarHojas(r)
 """
-
 # D
 """ 
 buscado = int(input("Ingrese valor del que desea determinar el padre: "))
@@ -385,22 +385,19 @@ else:
     else:
         print("El elemento buscado no se encuentra. No tiene padre")
  """
-
 # E
-
-# print("Altura de arbol:", r.altura)
+""" 
+print("Altura de arbol:", r.altura)
+ """
 
 
 # EJERCICIO 11
 """ 
 cant_niveles = 9
 r = generarArbolPorNivel(cant_niveles)
- """
 # imprimirArbol(r)
-
-
-# A
-# Crea bosque y recorta arbol en nivel deseado
+ """
+# A (NECESARIO GENERAR EL ARBOL ANTERIORMENTE)
 """ 
 nivel_a_cortar = 3
 bosque = []
@@ -415,16 +412,13 @@ for arbol in bosque:
     print()
     print("##################")
  """
-
 # B
-# Muestras los nodos que hay en el bosque
 """ 
 print()
 print("Raices")
 for arbol in bosque:
     print("Raiz:", arbol.info, " Cantidad de nodos:", pesoArbol(arbol))
  """
-
 # C
 """ 
 for i in range(len(bosque)):
@@ -432,7 +426,6 @@ for i in range(len(bosque)):
     print("Barrido arbol " + str(i+1))
     preorden(bosque[i])
  """
-
 # D
 """ 
 if len(bosque) == 0:
@@ -445,13 +438,10 @@ else:
             mayor = arbol
             cant = pesoArbol(arbol)
 
-
 print()
 print("Raiz de arbol más pesado", mayor.info, " Cantidad de nodos", cant)
  """
-
 # E
-# Indicar qué arboles del bosque están llenos
 """ 
 print()
 for arbol in bosque:
@@ -459,8 +449,8 @@ for arbol in bosque:
         print("El arbol que empieza con raíz", arbol, "esta lleno")
     else:
         print("El arbol que empieza con raíz", arbol, "no esta lleno")
-
  """
+
 
 # EJERCICIO 12
 """ 
@@ -587,24 +577,23 @@ print("Mensaje 5:", decodMsj(arbol, msj5))
 
  """
 
+
 # EJERCICIO 14
 
-# ruta = "./Tp's 7 - Arbol/personajesSW/personajesStarWars"
-
+# ruta = "PersonajesSW/personajesStarWars"
 # Utilizado para inicial el archivo, en caso de que no esté cargado, o recargarlo
 # initArchivoPersonajes(ruta)
 
-
 # A
-
-# arbol_nombres = generarArbolPersonajesNombre(ruta)
+""" 
+arbol_nombres = generarArbolPersonajesNombre(ruta)
+ """
 # B
-
-# arbol_nombres = altaPersonaje(arbol_nombres, ruta)
-# arbol_nombres = modificarPersonaje(arbol_nombres, ruta)
-# arbol_nombres = bajaPeronsaje(arbol_nombres, ruta)
-
-
+""" 
+arbol_nombres = altaPersonaje(arbol_nombres, ruta)
+arbol_nombres = modificarPersonaje(arbol_nombres, ruta)
+arbol_nombres = bajaPeronsaje(arbol_nombres, ruta)
+ """
 # C
 """ 
 print("Información de Yoda")
@@ -612,15 +601,15 @@ consultaPersonaje(arbol_nombres, "Yoda", ruta)
 print("Información de Boba Fett")
 consultaPersonaje(arbol_nombres, "Boba Fett", ruta)
  """
-
 # D
 """ 
 archivo = abrir(ruta)
 print("Personajes que miden mas de un metro")
 listadoIndicesAltura(arbol_nombres, archivo)
 print()
-
+"""
 # E
+"""
 print("Personajes que pesan menos de 75kg")
 listadoIndicesPeso(arbol_nombres, archivo)
  """
@@ -646,13 +635,6 @@ tabla = [
 """ 
 raiz = crearArbolHuffman(tabla)
  """
-# Para controlar
-"""
-dic = {}
-huffmanToDicCodificaciones(raiz, dic)
-print(dic)
-"""
-
 # C 
 """ 
 msj_original = nanoMensaje()
@@ -665,7 +647,6 @@ print("Mensaje original:", msj_original)
 print("Mensaje comprimido:", msj_comprimido)
 print("Mensaje descomprimido:", msj_descomprimido)
  """
-
 # D
 """ 
 print("Diferencia en tamaño de memoria ocupada entre mensaje")
@@ -674,18 +655,11 @@ print(diferenciaTamano(msj_original, msj_comprimido))
  """
 
 
-
 # EJERCICIO 16
 
-""" 
-def obtenerDebilidades(pokemon):
-                            
-    return type(keys)
- """
+# initFilePokemon()  # Demora, así que utilizarlo solo si el archivo no está generado previamente
 
-# initFilePokemon()
-
-# ruta_file = "Pokemons/pokemons"
+ruta_file = "Pokemons/pokemons"
 
 # A
 """ 
@@ -693,7 +667,6 @@ arbolPokeNombre = generarArbolPoke(ruta_file, "nombre")  # Generado por campo 0 
 arbolPokeNro = generarArbolPoke(ruta_file, "nro")  # Generado por campo 1 = Nro
 arbolPokeTipo = generarArbolPoke(ruta_file, "tipo")  # # Generado por campo 2 = Tipo
  """
-
 # B - listar por nombre buscado
 """ 
 buscado = "Bul"
@@ -703,7 +676,6 @@ lista_poke = listaPokemonsNombre(ruta_file, arbolPokeNombre, buscado)
 for pokemon in lista_poke:
         print(pokemon)
  """
-
 # B - mostrar dato a partir de número
 """ 
 buscado = 135
@@ -716,7 +688,6 @@ if poke_encontrado:
 else:
     print("El pokemon con nro", buscado, "ingresado no se encuentra en nuestra pokedex")
  """
-
 # C
 """ 
 tipo_buscado = "fire"
@@ -726,10 +697,8 @@ print("Todos los pokemons de que tengan tipo ", tipo_buscado, " como principal o
 for pokemon in pokemons_tipo:
     print(pokemon)
  """
-
 # D
 """ 
-
 # Se buscan los datos de los tres pokemons, para poder extrae los tipos
 lista_poke = listaPokemonsNombre(ruta_file, arbolPokeNombre, "Jolteon")
 lista_poke += (listaPokemonsNombre(ruta_file, arbolPokeNombre, "Lycanroc"))
@@ -759,8 +728,6 @@ for pokemon in data_pokemons:
             print(datos)
             break
 """
-
-
 # E
 """ 
 tipos = ["bug","dark","dragon","electric","fairy","fight","fire","flying","ghost","grass","ground","ice","normal","poison","psychic","rock","steel","water"]
@@ -769,8 +736,6 @@ for tipo in tipos:
     pokemons_tipo = listaBusquedaTipoArbol(ruta_file, arbolPokeTipo, tipo)
     print("Hay", len(pokemons_tipo), "pokemons de tipo", tipo)
  """
-
-
 
 
 # EJERCICIO 17
