@@ -178,6 +178,18 @@ def contHeores(raiz):
     else:
         return 0
 
+# G
+
+def separarHeroesVillanos(raiz, bosque):
+    if raiz is not None:
+        separarHeroesVillanos(raiz.izq, bosque)
+        separarHeroesVillanos(raiz.der, bosque)
+        if raiz.info[1]:
+            bosque[0] = insertar(bosque[0], raiz.info)
+        else:
+            bosque[1] = insertar(bosque[1], raiz.info)
+
+
 
 # EJERCICIO 6
 

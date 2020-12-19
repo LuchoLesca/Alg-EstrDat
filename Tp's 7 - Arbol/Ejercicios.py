@@ -2,41 +2,15 @@ import json
 from TDA_Arbol import *
 from Arbol_Unit import *
 from random import randint, choice, uniform
-from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo
-from TDA_Archivo import txtToDat
+from TDA_Archivo import abrir, cerrar, leer, guardar, modificar, barridoArchivo, txtToDat
 
-""" 
-r = None  # Importante no eliminar esta variable, ya que se usará como raíz para la mayoría de los ejercicios
 
-lista_numeros = [20, 29, 11, 41, 32, 72, 99, 50, 65, 91]
-
-for i in range(randint(5, 10)):
-   num = randint(0, 50)
-   lista_numeros.append(num)
-   r = insertar(r, num)
- """
-# print("Lista de números ingresados", lista_numeros)
-# 20, 29, 11, 41, 32, 72, 99, 50, 65, 91
-""" 
-r = insertar(r, 20)
-r = insertar(r, 29)
-r = insertar(r, 11)
-r = insertar(r, 41)
-r = insertar(r, 32)
-r = insertar(r, 72)
-r = insertar(r, 99)
-r = insertar(r, 50)
-r = insertar(r, 65)
-r = insertar(r, 91)
-
- """
 # EJERCICIO 1
+
+# r = arbolAleatorio(10)
 
 # A
 """ 
-r = arbolAleatorio(10)
-
-print()
 print("Preorden")
 preorden(r)
 print()
@@ -47,55 +21,49 @@ print()
 
 print("Postorden")
 postorden(r)
-print()
-
-
-imprimirArbol(r)
  """
 # B
-"""
-# buscado = lista_numeros[0]  # este debería necontrarlo
-# buscado = 100  # Este no debería encontrarlo
 
+# buscado = randint(0, 100)
+# buscado = r.info  # Debería encontrarlo siempre
+""" 
 resultado = busqueda(r, buscado)
 
 if resultado is None:
     print("El elemento " + str(buscado) + " no está en el arbol")
 else:
     print("El elemento " + str(buscado) + " se encuentra en el arbol")
-"""
+ """
 # C
-"""
+""" 
+print("Arbol inorden")
+inorden(r)
 print()
 print("ELiminados: ")
+
 for i in range(3):
-    num = lista_numeros[i]
-    eliminar(r, num)
-    print(lista_numeros[i])
+    print(r.info)
+    eliminar(r, r.info)
 
 print()
 print("Arbol inorden")
 inorden(r)
-"""
-
+ """
 # D
 """
 print("Altura de sub arbol izquierdo: ", altura(r.izq))
 print("Altura de sub arbol derecho: ", altura(r.der))
 """
-
 # E
-"""
-r = insertar(r, 20)
-r = insertar(r, 29)
-r = insertar(r, 11)
+""" 
+r = insertar(r, r.info)
+r = insertar(r, r.der.info)
 
 imprimirArbol(r)
 
 print()
 repetido(r)
-"""
-
+ """
 # F
 """
 imprimirArbol(r)
@@ -105,6 +73,7 @@ pares, impares = paresImpares(r)
 print("Pares:", pares, "Impares:", impares)
 """
 
+
 # EJERCICIO 2
 
 """ 
@@ -112,7 +81,6 @@ raiz1 = arbolPruebaA()
 raiz2 = arbolPruebaB()
  """
 # A
-
 """ 
 print()
 print("En forma de prefijo:")
@@ -126,7 +94,6 @@ postorden(raiz1)
 print()
 print("El barrido inorden muestra la expresión en el orden correcto")
  """
-
 # B
 """ 
 print()
@@ -141,9 +108,9 @@ imprimirArbol(raiz2)
 print("Resultado:\n", calcular(raiz2))
  """
 
+
 # EJERCICIO 3
 
-# Solo usar txtToDat no existen los demás archivos, aparte del txt
 # txtToDat("Indices/indice_summerville.txt", "Indices/indice_summerville")
 
 """ 
@@ -156,13 +123,11 @@ arbol_b = transformarKnuth(arbol_nario)
 """ 
 barridoKnuth(arbol_b)
  """
-
 # B
 """ 
 buscado = "15. Disenio de software de tiempo real 309"
 mostrarParte(arbol_b, buscado)
  """
-
 # C
 """ 
 buscado = "16.4. Prototipado de la interfaz de usuario 348"
@@ -172,13 +137,11 @@ if pag != -1:
 else:
     print("No se pudo obtener la pagina de", buscado)
  """
-
 # D
 """ 
 cantidad_capitulos = contarCantidadCapitulos(arbol_b)
 print("El indice tiene", cantidad_capitulos, "capitulos")
  """
-
 # E
 """ 
 lista_coincidencias = []
@@ -211,10 +174,11 @@ print("Arbol derecho")
 imprimirArbol(hijoDer(r))
  """
 
+
 # EJERCICIO 5
 
 # A
-""" 
+
 heroes = ["Capitan America", "Iron Man", "Thor", "Hulk", "Black Widow",
           "Hawkeye", "Vision", "Dotor Strange", "Groot", "Spider-man"]
 villanos = ["Thanos", "Yellowjacket", "Ultron", "Red Skull", "Iron Monger",
@@ -225,30 +189,24 @@ r = None
 for i in range(10):
     r = insertar(r, [heroes[i], True])
     r = insertar(r, [villanos[i], False])
- """
 
 # B
-
 """ 
 print()
 print("Villanos ordenados alfabeticamente:")
 mostrarVillanos(r)
  """
 # C
-
 """ 
 print()
 print("Superheroes que empiezan con C")
 mostrarC(r)
  """
-
 # D
-
 """ 
 print()
 print("La cantidad de heroes en el arbol es de:", contHeores(r))
  """
-
 # E
 """ 
 print("Previo a busqueda y modificacion")
@@ -268,38 +226,17 @@ print()
 print("Luego busqueda y modificacion")
 inorden(r)
  """
-
 # F
 """
 invInorden(r)
 """
-
-# G
-"""
+# G (IMPORTANTE, EJECUTAR EL PUNTO "A" A LA VEZ QUE ESTE, PARA CARGAR EL ARBOL R)
+""" 
 bosque = [None, None]  # 0: arbol heroes. 1: arbol villanos
-
-
-def insertarHeroe(heroe):
-    bosque[0] = insertar(bosque[0], heroe)
-
-
-def insertarVillano(villano):
-    bosque[1] = insertar(bosque[1], villano)
-
-
-def serpararHeroesVillanos(raiz):
-    if raiz is not None:
-        serpararHeroesVillanos(raiz.izq)
-        serpararHeroesVillanos(raiz.der)
-        if raiz.info[1]:
-            insertarHeroe(raiz.info)
-        else:
-            insertarVillano(raiz.info)
-
-
-inorden(r)
+separarHeroesVillanos(r, bosque)
 
 # I
+
 print()
 print("Cantidad de nodos por arbol:")
 print("Héroes:", pesoArbol(bosque[0]))
@@ -308,34 +245,30 @@ print("Villanos:", pesoArbol(bosque[1]))
 # II
 print()
 print("Arbol de heroes")
-serpararHeroesVillanos(r)
 inorden(bosque[0])
 print()
 print("Arbol de villanos:")
 inorden(bosque[1])
+ """
 
-"""
 
 # EJERCICIO 6
 
-# Solo usar txtToDat no existen los demás archivos, aparte del txt
 # txtToDat("Directorios/indice_directorio.txt", "Directorios/indice_directorios")
 
-
 # A
-
+""" 
 a_indices = abrir("Directorios/indice_directorios")
 indices_nario = indiceDirectorioToNario(a_indices)
 cerrar(a_indices)
 indices_binario = transformarKnuth(indices_nario)
-
+ """
 # B 
 """ 
 print("Barrido inorden del arbol binario")
 print()
 inorden(indices_binario)
  """
-
 # C
 """ 
 buscado = "/Imagenes"
@@ -347,7 +280,6 @@ if respuesta:
 else:
     print("No se encontro", buscado, "en el indice")
  """
-
 # D 
 """ 
 buscado = "/Perla"
@@ -359,7 +291,6 @@ print()
 buscado = "/Imagenes"
 cantidadArchivosEnCarpeta(indices_binario, buscado)
  """
-
 # E
 """ 
 print("Listado de todos los archivos:")
@@ -1120,65 +1051,8 @@ print("Pronostico:", pronostico)
 # 1: madre
 # 2: descripcion
 
-
-""" 
-dioses = [
-    "Ouranos",
-    "Themis",
-    "Mnemosyne",
-    "Hyperon",
-    "Tehia",
-    "Krios",
-    "Kronos",
-    "Rhea",
-    "Kdios",
-    "Phobe",
-    "Iapetos",
-    "Okeanos",
-    "Thethys",
-    "Hyperon",
-    "Helios",
-    "Eos",
-    "Selene",
-    "Kronos",
-    "Hades",
-    "Demeter",
-    "Poseidon",
-    "Hestia",
-    "Hera",
-    "Zeus",
-    "Kdios",
-    "Leto",
-    "Iapetos",
-    "Prometheus",
-    "Epimetheus",
-    "Atlas",
-    "Okeanos",
-    "Pleione",
-    "Atlas",
-    "Maia",
-    "Zeus",
-    "Persephone",
-    "Ares",
-    "Hephaistos",
-    "Athena",
-    "Apolo",
-    "Artemis",
-    "Dionysos",
-    "Hermes",
-    "Ares",
-    "Phobes",
-    "Deimos",
-    "Eros",
-    "Humerios",
-    "Hermes",
-    "Hermaphrodite",
-    "Pan"
-]
- """
-
 # A
-
+""" 
 # txtToDat("Dioses/dioses.txt", "Dioses/dioses")
 
 a = abrir("Dioses/dioses")
@@ -1188,15 +1062,6 @@ cerrar(a)
 
 arbol_binario_dioses = transformadaDioses(arbol_nario_dioses)
 # barridoKnuth(arbol_binario_dioses)
-
-""" 
-for dios in list(set(dioses)):
-    respuesta = busquedaCampoKnuth(arbol_binario_dioses, dios, 0)
-    if respuesta:
-        print(respuesta.info)
-        print("hijos")
-        recDer(respuesta.izq)
-        print()
  """
 
 # B
@@ -1287,10 +1152,6 @@ if len(ancestros) != 0:
 else:
     print(dios_buscado, "no posee ancestros")
  """
-
-
-# I
-
 
 
 # J

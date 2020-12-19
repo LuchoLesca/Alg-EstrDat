@@ -60,7 +60,7 @@ def fileToArray(ruta):
 
 
 def txtToDat(rutatxt="", rutadat=""):
-    '''Crea archivo.dat a partir de .txt'''
+    '''Crea o sobreescribe archivo.dat a partir de .txt'''
     # Abrir archivo dir
     archivodat = abrir(rutadat)
     #Si ya existe, limpiamos el .dat
