@@ -762,25 +762,19 @@ for i in range(1000):
 """ 
 armasFalladasPorGeneral(arbolNombreSW)
  """
-
 # D
 """ 
 print("Cantidad de soldados por cada tipo en las misiones de Kylo Ren")
 soldadosCantidadPorGeneral(arbolNombreSW, "Kylo Ren")
  """
-
-
 # E
 """ 
 determinarSithyFallas(arbolNombreSW)
  """
-
 # F
 """ 
 codigoDeMisionesFecha(arbolFechaSW, "1/02/2019")
  """
-
-
 # G 
 # Se ingresa un nuevo reporte con el código solicitado, para poder buscarlo.
 # En este caso solo a arbol de código, ya que los demás no es necesario, pero debería hacerse
@@ -801,24 +795,21 @@ else:
 
 # EJERCICIO 18
 
-
-# A Se cargan 100 libros
+# A
 """ 
 ruta_file = "Libros/libros"
 initFileLibros()
  """
-
 # B
 """ 
 arbolTitulo = generarArbolLibro(ruta_file, "titulo")
 arbolISBN = generarArbolLibro(ruta_file, "isbn")
 arbolAutores = generarArbolLibro(ruta_file, "autores")
- """
+
 # imprimirArbol(arbolTitulo)
 # imprimirArbol(arbolISBN)
 # imprimirArbol(arbolAutores)
-
-
+ """
 # D
 # D - i
 """ 
@@ -836,7 +827,6 @@ if res:
 else:
     print("Libro con ISBN", isbn_buscado, "no encontrado")
  """
-
 # D - ii
 """ 
 autor_buscado = "autor3"
@@ -854,7 +844,6 @@ if len(res) > 0:
 else:
     print("No se encontraron libros con ese autor")
  """
-
 # D - iii
 """ 
 inicio_nombre_buscado = "alg"
@@ -863,7 +852,6 @@ res = busquedaPorCoincidenciaTitulo(arbolTitulo, inicio_nombre_buscado)
 
 print(res)
  """
-
 # A
 """ 
 # Se busca en el arbol todos los libros de los autores deseados
@@ -889,9 +877,7 @@ for libro in libros_deseados:
     print(libro)
 
  """
-
  # B
-
 """ 
 libros_mineria = busquedaPorCoincidenciaTitulo(arbolTitulo, "Mineria de Datos")
 libros_algoritmos = busquedaPorCoincidenciaTitulo(arbolTitulo, "Algoritmos")
@@ -913,8 +899,6 @@ print("Libros de Mineria de Datos, Algoritmos y Base de Datos:")
 for libro in libros_deseados:
     print(libro)
  """
-
-
 # C
 """ 
 # Creación arbol páginas para que sea más eficiente la búsqueda
@@ -936,8 +920,6 @@ print("Libros con más de", paginas_deseadas)
 for libro in libros:
     print(libro)
  """
-
-
 # D
 """ 
 isbn_buscado = 9788420546391
@@ -967,7 +949,6 @@ if res:
 else:
     print("Libro con ISBN", isbn_buscado, "no encontrado")
  """
-
 # E
 """ 
 # Carga libro con ISBN especifico, inserta en archivo y actualiza los arboles
@@ -996,7 +977,6 @@ if len(libros_nosql) > 0:
 else:
     print("No se encontró el libror NoSQL for Mere Mortals")
  """
-
 
 
 # EJERCICIO 19
@@ -1028,18 +1008,15 @@ cerrar(a)
 arbol_binario_dioses = transformadaDioses(arbol_nario_dioses)
 # barridoKnuth(arbol_binario_dioses)
  """
-
 # B
 """ 
 barridoHermanos(arbol_binario_dioses)
  """
-
 # D
 """ 
 dios_buscado = "Zeus"
 imprimirHijosDe(arbol_binario_dioses, dios_buscado)
  """
-
 # E
 """ 
 dios_buscado = "Ares"
@@ -1089,8 +1066,6 @@ if nodo_buscado:
 else:
     print(dios_buscado, "no encontrado")
  """
-
-
 # F
 """ 
 print("Barrido Inorden:")
@@ -1099,12 +1074,10 @@ print()
 print("Barrido Preorden:")
 preorden(arbol_binario_dioses)
  """
-
 # G
 """ 
 barridoInordenDiosesMadres(arbol_binario_dioses)
  """
-
 # H
 """ 
 dios_buscado = "Eros"
@@ -1117,8 +1090,6 @@ if len(ancestros) != 0:
 else:
     print(dios_buscado, "no posee ancestros")
  """
-
-
 # J
 """ 
 nombre_madre = "Theia"
@@ -1210,9 +1181,7 @@ if res:
     print("Descripcion:", res.info[2])
 else:
     print("No se encontró datos de la criatura", nombre_criatura)
- """    
-
-
+ """
 # D 
 """ 
 # Lista de todos los vencedores (repetidos)  
@@ -1226,8 +1195,6 @@ print("Mayores 3 heroes/dioses vencedores")
 for i in range(3):
     print(mayores_vencedores[i])
  """
-
-
 # E
 """ 
 nombre = "Heracles"
@@ -1248,7 +1215,6 @@ print("Criaturas no derrotadas")
 for criatura in no_derrotadas:
     print(criatura[0])
  """
-
 # G
 """ 
 nombre_criatura = "tr"
@@ -1260,7 +1226,6 @@ print("Lista de criatura coincidentes con '{}'".format(nombre_criatura))
 for criatura in criaturas_encontradas:
     print(criatura[0])
  """
-
 # H
 """ 
 print("Antes de elimar Basilisco y Sirenas")
@@ -1274,7 +1239,6 @@ print("Despues de eliminarlos:")
 
 imprimirArbol(arbolCriaturas)
  """
-
 # I
 """ 
 print("Antes de modificar el derrotado por de Aves del Estinfalo")
@@ -1286,7 +1250,6 @@ print()
 print("Despues de modificar el derrotado por de Aves del Estinfalo")
 imprimirArbol(arbolCriaturas)
  """
-
 # J
 """ 
 modificarnombreCriatura(arbolCriaturas, "Ladon", "Dragon Ladon")
