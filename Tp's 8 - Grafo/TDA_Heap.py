@@ -1,6 +1,3 @@
-import random
-
-
 class Heap():
     def __init__(self, tamanio):
         self.tamanio = 0
@@ -34,7 +31,6 @@ def flotar(heap, indice):
 
 def hundir(heap, indice):
     """Hunde el elemento en la posicion del indice"""
-
     # hi = Hijo izquierdo
     hi = (2 * indice) + 1
     control = True
@@ -58,8 +54,7 @@ def hundir(heap, indice):
 
 def atencion_H(heap):
     '''Elimina y devuelve primer elemento en cola de prioridad'''
-    aux = quitar(heap)
-    return aux
+    return quitar(heap)
 
 
 def arribo_H(heap, dato, prioridad=0):
@@ -67,25 +62,16 @@ def arribo_H(heap, dato, prioridad=0):
     agregar(heap, [dato, prioridad])
 
 
-"""
-def ordenarHeap(heap):
-    '''Ordena el heap'''
-    for i in range(heap.tamanio):
-        flotar(heap, i)
-"""
-
-"""
 def heapSort(heap):
     '''Metodo de ordenamiento monticulo'''
     aux = heap.tamanio
-    for i in range(0, heap.tamanio-1):
+    for i in range(0, heap.tamanio):
         quitar(heap)
     heap.tamanio = aux
-"""
 
 
 def monticulizar(lista):
-    '''Convierte lista en montículo(la ordena como su fuese uno)'''
+    '''Convierte lista en montículo(la ordena como si fuese uno)'''
     for i in range(len(lista)):
         flotar(lista, i)
 
@@ -94,22 +80,28 @@ def heap_vacio(heap):
     return heap.tamanio == 0
 
 
-def buscar_H(heap, dato):
-    if dato in heap:
-        return heap.index(dato)
-    else:
-        return None
+def heap_lleno(heap):
+    return heap.tamanio == len(heap.vector)
+
+
+def cambiarPrioridad(heap, indice, prioridad):
+    """Cambia la prioridad de un elemento y lo acomoda en el montículo."""
+    prioridad_anterior = heap.vector[indice][0]
+    heap.vector[indice][0] = prioridad
+    if(prioridad < prioridad_anterior):
+        flotar(heap, indice)
+    elif(prioridad > prioridad_anterior):
+        hundir(heap, indice)
+
+
+def buscar_H(heap, buscado):
+    pos = -1
+    for i in range(len(heap.vector)):
+        if heap.vector[i][1][0].info == buscado:
+            pos = i
+    return pos
 
 
 def barridoMonticulo(heap):
     for i in range(heap.tamanio):
         print(heap.vector[i])
-
-
-lala = [2, 45, 1, 15, 18, 99, 0, 233, 57]
-mont = Heap(100)
-
-for i in range(len(lala)):
-    arribo_H(mont, lala[i])
-
-barridoMonticulo(mont)
