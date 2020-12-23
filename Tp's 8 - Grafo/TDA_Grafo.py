@@ -14,7 +14,7 @@ class Grafo():
 
 class Vertice():
     '''Crea un vertice con la información cargada'''
-    def __init__(self, info):
+    def __init__ (self, info):
         self.info = info
         self.sig = None
         self.visitado = False
@@ -22,10 +22,7 @@ class Vertice():
 
 
 class Arista():
-    # info de vértice(peso), el siguiente nodo vértice de la lista de vertices
-    # y su destino o sea el nodo vertice destino que seria
-
-    def __init__(self, info=0, destino):
+    def __init__ (self, info, destino):
         self.info = info
         self.destino = destino
         self.sig = None
@@ -38,13 +35,17 @@ class listaAristas():
         self.tamanio = 0
 
 
+# INSERTAR/AGREGAR
+
 def insertarVertice(grafo, dato):
     '''Inserta un vertice al grafo'''
     vertice = Vertice(dato)
+    # Si el grafo está vacío o la info es menos que el primer elemento, lo inserta primero en la lista de vertices
     if (grafo.inicio is None) or (vertice.info < grafo.inicio.info):
         vertice.sig = grafo.inicio
         grafo.inicio = vertice
     else:
+    # Sino, realiza un barrido secuencial en la lista de nodos hasta encontrarel lugar a ubicar
         act = grafo.inicio.sig
         ant = grafo.inicio
         
@@ -58,15 +59,15 @@ def insertarVertice(grafo, dato):
     grafo.tamanio += 1
 
 
-# INSERTAR/AGREGAR
-
-def agregrarArista(lista_adyacentes, dato, destino):
-    '''Agrega la arista desde el vértice origen al destino.'''
+def agregarArista(lista_adyacentes, dato, destino):
+    '''Agrega la arista a la lista de adyacentes del orígen.'''
     arista = Arista(dato, destino)
-    if (lista_adyacentes.inicio is None) or (lista_adyacentes.inicio.destino > destino):
+    # Si la lista de adyacentes está vacía o el valor destino es menor que el valo destino del primer elemento, coloca este nodo como primero
+    if (lista_adyacentes.inicio is None) or (destino < lista_adyacentes.inicio.destino):
         arista.sig = lista_adyacentes.inicio
         lista_adyacentes.inicio = arista
     else:
+    # Sino, realiza un barrido secuencial en la lista de nodos hasta encontrarel lugar a ubicar
         ant = lista_adyacentes.inicio
         act = lista_adyacentes.inicio.sig
         
@@ -82,8 +83,8 @@ def agregrarArista(lista_adyacentes, dato, destino):
 
 def insertarArista(grafo, dato, origen, destino):
     '''Si los vertices de origen y destino existen, insertar arista directamente'''
-    ori = buscar_vertice(grafo, origen)
-    des = buscar_vertice(grafo, destino)
+    ori = buscarVertice(grafo, origen)
+    des = buscarVertice(grafo, destino)
     if (ori is not None) and (des is not None):
         if grafo.dirigido:
             agregarArista(ori.adyacentes, dato, des.info)
@@ -92,9 +93,10 @@ def insertarArista(grafo, dato, origen, destino):
             agregarArista(des.adyacentes, dato, ori.info)
 
 
- # BUSQUEDA
+ # BUSQUEDAS
 
 def buscarArista(vertice, buscado):
+    '''Retorna el nodoArista con la info buscada, si la encuentra'''
     aux = vertice.adyacentes.inicio
     while (aux is not None) and (aux.destino != buscado):
         aux = aux.sig
@@ -102,6 +104,7 @@ def buscarArista(vertice, buscado):
 
 
 def buscarVertice(grafo, buscado):
+    '''Retorna el nodoVertice con la info buscada, si la encuentra'''
     aux = grafo.inicio
     while (aux is not None) and (aux.info != buscado):
         aux = aux.sig
@@ -161,20 +164,21 @@ def barridoVertices(grafo):
         print("Adyacentes:")
         barridoAdyacentes(aux)
         aux = aux.sig
+        print()
 
 
 def barridoAdyacentes(vertice):
     '''Muestra los adyacentes del vertice.'''
     aux = vertice.adyacentes.inicio
     while(aux is not None):
-        print(aux.destino, aux.info)
+        print("Destino: {}  -   Info: {}".format(aux.destino, aux.info))
         aux = aux.sig
 
 
 # ELIMINAR
 
 def eliminarVertice(grafo, clave):
-    '''Elimina un vertice del grafo y lo devuelve si lo encuentra'''
+    '''Elimina un vertice del grafo y devuelve el dato, si lo encuentra'''
     dato = None
 
     if grafo.inicio.info == clave:
@@ -196,41 +200,48 @@ def eliminarVertice(grafo, clave):
     
     if(dato is not None):
         aux = grafo.inicio
-   
+
+        # Realiza un barrido de los vertices y quita la aristas que hayan ido a ese vertice
         while aux is not None:
-            quitarArista(aux.adyacentes, dato)
+            if aux.adyacentes.inicio is not None:
+                quitarArista(aux, dato)
+            aux = aux.sig
    
     return dato
 
 
 def quitarArista(vertice, destino):
-    x = None
+    '''Quita el arista con info = destino, del vertice dado'''
+    info_extraida = None
+    aux_adyacentes = vertice.adyacentes.inicio
 
-    if vertice.adyacentes.inicio.destino == destino:
-        x = vertice.adyacentes.inicio.info
-        vertice.adyacentes.inicio = vertice.adyacentes.inicio.sig
+    if aux_adyacentes.destino == destino:
+        info_extraida = aux_adyacentes.info
+        aux_adyacentes = aux_adyacentes.sig
         vertice.adyacentes.tamanio -= 1
     else:
-        ant = vertice.adyacentes.inicio
-        act = vertice.adyacentes.inicio.sig
+        ant = aux_adyacentes
+        act = aux_adyacentes.sig
     
         while (act is not None) and (act.destino != destino):
             ant = act
             act = act.sig
 
         if (act is not None):
-            x = act.info
+            info_extraida = act.info
             ant = act.sig
             vertice.adyacentes.tamanio -= 1
 
+    return info_extraida
 
-def eliminarAsrista(grafo, vertice, destino):
-    '''Elimina una arista del vertice, y lo devuelve si lo encuentra'''
+
+def eliminarArista(grafo, vertice, destino):
+    '''Elimina el arista de la lista de aristas del vértice pasado, que posea el destino pasado'''
     nodo_quitado = quitarArista(vertice, destino)
 
     if not grafo.dirigido:
-        ori = buscarVertice(grafo, destino)
-        quitarArista(ori, vertice.info)
+        nodo_origen = buscarVertice(grafo, destino)
+        quitarArista(nodo_origen, vertice.info)
     
     return nodo_quitado
 
@@ -249,7 +260,7 @@ def existePaso(grafo, origen, destino):
         origen.visitado = True
         vadyacentes = origen.adyacentes.inicio
     
-        while(vadyacentes is not None and not resultado):
+        while(vadyacentes is not None) and (not resultado):
             adyacente = buscarVertice(grafo, vadyacentes.destino)
             if(adyacente.info == destino.info):
                 return True
@@ -270,9 +281,35 @@ def marcarNoVisitado(grafo):
 
  # ARBOLES/CAMINOS
 
+def dijkstra(grafo, origen, destino):
+    """Algoritmo de Dijkstra para hallar el camino mas corto."""
+    no_visitados = Heap(grafo.tamanio)
+    camino = Pila()
+    aux = grafo.inicio
+    
+    while aux is not None:
+        if aux.info == origen:
+            arribo_H(no_visitados, [aux, None], 0)
+        else:
+            arribo_H(no_visitados, [aux, None], inf)
+        aux = aux.sig
+
+    while not heap_vacio(no_visitados):
+        dato = atencion_H(no_visitados)
+        apilar(camino, dato)
+        aux = dato[1][0].adyacentes.inicio
+        
+        while aux is not None:
+            pos = buscar_H(no_visitados, aux.destino)
+            if (no_visitados.vector[pos][0] > dato[0] + aux.info):
+                no_visitados.vector[pos][1][1] = dato[1][0].info
+                cambiarPrioridad(no_visitados, pos, dato[0] + aux.info)
+            aux = aux.sig
+    return camino
+
 
 def kruskal(grafo):
-    '''Arbol de expansión mínima'''
+    """Algoritmo de Kruskal para hallar el árbol de expansión mínimo."""
     bosque = []
     aristas = Heap(grafo.tamanio**2)
     aux = grafo.inicio
@@ -309,28 +346,26 @@ def kruskal(grafo):
     return bosque[0]
 
 
-def dijkstra(grafo, origen, destino):
-    '''Camino más corto entre dos nodos'''
-    no_visitados = Heap(grafo.tamanio)
-    camino = Pila()
-    aux = grafo.inicio
-    
-    while aux is not None:
-        if aux.info == origen:
-            arribo_H(no_visitados, [aux, None], 0)
-        else:
-            arribo_H(no_visitados, [aux, None], inf)
-        aux = aux.sig
+def prim(grafo):
+    """Algoritmo de Prim para hallar el árbol de expansión mínimo."""
+    bosque = []
 
-    while not heap_vacio(no_visitados):
-        dato = atencion_H(no_visitados)
-        apilar(camino, dato)
-        aux = dato[1][0].adyacentes.inicio
-        
-        while aux is not None:
-            pos = buscar_H(no_visitados, aux.destino)
-            if (no_visitados.vector[pos][0] > dato[0] + aux.info):
-                no_visitados.vector[pos][1][1] = dato[1][0].info
-                cambiarPrioridad(no_visitados, pos, dato[0] + aux.info)
-            aux = aux.sig
-    return camino
+    aristas = Heap(grafo.tamanio ** 2)
+    adyac = grafo.inicio.adyacentes.inicio
+
+    while adyac is not None:
+        arribo_H(aristas, [grafo.inicio.info, adyac.destino], adyac.info)
+        adyac = adyac.sig
+    
+    while (len(bosque) // 2 < grafo.tamanio) and not heap_vacio(aristas):
+        dato = atencion_H(aristas)
+
+        if(len(bosque) == 0 or ((dato[1][0] not in bosque) ^ (dato[1][1] not in bosque))):
+            bosque += dato[1]
+            destino = buscarVertice(grafo, dato[1][1])
+            adyac = destino.adyacentes.inicio
+
+            while adyac is not None:
+                arribo_H(aristas, [destino.info, adyac.destino], adyac.info)
+                adyac = adyac.sig
+    return bosque
