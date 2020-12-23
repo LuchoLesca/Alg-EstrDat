@@ -2,6 +2,10 @@ from TDA_Grafo import *
 from random import randint
 
 
+# EJERCICIO 1
+
+# A
+
 
 def verticeSinApuntar(vertice):
     '''retorna True si el vértice no apunta a ningún otro'''
@@ -9,7 +13,7 @@ def verticeSinApuntar(vertice):
 
 
 def verticeEsApuntado(grafo, vertice):
-    '''Retorna True si el vertice no es apuntado por ningún otro'''
+    '''Retorna True si el vertice es apuntado por algún otro'''
     apuntado = False
 
     aux_vertice = grafo.inicio
@@ -57,38 +61,83 @@ def listaAleatoriaVerticesSinRepetir(cantidad=10):
 
     return lista_vertices
 
+
 def eliminarVerticesDesconectados(grafo):
+    '''Elimina del grafo todos los vértices desconectados. Devuelve lista'''
+    eliminados = []
     aux_vertice = grafo.inicio
+    
     while aux_vertice is not None:
         if verticeDesconectado(grafo, aux_vertice):
-            eliminarVertice(g, aux_vertice.info)
-            print("Elimnado:", aux_vertice.info)
-
+            eliminarVertice(grafo, aux_vertice.info)
+            eliminados.append(aux_vertice)
+    
         aux_vertice = aux_vertice.sig
 
+    return eliminados
 
 
-lista_vertices = listaAleatoriaVerticesSinRepetir(15)
+# B
 
-g = Grafo()
 
-# Agrega vertices
-for dato in lista_vertices:
-    insertarVertice(g, dato)
+def nodosMayorCantidadAristasSalida(grafo):
+    lista_nodos = []
+    mayor_cantidad = 0
 
-# Agrega aristas
-cantidad_agregadas = 0
-while cantidad_agregadas < 30:
-    origen = chr(randint(65, 90))
-    destino = chr(randint(65, 90))
+    aux_vertices = grafo.inicio
     
-    insertarArista(g, randint(1, 100), origen, destino)
-    cantidad_agregadas += 1
+    while aux_vertices is not None:
+        if aux_vertices.adyacentes.tamanio > mayor_cantidad:
+            mayor_cantidad = aux_vertices.adyacentes.tamanio
+            lista_nodos = [aux_vertices]
+        elif aux_vertices.adyacentes.tamanio == mayor_cantidad:
+            lista_nodos.append(aux_vertices)
+
+        aux_vertices = aux_vertices.sig
+
+    return lista_nodos
 
 
-barridoVertices(g)
+# C 
 
-# A
+def listaNodosQueMeApuntan(grafo, vertice):
+    '''Dado un vertice, retorna una lista de los nodos que apuntan hacia él'''
+    lista = []
 
-# Eliminar vertices desconectados
-eliminarVerticesDesconectados(g)
+    aux_vertice = grafo.inicio
+
+    while (aux_vertice is not None):
+        # Recorrida los vertices grafo
+        aux_adyacentes = aux_vertice.adyacentes.inicio
+    
+        while (aux_adyacentes is not None):
+            # Recorrida de las aristas de la lista de adyacencia de cada vertice    
+            if (aux_vertice not in lista) and (aux_adyacentes.destino == vertice.info):
+                lista.append(aux_vertice)
+            
+            aux_adyacentes = aux_adyacentes.sig
+        
+        aux_vertice = aux_vertice.sig
+
+    return lista
+
+
+def nodosMayorCantidadAristasEntrada(grafo):
+    lista_nodos = []
+    mayor_cantidad = 0
+
+    aux_vertices = grafo.inicio
+    
+    while aux_vertices is not None:
+        cantidad_entrantes = len(listaNodosQueMeApuntan(grafo, aux_vertices))
+        
+        if cantidad_entrantes > mayor_cantidad:
+            mayor_cantidad = cantidad_entrantes
+            lista_nodos = [aux_vertices]
+        
+        elif cantidad_entrantes == mayor_cantidad:
+            lista_nodos.append(aux_vertices)
+
+        aux_vertices = aux_vertices.sig
+
+    return lista_nodos
