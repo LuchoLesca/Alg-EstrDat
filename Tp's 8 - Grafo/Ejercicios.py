@@ -66,3 +66,12 @@ print("Cantidad de vertices luego de haberse eliminado los vértices desconectad
 """ 
 print("Cantidad de vertices que se autoapuntan:", cantidadAutoapuntados(g))
  """
+
+# G
+""" 
+aristas_mas_largos = aristaMasLarga(g)
+
+print("Lista de arista/s más larga/s")
+for arista in aristas_mas_largos:
+    print("Origen: {}.  Destino: {}.  Distancia: {}". format(arista[0], arista[1], arista[2]))
+ """

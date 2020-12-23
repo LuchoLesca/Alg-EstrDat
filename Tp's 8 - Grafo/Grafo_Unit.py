@@ -185,3 +185,41 @@ def cantidadAutoapuntados(grafo):
         aux_vertices = aux_vertices.sig
 
     return cantidad_autoapuntados
+
+
+# G
+
+def aristaMasLarga(grafo):
+    '''Determina la/s arista/s más larga, devuelve lista'''
+    lista = []
+    distancia_maxima = 0
+
+    aux_vertice = grafo.inicio
+
+    while (aux_vertice is not None):
+        # Recorrida los vertices grafo
+        aux_adyacentes = aux_vertice.adyacentes.inicio
+    
+        while (aux_adyacentes is not None):
+            # Recorrida de las aristas de la lista de adyacencia de cada vertice    
+            
+            distancia = aux_adyacentes.info
+
+            if distancia > distancia_maxima:
+                distancia_maxima = distancia
+                
+                ori = aux_vertice.info
+                des = aux_adyacentes.destino
+                lista = [[ori, des, distancia]]
+        
+            elif distancia == distancia_maxima:
+                ori = aux_vertice.info
+                des = aux_adyacentes.destino
+
+                lista.append([ori, des, distancia])
+            
+            aux_adyacentes = aux_adyacentes.sig
+        
+        aux_vertice = aux_vertice.sig
+
+    return lista
