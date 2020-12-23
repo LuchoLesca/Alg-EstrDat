@@ -81,6 +81,7 @@ def eliminarVerticesDesconectados(grafo):
 
 
 def nodosMayorCantidadAristasSalida(grafo):
+    '''Retorna lista de nodos con mayor cantidad de aristas que salen de él'''
     lista_nodos = []
     mayor_cantidad = 0
 
@@ -123,6 +124,7 @@ def listaNodosQueMeApuntan(grafo, vertice):
 
 
 def nodosMayorCantidadAristasEntrada(grafo):
+    '''Retorna lista de nodos con mayor cantidad de aristas que llegan a él'''
     lista_nodos = []
     mayor_cantidad = 0
 
@@ -141,3 +143,45 @@ def nodosMayorCantidadAristasEntrada(grafo):
         aux_vertices = aux_vertices.sig
 
     return lista_nodos
+
+
+# D
+
+def verticesSinAccesoAOtros(grafo):
+    '''Lista la información de los vertices del  grafo que no tienen acceso a ningún otro vertice'''
+    aux_vertices = grafo.inicio
+
+    print("Vertices desde los cuales no se puede acceder a otro vértice:")
+
+    while aux_vertices is not None:
+        if verticeSinApuntar(aux_vertices):
+            print(aux_vertices.info)
+        
+        aux_vertices = aux_vertices.sig
+    
+
+# F
+
+def seAutoapunta(vertice):
+    '''Retorna si un vertice se autoapunta'''
+    aux_adyacentes = vertice.adyacentes.inicio
+
+    while aux_adyacentes is not None:
+        if aux_adyacentes.destino == vertice.info:
+            return True
+        aux_adyacentes = aux_adyacentes.sig
+
+    return False
+
+def cantidadAutoapuntados(grafo):
+    '''Retorna cantidad de vértices se apuntan a si mismos'''
+    cantidad_autoapuntados = 0
+    aux_vertices = grafo.inicio
+
+    while aux_vertices is not None:
+        if seAutoapunta(aux_vertices):
+            cantidad_autoapuntados += 1
+
+        aux_vertices = aux_vertices.sig
+
+    return cantidad_autoapuntados

@@ -51,3 +51,18 @@ print("Nodos/s con mayor cantidad de aristas que llegan de él:")
 for nodo in nodos_mas_conexiones_entrada:
      print(nodo.info)
  """
+
+# D 
+""" 
+verticesSinAccesoAOtros(g)
+ """
+
+# E
+""" 
+print("Cantidad de vertices luego de haberse eliminado los vértices desconectados:", grafo.tamanio)
+ """
+
+# F
+""" 
+print("Cantidad de vertices que se autoapuntan:", cantidadAutoapuntados(g))
+ """
