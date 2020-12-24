@@ -124,7 +124,7 @@ def barridoProfundidad(grafo, vertice):
             adyacentes = vertice.adyacentes.inicio
             
             while adyacentes is not None:
-                aux_adyacente = buscar_vertice(grafo, adyacentes.destino)
+                aux_adyacente = buscarVertice(grafo, adyacentes.destino)
                 if not aux_adyacente.visitado:
                     barridoProfundidad(grafo, aux_adyacente)
             
@@ -198,7 +198,7 @@ def eliminarVertice(grafo, clave):
             ant.sig = act.sig
             grafo.tamanio -= 1
     
-    if(dato is not None):
+    if dato is not None:
         aux = grafo.inicio
 
         # Realiza un barrido de los vertices y quita la aristas que hayan ido a ese vertice
@@ -311,20 +311,25 @@ def dijkstra(grafo, origen, destino):
 def kruskal(grafo):
     """Algoritmo de Kruskal para hallar el árbol de expansión mínimo."""
     bosque = []
-    aristas = Heap(grafo.tamanio**2)
+    heap_aristas = Heap(grafo.tamanio**2)
     aux = grafo.inicio
    
     while aux is not None:
+        # Se la info del vértice al bosque
         bosque.append([aux.info])
+        # Se obtiene el inicio de la lista de adyacentes para recorrerlo
         adyacentes = aux.adyacentes.inicio
    
         while adyacentes is not None:
-            arribo_H(aristas, [aux.info, adyacentes.destino], adyacentes.info)
+            # Se arriba cada info de los adyacentes al heap
+            arribo_H(heap_aristas, [aux.info, adyacentes.destino], adyacentes.info)
             adyacentes = adyacentes.sig
         aux = aux.sig
    
-    while (len(bosque) > 1) and (not heap_vacio(aristas)):
-        dato = atencion_H(aristas)
+    while (len(bosque) > 1) and (not heap_vacio(heap_aristas)):
+        # Mientras haya un vértice en el bosque y el heap de aristas no esté vacío
+        # Se atiende en dato del heap
+        dato = atencion_H(heap_aristas)
         origen = None
    
         for elemento in bosque:

@@ -3,7 +3,7 @@ from Grafo_Unit import *
 
 
 #  EJERCICIO 1
-
+""" 
 lista_vertices = listaAleatoriaVerticesSinRepetir(15)
 
 g = Grafo()
@@ -23,7 +23,7 @@ while cantidad_agregadas < 30:
 
 
 barridoVertices(g)
-
+ """
 # A
 """ 
 # Eliminar vertices desconectados
@@ -75,3 +75,36 @@ print("Lista de arista/s más larga/s")
 for arista in aristas_mas_largos:
     print("Origen: {}.  Destino: {}.  Distancia: {}". format(arista[0], arista[1], arista[2]))
  """
+
+
+# EJERCICIO 2
+
+# B 
+
+# g = cargarGrafoEj2(True)
+# barridoVertices(g)
+
+# A
+""" 
+print("MATRIZ DE ADYACENCIA")
+mostrarMatrizAdyacencia(g)
+print("\nLISTA DE ADYACENCIA")
+mostrarListaAdyacencia(g)
+ """
+# C
+# Se vuelve a cargar el grafo, pero esta vez como no dirigido
+g = cargarGrafoEj2(False)
+
+arbol_expansion_min = kruskal(g)
+# print(arbol_expansion_min)
+
+
+# D
+""" 
+insertarArista(g, randint(0, 100), "E", "C")
+ """
+ # E
+""" 
+ camino_mas_corto = dijkstra(g, "A", "D")
+  """
+  
