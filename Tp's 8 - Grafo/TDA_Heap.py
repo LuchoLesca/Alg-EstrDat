@@ -1,7 +1,12 @@
+def intercambio(vector, indice1, indice2):
+    '''Intercambio dos valores del vector'''
+    vector[indice1], vector[indice2] = vector[indice2], vector[indice1]
+
 class Heap():
     def __init__(self, tamanio):
+        '''Creación de montículo vacío'''
         self.tamanio = 0
-        self.vector = [None]*tamanio
+        self.vector = [None] * tamanio
 
 
 def agregar(heap, dato):
@@ -14,7 +19,7 @@ def agregar(heap, dato):
 def quitar(heap):
     '''Quita primer elemento y reordena heap'''
     primer_elemento = heap.vector[0]
-    heap.vector[0], heap.vector[heap.tamanio-1] = heap.vector[heap.tamanio-1], heap.vector[0]
+    intercambio(heap.vector, 0, heap.tamanio-1)
     heap.tamanio -= 1
     hundir(heap, 0)
     return primer_elemento
@@ -22,7 +27,7 @@ def quitar(heap):
 
 def flotar(heap, indice):
     """Flota el elemento en la posicion del indice"""
-    padre = (indice-1)//2
+    padre = (indice-1) // 2
     while (padre >= 0) and (heap.vector[padre] > heap.vector[indice]):
         heap.vector[padre], heap.vector[indice] = heap.vector[indice], heap.vector[padre]
         indice = padre

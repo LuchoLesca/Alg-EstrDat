@@ -333,7 +333,7 @@ def kruskal(grafo):
         origen = None
    
         for elemento in bosque:
-            if dato[1][0] in elemento:
+            if dato[1] in elemento:
                 origen = bosque.pop(bosque.index(elemento))
                 break
         destino = None
