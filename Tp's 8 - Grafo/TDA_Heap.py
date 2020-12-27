@@ -1,12 +1,13 @@
-def intercambio(vector, indice1, indice2):
-    '''Intercambio dos valores del vector'''
-    vector[indice1], vector[indice2] = vector[indice2], vector[indice1]
-
 class Heap():
     def __init__(self, tamanio):
         '''Creación de montículo vacío'''
         self.tamanio = 0
         self.vector = [None] * tamanio
+
+
+def intercambio(vector, indice1, indice2):
+    '''Intercambio dos valores del vector'''
+    vector[indice1], vector[indice2] = vector[indice2], vector[indice1]
 
 
 def agregar(heap, dato):
@@ -27,44 +28,45 @@ def quitar(heap):
 
 def flotar(heap, indice):
     """Flota el elemento en la posicion del indice"""
-    padre = (indice-1) // 2
-    while (padre >= 0) and (heap.vector[padre] > heap.vector[indice]):
-        heap.vector[padre], heap.vector[indice] = heap.vector[indice], heap.vector[padre]
+    # Mientras la prioridad del padre sea menor que la del hijo...
+    padre = (indice - 1) // 2
+    while (indice > 0) and (heap.vector[indice][0] < heap.vector[padre][0]):
+        intercambio(heap.vector, indice, padre)
         indice = padre
-        padre = (padre - 1) // 2
+        padre = (indice - 1) // 2
 
 
 def hundir(heap, indice):
     """Hunde el elemento en la posicion del indice"""
-    # hi = Hijo izquierdo
-    hi = (2 * indice) + 1
+    indice_hijo_izq = (2 * indice) + 1
     control = True
 
-    while (hi < heap.tamanio - 1) and control:
+    while control and (indice_hijo_izq < heap.tamanio):
+        indice_hijo_der = indice_hijo_izq + 1
         # Ve cual de los hijos es mayor
-        menor = hi
-        # hd = Hijo derecho
-        hd = hi + 1
-        if (hd <= heap.tamanio - 1) and (heap.vector[hd] < heap.vector[hi]):
-            menor = hd
-        # Intercambio con el hijo que haya sido el mayor
-        if (heap.vector[indice] < heap.vector[menor]):
-            heap.vector[indice], heap.vector[menor] = heap.vector[menor], heap.vector[indice]
-        # Si ningun hijo de mayor, termina de hundir
+        indice_menor = indice_hijo_izq
+        
+        if (indice_hijo_der < heap.tamanio):
+            if (heap.vector[indice_hijo_der][0] < heap.vector[indice_hijo_izq][0]):
+                indice_menor = indice_hijo_der
+        
+        if heap.vector[indice][0] > heap.vector[indice_menor][0]:
+            # Intercambio con el hijo que haya tenido menor num de prioridad
+            intercambio(heap.vector, indice, indice_menor)
+            indice = indice_menor
+            indice_hijo_izq = (indice * 2) + 1
         else:
             control = False
-
-        hi = (2 * menor) + 1
-
+        
 
 def atencion_H(heap):
     '''Elimina y devuelve primer elemento en cola de prioridad'''
     return quitar(heap)
 
 
-def arribo_H(heap, dato, prioridad=0):
+def arribo_H(heap, prioridad, dato):
     '''Agrega dato a cola de prioridad heap'''
-    agregar(heap, [dato, prioridad])
+    agregar(heap, [prioridad, dato])
 
 
 def heapSort(heap):
@@ -75,10 +77,22 @@ def heapSort(heap):
     heap.tamanio = aux
 
 
-def monticulizar(lista):
-    '''Convierte lista en montículo(la ordena como si fuese uno)'''
-    for i in range(len(lista)):
-        flotar(lista, i)
+def buscar_H(heap, buscado):
+    for i in range(len(heap.vector)):
+        if heap.vector[i][1][0].info == buscado:
+            return i
+    return -1
+
+
+def barridoMonticulo(heap):
+    for i in range(heap.tamanio):
+        print(heap.vector[i])
+
+
+def monticulizar(heap):
+    '''Tansforma vector desaordenado de Heap en heap ordenado'''
+    for indice in range(len(heap.vector)):
+        flotar(heap, indice)
 
 
 def heap_vacio(heap):
@@ -99,14 +113,3 @@ def cambiarPrioridad(heap, indice, prioridad):
         hundir(heap, indice)
 
 
-def buscar_H(heap, buscado):
-    pos = -1
-    for i in range(len(heap.vector)):
-        if heap.vector[i][1][0].info == buscado:
-            pos = i
-    return pos
-
-
-def barridoMonticulo(heap):
-    for i in range(heap.tamanio):
-        print(heap.vector[i])

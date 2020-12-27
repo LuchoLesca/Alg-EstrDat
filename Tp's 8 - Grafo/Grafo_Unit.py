@@ -294,8 +294,8 @@ def mostrarListaAdyacencia(grafo):
 
 # B
 
-def cargarGrafoEj2(dirigido):
-    g = Grafo(dirigido)
+def cargarGrafoEj2():
+    g = Grafo(True)
     vertices = ['A', 'B', 'C', 'D', 'E']
     
     for char in vertices:
@@ -308,8 +308,27 @@ def cargarGrafoEj2(dirigido):
     insertarArista(g, randint(0, 100), 'C', 'B')
     insertarArista(g, randint(0, 100), 'C', 'D')
     insertarArista(g, randint(0, 100), 'D', 'D')
+    
 
     return g
+
+
+def cargarGrafoEj2V2():
+    g = Grafo(False)
+    vertices = ['A', 'B', 'C', 'D', 'E']
+    
+    for char in vertices:
+        insertarVertice(g, char)
+
+    insertarArista(g, 15, 'A', 'B')
+    insertarArista(g, 12, 'A', 'C')
+    insertarArista(g, 4, 'A', 'E')
+    insertarArista(g, 44, 'B', 'C')
+    insertarArista(g, 17, 'C', 'D')
+    insertarArista(g, 6, 'D', 'D')
+
+    return g
+
 
 # C
 

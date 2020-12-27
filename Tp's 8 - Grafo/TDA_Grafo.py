@@ -282,28 +282,24 @@ def marcarNoVisitado(grafo):
  # ARBOLES/CAMINOS
 
 def dijkstra(grafo, origen, destino):
-    """Algoritmo de Dijkstra para hallar el camino mas corto."""
+    '''Camino mas corto entre dos nodos'''
     no_visitados = Heap(grafo.tamanio)
     camino = Pila()
     aux = grafo.inicio
-    
     while aux is not None:
         if aux.info == origen:
-            arribo_H(no_visitados, [aux, None], 0)
+            arribo_H(no_visitados, 0, [aux, None])
         else:
-            arribo_H(no_visitados, [aux, None], inf)
+            arribo_H(no_visitados, 1, [aux, None])
         aux = aux.sig
-
     while not heap_vacio(no_visitados):
         dato = atencion_H(no_visitados)
         apilar(camino, dato)
         aux = dato[1][0].adyacentes.inicio
-        
         while aux is not None:
             pos = buscar_H(no_visitados, aux.destino)
-            if (no_visitados.vector[pos][0] > dato[0] + aux.info):
+            if (no_visitados.vector[pos][0] > dato[0] + aux.peso):
                 no_visitados.vector[pos][1][1] = dato[1][0].info
-                cambiarPrioridad(no_visitados, pos, dato[0] + aux.info)
             aux = aux.sig
     return camino
 
@@ -312,65 +308,69 @@ def kruskal(grafo):
     """Algoritmo de Kruskal para hallar el árbol de expansión mínimo."""
     bosque = []
     heap_aristas = Heap(grafo.tamanio**2)
-    aux = grafo.inicio
-   
-    while aux is not None:
-        # Se la info del vértice al bosque
-        bosque.append([aux.info])
-        # Se obtiene el inicio de la lista de adyacentes para recorrerlo
-        adyacentes = aux.adyacentes.inicio
-   
+    
+    aux_vertices = grafo.inicio
+    while aux_vertices is not None:
+        bosque.append([aux_vertices.info])
+        adyacentes = aux_vertices.adyacentes.inicio
+        
         while adyacentes is not None:
-            # Se arriba cada info de los adyacentes al heap
-            arribo_H(heap_aristas, [aux.info, adyacentes.destino], adyacentes.info)
+            datos = [aux_vertices.info, adyacentes.destino]
+            prioridad = adyacentes.info
+            arribo_H(heap_aristas, prioridad, datos)
+            
             adyacentes = adyacentes.sig
-        aux = aux.sig
-   
-    while (len(bosque) > 1) and (not heap_vacio(heap_aristas)):
-        # Mientras haya un vértice en el bosque y el heap de aristas no esté vacío
-        # Se atiende en dato del heap
+        aux_vertices = aux_vertices.sig
+    
+    while (len(bosque) == 1) and (not heap_vacio(heap_aristas)):
         dato = atencion_H(heap_aristas)
         origen = None
-   
         for elemento in bosque:
-            if dato[1] in elemento:
+            if dato[1][0] in elemento:
                 origen = bosque.pop(bosque.index(elemento))
-                break
         destino = None
-
-        if (origen is not None) and (destino is not None):
-            if (len(origen) > 1) and (len(destino) == 1):
-                destino = [dato[1][0], dato[1][1]]
-            elif(len(destino) > 1 and len(origen) == 1):
-                origen = [dato[1][0], dato[1][1]]
-            elif(len(destino) > 1 and len(origen) > 1):
-                origen += [dato[1][0], dato[1][1]]
-            bosque.append(origen + destino)
-        else:
-            bosque.append(origen)
-    return bosque[0]
+    
+    return bosque
 
 
 def prim(grafo):
     """Algoritmo de Prim para hallar el árbol de expansión mínimo."""
     bosque = []
+    vertice_inicial = grafo.inicio
+    heap_aristas = Heap(grafo.tamanio ** 2)
+    aux_adyacentes = vertice_inicial.adyacentes.inicio
 
-    aristas = Heap(grafo.tamanio ** 2)
-    adyac = grafo.inicio.adyacentes.inicio
+    if grafo:
+        bosque += vertice_inicial.info
 
-    while adyac is not None:
-        arribo_H(aristas, [grafo.inicio.info, adyac.destino], adyac.info)
-        adyac = adyac.sig
+    while aux_adyacentes is not None:
+        # Se arriban todas las aristas
+        datos = [vertice_inicial.info, aux_adyacentes.destino]
+        peso = aux_adyacentes.info
+        arribo_H(heap_aristas, peso, datos)
+        aux_adyacentes = aux_adyacentes.sig
     
-    while (len(bosque) // 2 < grafo.tamanio) and not heap_vacio(aristas):
-        dato = atencion_H(aristas)
+    while (len(bosque) // 2 < grafo.tamanio) and not heap_vacio(heap_aristas):
+        # Mientras heap no esté vació, se desencola una arista
+        datos_y_prioridad = atencion_H(heap_aristas)
+        datos = datos_y_prioridad[1]
+        origen = datos[0]
+        destino = datos[1]
+        # print("Ingresado par {} > {} con peso {}".format(origen, destino, peso))
 
-        if(len(bosque) == 0 or ((dato[1][0] not in bosque) ^ (dato[1][1] not in bosque))):
-            bosque += dato[1]
-            destino = buscarVertice(grafo, dato[1][1])
-            adyac = destino.adyacentes.inicio
+        # Si alguno de los extremos no ha sido visitado. es decir que ya existe camino entre ellos:
+        if(len(bosque) == 0 or ((origen not in bosque) or (destino not in bosque))):
+            bosque += destino
+            
+            nodo_destino = buscarVertice(grafo, destino)
+            aux_adyacentes = nodo_destino.adyacentes.inicio
 
-            while adyac is not None:
-                arribo_H(aristas, [destino.info, adyac.destino], adyac.info)
-                adyac = adyac.sig
+            # Se busca el vertice y se agrega al heap todas las aristas de este
+            while aux_adyacentes is not None:
+                peso = aux_adyacentes.info
+                datos = [nodo_destino.info, aux_adyacentes.destino]
+                arribo_H(heap_aristas, peso, datos)
+                aux_adyacentes = aux_adyacentes.sig
+
+            
     return bosque
