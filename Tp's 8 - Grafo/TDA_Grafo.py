@@ -311,26 +311,65 @@ def kruskal(grafo):
     
     aux_vertices = grafo.inicio
     while aux_vertices is not None:
+        # Se inserta en el bosque, el origen
         bosque.append([aux_vertices.info])
         adyacentes = aux_vertices.adyacentes.inicio
         
         while adyacentes is not None:
+            # Se inserta en el heap todas las aristas del vertice
             datos = [aux_vertices.info, adyacentes.destino]
-            prioridad = adyacentes.info
-            arribo_H(heap_aristas, prioridad, datos)
+            peso = adyacentes.info
+            arribo_H(heap_aristas, peso, datos)
             
             adyacentes = adyacentes.sig
         aux_vertices = aux_vertices.sig
     
-    while (len(bosque) == 1) and (not heap_vacio(heap_aristas)):
-        dato = atencion_H(heap_aristas)
-        origen = None
-        for elemento in bosque:
-            if dato[1][0] in elemento:
-                origen = bosque.pop(bosque.index(elemento))
-        destino = None
-    
-    return bosque
+    # Una vez tenemos todas las aristas en el heap, comenzamos:
+    while (len(bosque) > 1) and (not heap_vacio(heap_aristas)):
+        datos_y_peso = atencion_H(heap_aristas)
+        peso = datos_y_peso[0]
+        datos = datos_y_peso[1]
+        
+        origen = datos[0]
+        destino = datos[1]
+        
+        array_origen = None  # Array que contendrá al origen
+        array_destino = None  # Array que contendré al destino
+
+        # Se busca si el origen y destino son conexos
+        for array_conexo in bosque:
+            if origen in array_conexo:
+                indice = bosque.index(array_conexo)
+                array_origen = bosque.pop(indice)
+                break
+        
+        for array_conexo in bosque:
+            if destino in array_conexo:
+                indice = bosque.index(array_conexo)
+                array_destino = bosque.pop(indice)
+                break
+        
+        # Si están en el mismo grupo(array), se descarta, si están en distintos grupo(array) el origen y el destino, se juntan estos
+        """ 
+        print("Origen de la arista:", origen)
+        print("Destino de la arista:", destino)
+        print("Array que debería contener a origen:", array_origen)
+        print("Array que debería contener a destino:", array_destino)
+        print("Bosque después de sacarlo:", bosque) 
+        """
+        if (array_origen is not None) and (array_destino is not None):
+            # Si ambos no son none, es porque están en distinto array
+                if (len(array_origen) > len(array_destino)) or (len(array_origen) == len(array_destino)):
+                    bosque.append(array_origen + array_destino)
+                else:
+                    bosque.append(array_destino + array_origen)
+        else:
+            bosque.append(array_origen)
+        """ 
+        print("Bosque al volver a agregarlo:", bosque)
+        input()
+         """
+    return bosque[0]
 
 
 def prim(grafo):
