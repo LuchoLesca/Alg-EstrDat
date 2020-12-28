@@ -93,52 +93,16 @@ mostrarListaAdyacencia(g)
  """
 # C
 
-def grafoPueba():
-    g = Grafo(False)
-    vertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
-    
-    for char in vertices:
-        insertarVertice(g, char)
-
-    insertarArista(g, 7, 'A', 'B')
-    insertarArista(g, 5, 'A', 'D')
-    
-    insertarArista(g, 7, 'B', 'A') #
-    insertarArista(g, 8, 'B', 'C')
-    insertarArista(g, 9, 'B', 'D')
-    insertarArista(g, 7, 'B', 'E')
-    
-    insertarArista(g, 8, 'C', 'B') # 
-    insertarArista(g, 5, 'C', 'E')
-    
-    insertarArista(g, 5, 'D', 'A') #
-    insertarArista(g, 9, 'D', 'B') #
-    insertarArista(g, 15, 'D', 'E')
-    insertarArista(g, 6, 'D', 'F')
-    
-    insertarArista(g, 7, 'E', 'B') #
-    insertarArista(g, 5, 'E', 'C') #
-    insertarArista(g, 15, 'E', 'D') #
-    insertarArista(g, 8, 'E', 'F')
-    insertarArista(g, 9, 'E', 'G')
-    
-    insertarArista(g, 6, 'F', 'D') #
-    insertarArista(g, 8, 'F', 'E') #
-    insertarArista(g, 11, 'F', 'G')
-    
-    insertarArista(g, 9, 'G', 'E') #
-    insertarArista(g, 11, 'G', 'F') #
-    
-    g.inicio = buscarVertice(g, "A")
-    
-    return g
-
 # Se vuelve a cargar el grafo, pero esta vez como no dirigido
 g = cargarGrafoEj2V2()
 
-# g = grafoPueba()
-arbol_min = prim(g)
-print(arbol_min)
+print("Arbol de expansión mínima con algoritmo Prim")
+arbol_exp_min = prim(g)
+print(arbol_exp_min)
+print("\nArbol de expansión mínima con algoritmo Kruskal")
+arbol_exp_min = kruskal(g)
+print(arbol_exp_min)
+
 
 
 # D
