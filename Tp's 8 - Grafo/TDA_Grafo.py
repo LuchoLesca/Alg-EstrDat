@@ -1,6 +1,6 @@
 from TDA_Cola import Cola, arribo, atencion, cola_vacia
-from TDA_Pila import Pila, apilar, desapilar
-from TDA_Heap import Heap, arribo_H, atencion_H, heap_vacio, buscar_H, cambiarPrioridad
+from TDA_Pila import Pila, apilar, desapilar, barrido, pila_vacia, invertir
+from TDA_Heap import Heap, arribo_H, atencion_H, heap_vacio, buscar_H, cambiarPrioridad, barridoMonticulo
 from math import inf
 
 
@@ -281,28 +281,6 @@ def marcarNoVisitado(grafo):
 
  # ARBOLES/CAMINOS
 
-def dijkstra(grafo, origen, destino):
-    '''Camino mas corto entre dos nodos'''
-    no_visitados = Heap(grafo.tamanio)
-    camino = Pila()
-    aux = grafo.inicio
-    while aux is not None:
-        if aux.info == origen:
-            arribo_H(no_visitados, 0, [aux, None])
-        else:
-            arribo_H(no_visitados, 1, [aux, None])
-        aux = aux.sig
-    while not heap_vacio(no_visitados):
-        dato = atencion_H(no_visitados)
-        apilar(camino, dato)
-        aux = dato[1][0].adyacentes.inicio
-        while aux is not None:
-            pos = buscar_H(no_visitados, aux.destino)
-            if (no_visitados.vector[pos][0] > dato[0] + aux.peso):
-                no_visitados.vector[pos][1][1] = dato[1][0].info
-            aux = aux.sig
-    return camino
-
 
 def kruskal(grafo):
     """Algoritmo de Kruskal para hallar el árbol de expansión mínimo."""
@@ -350,13 +328,6 @@ def kruskal(grafo):
                 break
         
         # Si están en el mismo grupo(array), se descarta, si están en distintos grupo(array) el origen y el destino, se juntan estos
-        """ 
-        print("Origen de la arista:", origen)
-        print("Destino de la arista:", destino)
-        print("Array que debería contener a origen:", array_origen)
-        print("Array que debería contener a destino:", array_destino)
-        print("Bosque después de sacarlo:", bosque) 
-        """
         if (array_origen is not None) and (array_destino is not None):
             # Si ambos no son none, es porque están en distinto array
                 if (len(array_origen) > len(array_destino)) or (len(array_origen) == len(array_destino)):
@@ -365,10 +336,7 @@ def kruskal(grafo):
                     bosque.append(array_destino + array_origen)
         else:
             bosque.append(array_origen)
-        """ 
-        print("Bosque al volver a agregarlo:", bosque)
-        input()
-         """
+
     return bosque[0]
 
 
@@ -413,3 +381,48 @@ def prim(grafo):
 
             
     return bosque
+
+
+def resolverCaminoDijkstra(pila_camino, fin):
+    '''Recibe una pila enviada por dijkstra y devuelve una lista con el camino resuelto'''
+    camino = []
+    while not pila_vacia(pila_camino):
+        dato = desapilar(pila_camino)
+        if dato[1][0].info == fin:
+            camino.append(dato[1][0].info)
+            fin = dato[1][1]
+    return camino[::-1]  # Array invertido
+
+def dijkstra(grafo, origen, destino):
+    '''Camino mas corto entre dos nodos'''
+    no_visitados = Heap(grafo.tamanio)
+    camino = Pila()
+    aux_vertices = grafo.inicio
+    # Carga inicial de todos los vértices, con sus pesos temporales en infinito, excepto el de inicio
+    while aux_vertices is not None:
+        if aux_vertices.info == origen:
+            arribo_H(no_visitados, 0, [aux_vertices, None])
+        else:
+            arribo_H(no_visitados, inf, [aux_vertices, None])
+        aux_vertices = aux_vertices.sig
+
+    while not heap_vacio(no_visitados):
+        # Se extrae el vertice de menor peso que no haya sido visitado
+        dato = atencion_H(no_visitados)
+        apilar(camino, dato)
+        # Se apunta a sus adyacentes para hacer un barrido
+        aux_adyacentes = dato[1][0].adyacentes.inicio
+
+        while aux_adyacentes is not None:
+            # Se busca en el heap el adyacente, (en el heap están solo los que no fueron vvisitados)
+            pos = buscar_H(no_visitados, aux_adyacentes.destino)
+            # Se calcula la distancia acumulada que tomaría desde lo que lleva la arista analizada más el camino que tomaría llegar a la nueva arista
+            distancia_acumulada = dato[0] + aux_adyacentes.info
+            # Si el que está en heap tiene mayor peso que el acumulado anterior, se reemplazan los valores
+            if (distancia_acumulada < no_visitados.vector[pos][0]):
+                # print("Desde {} hasta {} se tarda {}, pero ahora desde {} se tarda {}".format(no_visitados.vector[pos][1][1], no_visitados.vector[pos][1][0].info, no_visitados.vector[pos][0], dato[1][0].info, dato[0] + aux_adyacentes.info))
+                no_visitados.vector[pos][1][1] = dato[1][0].info  # Cambia el valor "de donde viene"
+                cambiarPrioridad(no_visitados, pos, distancia_acumulada)  # Cambia el peso y flota o hunde
+            aux_adyacentes = aux_adyacentes.sig  
+    
+    return resolverCaminoDijkstra(camino, destino)

@@ -1,6 +1,6 @@
 import TDA_Grafo as Gra
+from TDA_Pila import *
 from Grafo_Unit import *
-
 
 #  EJERCICIO 1
 """ 
@@ -79,9 +79,10 @@ for arista in aristas_mas_largos:
 
 # EJERCICIO 2
 
+g = cargarGrafoAleatorioEj2()
+
 # B 
 
-# g = cargarGrafoEj2()
 # barridoVertices(g)
 
 # A
@@ -94,6 +95,7 @@ mostrarListaAdyacencia(g)
 # C
 
 # Se vuelve a cargar el grafo, pero esta vez como no dirigido
+""" 
 g = cargarGrafoEj2V2()
 
 print("Arbol de expansión mínima con algoritmo Prim")
@@ -102,15 +104,18 @@ print(arbol_exp_min)
 print("\nArbol de expansión mínima con algoritmo Kruskal")
 arbol_exp_min = kruskal(g)
 print(arbol_exp_min)
-
-
-
-# D
-""" 
-insertarArista(g, randint(0, 100), "E", "C")
  """
+# D
+
+g = cargarGrafoEj2V2()
+insertarArista(g, 6, "E", "C")
+
  # E
-""" 
- camino_mas_corto = dijkstra(g, "A", "D")
-  """
-  
+
+inicio = "A"
+fin = "D"
+
+camino_mas_corto = dijkstra(g, inicio, fin)
+print(camino_mas_corto)
+
+    
