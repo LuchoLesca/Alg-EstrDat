@@ -106,16 +106,16 @@ arbol_exp_min = kruskal(g)
 print(arbol_exp_min)
  """
 # D
-
+""" 
 g = cargarGrafoEj2V2()
 insertarArista(g, 6, "E", "C")
-
+ """
  # E
-
+""" 
 inicio = "A"
 fin = "D"
 
 camino_mas_corto = dijkstra(g, inicio, fin)
 print(camino_mas_corto)
-
+ """
     
