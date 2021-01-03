@@ -1,5 +1,5 @@
 from TDA_Grafo import *
-from random import randint
+from random import randint, choice
 
 
 # EJERCICIO 1
@@ -333,4 +333,48 @@ def cargarGrafoEj2V2():
 
 
 
+# EJERCICIO 3
 
+class Antena():
+
+    def __init__(self, id, lat, lon, vel_transf):
+        self.info = id
+        self.ubicacion = [lat, lon]
+        self.vel_transf = vel_transf
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+
+    def __str__(self):
+        return "Id: " + str(self.info) + "\nUbicacion: " + str(self.ubicacion) + "\nVel. de transf.: " + str(self.vel_transf) + "MB/s"
+
+
+def antenaRandom(identificador=-1):
+    '''Devuelve un objeto antena con valores random'''
+    if identificador == -1:
+        id = randint(0, 999999)
+    else:
+        id = identificador
+    latitud = randint(-200, 200)
+    longitud = randint(-200, 200)
+    trasnferencia = randint(100, 5000)
+
+    return Antena(id, latitud, longitud, trasnferencia)
+
+
+
+def insertarVerticeObjeto(grafo, objeto):
+    '''Inserta un vertice al grafo, el cual en vez de ser un dato es un objeto completo'''
+    vertice = objeto
+    if (grafo.inicio is None) or (vertice.info < grafo.inicio.info):
+        vertice.sig = grafo.inicio
+        grafo.inicio = vertice
+    else:
+        act = grafo.inicio.sig
+        ant = grafo.inicio
+        while (act is not None) and (act.info <= vertice.info):
+            act = act.sig
+            ant = ant.sig
+        vertice.sig = act
+        ant.sig = vertice
+    grafo.tamanio += 1

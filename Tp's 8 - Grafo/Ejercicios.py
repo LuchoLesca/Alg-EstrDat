@@ -9,7 +9,7 @@ lista_vertices = listaAleatoriaVerticesSinRepetir(15)
 g = Grafo()
 
 # Agrega vertices
-for dato in lista_vertices:
+for dato in lista_vertices:q
     insertarVertice(g, dato)
 
 # Agrega aristas
@@ -78,13 +78,13 @@ for arista in aristas_mas_largos:
 
 
 # EJERCICIO 2
-
+""" 
 g = cargarGrafoAleatorioEj2()
-
+ """
 # B 
-
-# barridoVertices(g)
-
+""" 
+barridoVertices(g)
+ """
 # A
 """ 
 print("MATRIZ DE ADYACENCIA")
@@ -93,7 +93,6 @@ print("\nLISTA DE ADYACENCIA")
 mostrarListaAdyacencia(g)
  """
 # C
-
 # Se vuelve a cargar el grafo, pero esta vez como no dirigido
 """ 
 g = cargarGrafoEj2V2()
@@ -118,4 +117,52 @@ fin = "D"
 camino_mas_corto = dijkstra(g, inicio, fin)
 print(camino_mas_corto)
  """
-    
+
+
+# EJERCICIO 3
+
+# A
+""" 
+g = Grafo(False)
+ """
+# B
+""" 
+vertices = ["S", "T", "U", "V", "X", "Y", "Z"]
+
+for char in vertices:
+    insertarVerticeObjeto(g, antenaRandom(char))
+
+cont = 0
+while cont < 10:
+    inicio = choice(vertices)
+    destino = choice(vertices)
+    if (inicio != destino):
+        insertarArista(g, randint(0, 100), inicio, destino)
+        cont += 1
+ """
+# C
+""" 
+print("Tamanio del grafo:", g.tamanio)
+ """
+# D
+""" 
+camino_mas_corto = dijkstra(g, "X", "Y")
+if len(camino_mas_corto) > 1:
+    print("Camino más corto desde X hasta Y:", camino_mas_corto)
+else:
+    print("No hay conexión entre las antenas")
+ """
+# E
+""" 
+arbol_exp_min = prim(g)
+print("Arbol de expansion minimo por prim:", arbol_exp_min)
+ """
+# F
+""" 
+resultado = buscarVertice(g, "X")
+
+if resultado:
+    print(resultado)
+else:
+    print("La antena buscada no se encuentra")
+ """
