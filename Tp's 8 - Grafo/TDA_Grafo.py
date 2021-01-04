@@ -115,7 +115,7 @@ def buscarVertice(grafo, buscado):
 
 def barridoProfundidad(grafo, vertice):
     '''Barrido en profundiad del grafos'''
-    marcarNoVisitado(grafo)
+    # marcarNoVisitado(grafo)
     
     while vertice is not None:
         if not vertice.visitado:
@@ -123,8 +123,9 @@ def barridoProfundidad(grafo, vertice):
             print(vertice.info)
             adyacentes = vertice.adyacentes.inicio
             
+            
             while adyacentes is not None:
-                aux_adyacente = buscarVertice(grafo, adyacentes.destino)
+                aux_adyacente = buscarVertice(grafo, adyacentes.destino)         
                 if not aux_adyacente.visitado:
                     barridoProfundidad(grafo, aux_adyacente)
             

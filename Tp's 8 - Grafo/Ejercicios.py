@@ -166,3 +166,117 @@ if resultado:
 else:
     print("La antena buscada no se encuentra")
  """
+
+
+
+# EJERCICIO 4
+
+class NodoRed():
+
+    def __init__(self, tipo, nombre):
+        self.info = nombre
+        self.tipo = tipo
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+
+
+# A
+
+TIPOS = ["pc", "laptop", "servidor", "router", "switch", "impresora"]
+
+g = Grafo(False)
+
+# Routers
+insertarVerticeObjeto(g, NodoRed("829", "Router01"))
+insertarVerticeObjeto(g, NodoRed("829", "Router02"))
+insertarVerticeObjeto(g, NodoRed("829", "Router03"))
+# Switchs
+insertarVerticeObjeto(g, NodoRed("2960-24TT", "Switch01"))
+insertarVerticeObjeto(g, NodoRed("2960-24TT", "Switch02"))
+# Servers
+insertarVerticeObjeto(g, NodoRed("Server-PT", "Guarani"))
+insertarVerticeObjeto(g, NodoRed("Server-PT", "MongoDB"))
+# PC's
+insertarVerticeObjeto(g, NodoRed("PC-PT", "Ubuntu"))
+insertarVerticeObjeto(g, NodoRed("PC-PT", "Mint"))
+insertarVerticeObjeto(g, NodoRed("PC-PT", "Fedora"))
+insertarVerticeObjeto(g, NodoRed("PC-PT", "Parrot"))
+insertarVerticeObjeto(g, NodoRed("PC-PT", "Manjaro"))
+# Laptop's
+insertarVerticeObjeto(g, NodoRed("Laptop-PT", "Debian"))
+insertarVerticeObjeto(g, NodoRed("Laptop-PT", "Arch"))
+insertarVerticeObjeto(g, NodoRed("Laptop-PT", "Red Hat"))
+# Printers
+insertarVerticeObjeto(g, NodoRed("Printer-PT", "Printer"))
+
+
+insertarArista(g, 25, "Router02", "Red Hat")
+insertarArista(g, 9, "Router02", "Guarani")
+insertarArista(g, 37, "Router02", "Router01")
+insertarArista(g, 50, "Router02", "Router03")
+
+insertarArista(g, 43, "Router03", "Router01")
+insertarArista(g, 61, "Router03", "Switch02")
+
+insertarArista(g, 29, "Router01", "Switch01")
+
+insertarArista(g, 17, "Switch01", "Debian")
+insertarArista(g, 18, "Switch01", "Ubuntu")
+insertarArista(g, 22, "Switch01", "Printer")
+insertarArista(g, 80, "Switch01", "Mint")
+
+insertarArista(g, 40, "Switch02", "Manjaro")
+insertarArista(g, 12, "Switch02", "MongoDB")
+insertarArista(g, 5, "Switch02", "Parrot")
+insertarArista(g, 56, "Switch02", "Fedora")
+insertarArista(g, 3, "Switch02", "Arch")
+
+
+# B
+print("Barrido de profundidad desde Red Hat")
+resultado = buscarVertice(g, "Red Hat")
+marcarNoVisitado(g)
+barridoProfundidad(g, resultado)
+
+print("\nBarrido de profundidad desde Debian")
+resultado = buscarVertice(g, "Debian")
+marcarNoVisitado(g)
+barridoProfundidad(g, resultado)
+
+print("\nBarrido de profundidad desde Arch")
+resultado = buscarVertice(g, "Arch")
+marcarNoVisitado(g)
+barridoProfundidad(g, resultado)
+
+print("\nBarrido de Amplitud desde Arch")
+resultado = buscarVertice(g, "Arch")
+marcarNoVisitado(g)
+barridoAmplitud(g, resultado)
+
+# C
+""" 
+camino_mas_corto(dijkstra(g, "Manjaro", "Printer"))
+camino_mas_corto(dijkstra(g, "Red Hat", "Printer"))
+camino_mas_corto(dijkstra(g, "Fedora", "Printer"))
+ """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
