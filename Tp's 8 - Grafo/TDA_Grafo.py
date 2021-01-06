@@ -123,7 +123,6 @@ def barridoProfundidad(grafo, vertice):
             print(vertice.info)
             adyacentes = vertice.adyacentes.inicio
             
-            
             while adyacentes is not None:
                 aux_adyacente = buscarVertice(grafo, adyacentes.destino)         
                 if not aux_adyacente.visitado:
@@ -135,7 +134,7 @@ def barridoProfundidad(grafo, vertice):
 
 def barridoAmplitud(grafo, vertice):
     '''Barrido en amplitud del grafo'''    
-    marcarNoVisitado(grafo)
+    # marcarNoVisitado(grafo)
     cola = Cola()
     
     while vertice is not None:
@@ -146,16 +145,17 @@ def barridoAmplitud(grafo, vertice):
             while not cola_vacia(cola):
                 nodo = atencion(cola)
                 print(nodo.info)
-                adyacente = nodo.adyacentes.inicio
-    
-                while adyacente is not None:
-                    adyacente = buscarVertice(grafo, adyacente.destino)
-                    if not adyacente.visitado:
-                        adyacente.visitado = True
-                        arribo(cola, adyacente)
-                    adyacente = adyacente.sig
-    
-    vertice = vertice.sig
+                
+                aux_adyacentes = nodo.adyacentes.inicio
+                while aux_adyacentes is not None:
+                    resultado = buscarVertice(grafo, aux_adyacentes.destino)
+
+                    if not resultado.visitado:
+                        resultado.visitado = True
+                        arribo(cola, resultado)
+
+                    aux_adyacentes = aux_adyacentes.sig
+        vertice = vertice.sig
 
 
 def barridoVertices(grafo):
