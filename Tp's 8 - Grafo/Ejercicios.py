@@ -9,7 +9,7 @@ lista_vertices = listaAleatoriaVerticesSinRepetir(15)
 g = Grafo()
 
 # Agrega vertices
-for dato in lista_vertices:q
+for dato in lista_vertices:
     insertarVertice(g, dato)
 
 # Agrega aristas
@@ -20,7 +20,6 @@ while cantidad_agregadas < 30:
     
     insertarArista(g, randint(1, 100), origen, destino)
     cantidad_agregadas += 1
-
 
 barridoVertices(g)
  """
@@ -232,42 +231,50 @@ insertarArista(g, 5, "Switch02", "Parrot")
 insertarArista(g, 56, "Switch02", "Fedora")
 insertarArista(g, 3, "Switch02", "Arch")
 
-
 # B
+""" 
 print("Barrido de profundidad desde Red Hat")
 resultado = buscarVertice(g, "Red Hat")
 marcarNoVisitado(g)
 barridoProfundidad(g, resultado)
+
+print("\nBarrido de amplitud desde Red Hat")
+resultado = buscarVertice(g, "Red Hat")
+marcarNoVisitado(g)
+barridoAmplitud(g, resultado)
 
 print("\nBarrido de profundidad desde Debian")
 resultado = buscarVertice(g, "Debian")
 marcarNoVisitado(g)
 barridoProfundidad(g, resultado)
 
+print("\nBarrido de amplitud desde Debian")
+resultado = buscarVertice(g, "Debian")
+marcarNoVisitado(g)
+barridoAmplitud(g, resultado)
+
 print("\nBarrido de profundidad desde Arch")
 resultado = buscarVertice(g, "Arch")
 marcarNoVisitado(g)
 barridoProfundidad(g, resultado)
 
-print("\nBarrido de Amplitud desde Arch")
+print("\nBarrido de amplitud desde Arch")
 resultado = buscarVertice(g, "Arch")
 marcarNoVisitado(g)
 barridoAmplitud(g, resultado)
-
+ """
 # C
 """ 
 camino_mas_corto(dijkstra(g, "Manjaro", "Printer"))
 camino_mas_corto(dijkstra(g, "Red Hat", "Printer"))
 camino_mas_corto(dijkstra(g, "Fedora", "Printer"))
  """
-
-
-
-
-
-
-
-
+# D
+""" 
+print("\nArbol de expansión mínima con algoritmo Kruskal")
+print(kruskal(g))
+ """
+# E
 
 
 
