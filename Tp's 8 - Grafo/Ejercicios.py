@@ -265,9 +265,9 @@ barridoAmplitud(g, resultado)
  """
 # C
 """ 
-camino_mas_corto(dijkstra(g, "Manjaro", "Printer"))
-camino_mas_corto(dijkstra(g, "Red Hat", "Printer"))
-camino_mas_corto(dijkstra(g, "Fedora", "Printer"))
+print(dijkstra(g, "Manjaro", "Printer"))
+print(dijkstra(g, "Red Hat", "Printer"))
+print(dijkstra(g, "Fedora", "Printer"))
  """
 # D
 """ 
@@ -275,10 +275,21 @@ print("\nArbol de expansión mínima con algoritmo Kruskal")
 print(kruskal(g))
  """
 # E
+""" 
+pcs_no_laptops = ["Manjaro", "Parrot", "Fedora", "Mint", "Ubuntu"]
 
+largo_camino = 0
+pc_camino_mas_corto = ""
 
-
-
+for pc in pcs_no_laptops:
+    camino_resultado = dijkstra(g, pc, "Guarani")
+    if len(camino_resultado) > largo_camino:
+        largo_camino = len(camino_resultado)
+        pc_camino_mas_corto = pc
+    
+print("La pc que posee el camino más corto hasta el servidor Guarani es:", pc_camino_mas_corto)
+ """
+# F
 
 
 
