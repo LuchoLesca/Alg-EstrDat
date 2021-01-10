@@ -1,5 +1,5 @@
 from TDA_Cola import Cola, arribo, atencion, cola_vacia
-from TDA_Pila import Pila, apilar, desapilar, barrido, pila_vacia, invertir
+from TDA_Pila import Pila, apilar, desapilar, barrido, pila_vacia, invertir, copiarPila
 from TDA_Heap import Heap, arribo_H, atencion_H, heap_vacio, buscar_H, cambiarPrioridad, barridoMonticulo
 from math import inf
 
@@ -394,6 +394,19 @@ def resolverCaminoDijkstra(pila_camino, fin):
             fin = dato[1][1]
     return camino[::-1]  # Array invertido
 
+
+def resolverCaminoDijkstraPeso(pila_camino, fin):
+    '''Recibe una pila enviada por dijkstra y devuelve el peso total del camino resuelto'''
+    pila_camino_aux = copiarPila(pila_camino)
+    peso_del_camino = 0
+    while not pila_vacia(pila_camino_aux):
+        dato = desapilar(pila_camino_aux)
+        if dato[1][0].info == fin:
+            peso_del_camino += dato[0]
+            fin = dato[1][1]
+    return peso_del_camino
+
+
 def dijkstra(grafo, origen, destino):
     '''Camino mas corto entre dos nodos'''
     no_visitados = Heap(grafo.tamanio)
@@ -421,9 +434,42 @@ def dijkstra(grafo, origen, destino):
             distancia_acumulada = dato[0] + aux_adyacentes.info
             # Si el que está en heap tiene mayor peso que el acumulado anterior, se reemplazan los valores
             if (distancia_acumulada < no_visitados.vector[pos][0]):
-                # print("Desde {} hasta {} se tarda {}, pero ahora desde {} se tarda {}".format(no_visitados.vector[pos][1][1], no_visitados.vector[pos][1][0].info, no_visitados.vector[pos][0], dato[1][0].info, dato[0] + aux_adyacentes.info))
                 no_visitados.vector[pos][1][1] = dato[1][0].info  # Cambia el valor "de donde viene"
                 cambiarPrioridad(no_visitados, pos, distancia_acumulada)  # Cambia el peso y flota o hunde
-            aux_adyacentes = aux_adyacentes.sig  
-    
+            aux_adyacentes = aux_adyacentes.sig
+
     return resolverCaminoDijkstra(camino, destino)
+
+
+def dijkstra2(grafo, origen, destino):
+    '''Camino mas corto entre dos nodos. Devuelve el camino y el peso total'''
+    no_visitados = Heap(grafo.tamanio)
+    camino = Pila()
+    aux_vertices = grafo.inicio
+
+    while aux_vertices is not None:
+        if aux_vertices.info == origen:
+            arribo_H(no_visitados, 0, [aux_vertices, None])
+        else:
+            arribo_H(no_visitados, inf, [aux_vertices, None])
+        aux_vertices = aux_vertices.sig
+
+    while not heap_vacio(no_visitados):
+        dato = atencion_H(no_visitados)
+        apilar(camino, dato)
+
+        aux_adyacentes = dato[1][0].adyacentes.inicio
+
+        while aux_adyacentes is not None:
+            pos = buscar_H(no_visitados, aux_adyacentes.destino)
+            distancia_acumulada = dato[0] + aux_adyacentes.info
+            
+            if (distancia_acumulada < no_visitados.vector[pos][0]):
+                no_visitados.vector[pos][1][1] = dato[1][0].info
+                cambiarPrioridad(no_visitados, pos, distancia_acumulada)
+            aux_adyacentes = aux_adyacentes.sig
+
+    largo_de_camino = resolverCaminoDijkstraPeso(camino, destino)
+    camino_resuelto = resolverCaminoDijkstra(camino, destino)
+
+    return camino_resuelto, largo_de_camino
