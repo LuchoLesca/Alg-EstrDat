@@ -378,3 +378,51 @@ def insertarVerticeObjeto(grafo, objeto):
         vertice.sig = act
         ant.sig = vertice
     grafo.tamanio += 1
+
+
+
+# EJERCICIO 4 
+
+class NodoRed():
+
+    def __init__(self, tipo, nombre):
+        self.info = nombre
+        self.tipo = tipo
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+
+
+# E
+
+def Ej4e():
+    pass
+
+# F
+
+def Ej4f(g, switch, servidor):
+    '''Indica desde qué computadora del switch pasado, es el camino más corto al servidor pasado'''
+    resultado_switch = buscarVertice(g, switch)
+    resultado_server = buscarVertice(g, servidor)
+    if (not resultado_switch) or (not resultado_server):
+        print("Switch y/o servidor no encontrado/s en la red")
+    else:
+        largo_camino_mas_corto = inf
+        camino_mas_corto = []
+
+        aux_adyacentes = resultado_switch.adyacentes.inicio
+        while aux_adyacentes is not None:
+            resultado = buscarVertice(g, aux_adyacentes.destino)
+            if ("PC" in resultado.tipo) or ("Laptop" in resultado.tipo):
+
+                camino, largo = dijkstra2(g, resultado.info, servidor)
+
+                if largo < largo_camino_mas_corto:
+                    largo_camino_mas_corto = largo
+                    camino_mas_corto = camino
+            aux_adyacentes = aux_adyacentes.sig
+
+        if largo_camino_mas_corto > 0:
+            print("El camino más corto es desde la computadora", camino_mas_corto[0])
+        else:
+            print("No se encontró camino")

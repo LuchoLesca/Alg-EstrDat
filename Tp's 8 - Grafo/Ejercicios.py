@@ -170,16 +170,6 @@ else:
 
 # EJERCICIO 4
 
-class NodoRed():
-
-    def __init__(self, tipo, nombre):
-        self.info = nombre
-        self.tipo = tipo
-        self.sig = None
-        self.visitado = False
-        self.adyacentes = listaAristas()
-
-
 # A
 
 TIPOS = ["pc", "laptop", "servidor", "router", "switch", "impresora"]
@@ -290,9 +280,7 @@ for pc in pcs_no_laptops:
 print("La pc que posee el camino más corto hasta el servidor Guarani es:", pc_camino_mas_corto)
  """
 # F
-
-
-
+Ej4f(g, "Switch01", "MongoDB")
 
 
 
