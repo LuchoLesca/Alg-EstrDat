@@ -84,6 +84,20 @@ def invertir(pila1):
     return pila2
 
 
+def copiarPila(pila):
+    paux = Pila()
+    pila2 = Pila()
+    
+    while not pila_vacia(pila):
+        dato = desapilar(pila)
+        apilar(paux, dato)
+    while not pila_vacia(paux):
+        dato = desapilar(paux)
+        apilar(pila, dato)
+        apilar(pila2, dato)
+    return pila2
+
+
 def randString(largo=1):
     """Devuelve una cadena aleatoria"""
     valores = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
