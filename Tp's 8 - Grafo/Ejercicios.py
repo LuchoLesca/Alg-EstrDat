@@ -1,4 +1,4 @@
-import TDA_Grafo as Gra
+from TDA_Grafo import *
 from TDA_Pila import *
 from Grafo_Unit import *
 
@@ -266,21 +266,50 @@ print(kruskal(g))
  """
 # E
 """ 
-pcs_no_laptops = ["Manjaro", "Parrot", "Fedora", "Mint", "Ubuntu"]
-
-largo_camino = 0
-pc_camino_mas_corto = ""
-
-for pc in pcs_no_laptops:
-    camino_resultado = dijkstra(g, pc, "Guarani")
-    if len(camino_resultado) > largo_camino:
-        largo_camino = len(camino_resultado)
-        pc_camino_mas_corto = pc
-    
-print("La pc que posee el camino más corto hasta el servidor Guarani es:", pc_camino_mas_corto)
+Ej4e(g, "Guarani")
  """
 # F
+""" 
 Ej4f(g, "Switch01", "MongoDB")
+ """
+# G
+""" 
+eliminarArista(g, buscarVertice(g, "Printer"), "Switch01")
+insertarArista(g, 30, "Printer", "Router02")
+
+print("Barrido de profundidad desde Red Hat")
+resultado = buscarVertice(g, "Red Hat")
+marcarNoVisitado(g)
+barridoProfundidad(g, resultado)
+
+print("\nBarrido de amplitud desde Red Hat")
+resultado = buscarVertice(g, "Red Hat")
+marcarNoVisitado(g)
+barridoAmplitud(g, resultado)
+
+print("\nBarrido de profundidad desde Debian")
+resultado = buscarVertice(g, "Debian")
+marcarNoVisitado(g)
+barridoProfundidad(g, resultado)
+
+print("\nBarrido de amplitud desde Debian")
+resultado = buscarVertice(g, "Debian")
+marcarNoVisitado(g)
+barridoAmplitud(g, resultado)
+
+print("\nBarrido de profundidad desde Arch")
+resultado = buscarVertice(g, "Arch")
+marcarNoVisitado(g)
+barridoProfundidad(g, resultado)
+
+print("\nBarrido de amplitud desde Arch")
+resultado = buscarVertice(g, "Arch")
+marcarNoVisitado(g)
+barridoAmplitud(g, resultado)
+ """
+
+
+
 
 
 

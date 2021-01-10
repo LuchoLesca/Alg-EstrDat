@@ -218,7 +218,7 @@ def quitarArista(vertice, destino):
 
     if aux_adyacentes.destino == destino:
         info_extraida = aux_adyacentes.info
-        aux_adyacentes = aux_adyacentes.sig
+        vertice.adyacentes.inicio = aux_adyacentes.sig
         vertice.adyacentes.tamanio -= 1
     else:
         ant = aux_adyacentes
@@ -230,7 +230,7 @@ def quitarArista(vertice, destino):
 
         if (act is not None):
             info_extraida = act.info
-            ant = act.sig
+            ant.sig = act.sig
             vertice.adyacentes.tamanio -= 1
 
     return info_extraida

@@ -395,8 +395,28 @@ class NodoRed():
 
 # E
 
-def Ej4e():
-    pass
+def Ej4e(g, servidor):
+    '''Indica desde qué computadora (no laptop) es el camino más corto al servidor pasado'''
+    resultado_server = buscarVertice(g, servidor)
+    if not resultado_server:
+        print("Servidor no encontrado/s en la red")
+    else:
+        largo_camino_mas_corto = inf
+        camino_mas_corto = []
+
+        aux_vertices = g.inicio
+        while aux_vertices is not None:
+            if ("PC" in aux_vertices.tipo):
+                camino, largo = dijkstra2(g, aux_vertices.info, servidor)
+                if largo < largo_camino_mas_corto:
+                    largo_camino_mas_corto = largo
+                    camino_mas_corto = camino
+            aux_vertices = aux_vertices.sig
+
+        if largo_camino_mas_corto > 0:
+            print("La pc (no laptop) desde la cual hay un camino mas corto al servidor", servidor, "es", camino_mas_corto[0])
+        else:
+            print("No se encontró camino")
 
 # F
 
@@ -423,6 +443,7 @@ def Ej4f(g, switch, servidor):
             aux_adyacentes = aux_adyacentes.sig
 
         if largo_camino_mas_corto > 0:
-            print("El camino más corto es desde la computadora", camino_mas_corto[0])
+            print("El camino más corto hacia", servidor, "desde una computadora del switch", switch, "es desde la computadora", camino_mas_corto[0])
         else:
             print("No se encontró camino")
+
