@@ -1,6 +1,7 @@
 from TDA_Grafo import *
 from TDA_Pila import *
 from Grafo_Unit import *
+from TDA_Archivo import *
 
 #  EJERCICIO 1
 """ 
@@ -171,7 +172,7 @@ else:
 # EJERCICIO 4
 
 # A
-
+""" 
 TIPOS = ["pc", "laptop", "servidor", "router", "switch", "impresora"]
 
 g = Grafo(False)
@@ -220,7 +221,7 @@ insertarArista(g, 12, "Switch02", "MongoDB")
 insertarArista(g, 5, "Switch02", "Parrot")
 insertarArista(g, 56, "Switch02", "Fedora")
 insertarArista(g, 3, "Switch02", "Arch")
-
+ """
 # B
 """ 
 print("Barrido de profundidad desde Red Hat")
@@ -309,6 +310,143 @@ barridoAmplitud(g, resultado)
  """
 
 
+
+# EJERCICIO 5  FALTA TERMINAR >>>>>>>>>>>>>>>>>>>>
+""" 
+# txtToDat("Dioses/dioses.txt", "Dioses/dioses")
+g = Grafo(False)
+dioses = []
+
+archivo = abrir("Dioses/dioses")
+
+
+pos = 0
+tam_archivo = len(archivo)
+while pos < tam_archivo:
+    linea = leer(archivo, pos)
+    
+    nombre, descripcion, nombre_padre, nombre_madre = linea.split(";")
+    dios = Dios(nombre, descripcion, nombre_padre, nombre_madre)
+    if dios not in dioses:
+        dioses.append(dios)
+    
+    pos += 1
+
+cerrar(archivo)
+
+for dios in dioses:
+    insertarVerticeObjeto(g, dios)
+ """
+
+
+
+# EJERCICIO 6
+""" 
+g = Grafo(True)
+vertices = ["A", "B", "C", "D", "E", "F", "G"]
+
+for vertice in vertices:
+    insertarVertice(g, vertice)
+
+insertarArista(g, 15, "A", "B")
+insertarArista(g, 19, "A", "C")
+insertarArista(g, 13, "A", "D")
+insertarArista(g, 2, "B", "C")
+insertarArista(g, 20, "B", "E")
+insertarArista(g, 12, "B", "F")
+insertarArista(g, 5, "C", "E")
+insertarArista(g, 9, "C", "F")
+insertarArista(g, 27, "C", "G")
+insertarArista(g, 39, "D", "F")
+insertarArista(g, 45, "D", "G")
+insertarArista(g, 1, "E", "F")
+insertarArista(g, 3, "F", "G")
+ """
+# A
+""" 
+print("Barrido en amplitud desde A")
+marcarNoVisitado(g)
+barridoAmplitud(g, buscarVertice(g, "A"))
+print("Barrido en amplitud desde C")
+marcarNoVisitado(g)
+barridoAmplitud(g, buscarVertice(g, "C"))
+print("Barrido en amplitud desde F")
+marcarNoVisitado(g)
+barridoAmplitud(g, buscarVertice(g, "F"))
+print("Barrido en profundidad desde A")
+marcarNoVisitado(g)
+barridoProfundidad(g, buscarVertice(g, "A"))
+print("Barrido en profundidad desde C")
+marcarNoVisitado(g)
+barridoProfundidad(g, buscarVertice(g, "C"))
+print("Barrido en profundidad desde F")
+marcarNoVisitado(g)
+barridoProfundidad(g, buscarVertice(g, "F"))
+ """
+# B
+""" 
+origenes = ["A", "C", "B"]
+destinos = ["F", "D", "G"]
+
+for i in range(len(origenes)):
+    origen = origenes[i]
+    destino = destinos[i]
+    camino = dijkstra(g, origen, destino)
+    if len(camino) > 1:
+        print("Camino más corto desde {} hasta {}".format(origen, destino))
+        print(camino)
+    else:
+        print("No hay camino posible entre los nodos {} y {}".format(origen, destino))
+ """
+# C
+""" 
+insertarArista(g, randint(1, 25), "C", "A")
+insertarArista(g, randint(1, 25), "C", "B")
+insertarArista(g, randint(1, 25), "G", "D")
+
+origenes = ["A", "C", "B"]
+destinos = ["F", "D", "G"]
+
+for i in range(len(origenes)):
+    origen = origenes[i]
+    destino = destinos[i]
+    camino = dijkstra(g, origen, destino)
+    if len(camino) > 1:
+        print("Camino más corto desde {} hasta {}".format(origen, destino))
+        print(camino)
+    else:
+        print("No hay camino posible entre los nodos {} y {}".format(origen, destino))
+ """
+# D
+""" 
+mostrarMatrizAdyacencia(g)
+ """
+
+
+# EJERCICIO 7
+
+datos_personas = [
+    Persona("Pedro", "Gonzalez", randint(10000000, 60000000), "PeGo"),
+    Persona("Alfonso", "Rodriguez", randint(10000000, 60000000), "AlRo"),
+    Persona("Miguel", "Lopez", randint(10000000, 60000000), "MiLo"),
+    Persona("Carmen", "Fernandez", randint(10000000, 60000000), "CarFer"),
+    Persona("Eduardo", "Garcia", randint(10000000, 60000000), "EduGa"),
+    Persona("Roberto", "Perez", randint(10000000, 60000000), "RoPe"),
+    Persona("Mario", "Martinez", randint(10000000, 60000000), "MaMa"),
+    Persona("Norma", "Gomez", randint(10000000, 60000000), "NorGo"),
+    Persona("Federico", "Diaz", randint(10000000, 60000000), "FeDi"),
+    Persona("Lucrecia", "Sanchez", randint(10000000, 60000000), "LuSa"),
+    Persona("Manolo", "Alvarez", randint(10000000, 60000000), "MaAl"),
+    Persona("Etelvina", "Romero", randint(10000000, 60000000), "EeRo"),
+    Persona("Ricardo", "Sosa", randint(10000000, 60000000), "RiSo"),
+    Persona("Ana", "Ruiz", randint(10000000, 60000000), "AnRu"),
+    Persona("Martin", "Torres", randint(10000000, 60000000), "MarTo"),
+    Persona("Abel", "Suarez", randint(10000000, 60000000), "AbSu"),
+    Persona("Florencia", "Castro", randint(10000000, 60000000), "FloCas"),
+    Persona("Rosa", "Gimenez", randint(10000000, 60000000), "RoGi"),
+    Persona("Maria", "Vazquez", randint(10000000, 60000000), "MaVaz"),
+    Persona("Joaquin", "Acosta", randint(10000000, 60000000), "JoAcos")
+]
 
 
 

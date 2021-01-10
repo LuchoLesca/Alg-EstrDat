@@ -447,3 +447,44 @@ def Ej4f(g, switch, servidor):
         else:
             print("No se encontró camino")
 
+
+
+
+# EJERCICOI 5
+
+class Dios():
+
+    def __init__(self, nombre, descripcion, nombre_padre, nombre_madre):
+        self.info = nombre
+        self.descripcion = descripcion
+        self.padre = nombre_padre
+        self.madre = nombre_madre
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+
+    def __eq__(self, other):
+        if (isinstance(other, Dios)):
+            return self.info == other.info
+
+    def __str__(self):
+        return self.info
+
+
+
+# EJERCICIO 7
+
+class Persona():
+
+    def __init__(self, nombre, apellido, dni, username):
+        self.info = username
+        self.nombre = nombre
+        self.apellido = apellido
+        self.dni = dni
+
+    def __eq__(self, other):
+        if (isinstance(other, Dios)):
+            return self.info == other.info
+
+    def __str__(self):
+        return self.info + " " + self.dni
