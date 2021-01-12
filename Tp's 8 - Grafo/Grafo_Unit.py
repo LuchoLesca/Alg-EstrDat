@@ -231,8 +231,8 @@ def aristaMasLarga(grafo):
 
 # A
 
-def hayCamino(grafo, origen, destino):
-    '''Retorna si hay camino desde origen hasta destino'''
+def hayCaminoDirecto(grafo, origen, destino):
+    '''Retorna si hay camino directo desde origen hasta destino'''
     ori = buscarVertice(grafo, origen)
     if ori is not None:
         aux_aristas = ori.adyacentes.inicio
@@ -256,7 +256,7 @@ def listaLinea(grafo, lista_cabecera, nodo_origen):
     '''Devuelve lista con resultados que ha de imprimir por linea (vertice)'''
     lista = []
     for destino in lista_cabecera:
-        if hayCamino(grafo, nodo_origen.info, destino):
+        if hayCaminoDirecto(grafo, nodo_origen.info, destino):
             lista.append("1")
         else:
             lista.append("0")
@@ -493,6 +493,7 @@ class Persona():
     def __str__(self):
         return self.info + " " + self.dni
 
+# A
 
 def cargarVerticesRedesSociales(g):
     datos_personas = [
@@ -521,6 +522,7 @@ def cargarVerticesRedesSociales(g):
     for persona in datos_personas:
         insertarVerticeObjeto(g, persona)
 
+# B
 
 def cargarAristasRedesSociales(g, cantidad):
     redes = ["Twitter", "Instagram", "Facebook"]
@@ -534,6 +536,7 @@ def cargarAristasRedesSociales(g, cantidad):
         
         insertarArista(g, [red, retwitts_megustas], origen, destino)
 
+# C
 
 def pesoMaximoDeAristas(g, red_social):
     peso_max = -1
@@ -563,21 +566,17 @@ def kruskalRedesSociales(grafo, red_social):
     aux_vertices = grafo.inicio
     
     while aux_vertices is not None:
-        # Se inserta en el bosque, el origen
         bosque.append([aux_vertices.info])
         adyacentes = aux_vertices.adyacentes.inicio
         
         while adyacentes is not None:
-            # Se inserta en el heap todas las aristas del vertice
             if adyacentes.info[0] == red_social:
                 datos = [aux_vertices.info, adyacentes.destino]
                 peso = peso_maximo - adyacentes.info[1]
-                arribo_H(heap_aristas, peso, datos)
-            
+                arribo_H(heap_aristas, peso, datos)            
             adyacentes = adyacentes.sig
         aux_vertices = aux_vertices.sig
     
-    # Una vez tenemos todas las aristas en el heap, comenzamos:
     while (len(bosque) > 1) and (not heap_vacio(heap_aristas)):
         datos_y_peso = atencion_H(heap_aristas)
         peso = datos_y_peso[0]
@@ -585,26 +584,21 @@ def kruskalRedesSociales(grafo, red_social):
         
         origen = datos[0]
         destino = datos[1]
-        
-        array_origen = None  # Array que contendrá al origen
-        array_destino = None  # Array que contendré al destino
+        array_origen = None
+        array_destino = None
 
-        # Se busca si el origen y destino son conexos
         for array_conexo in bosque:
             if origen in array_conexo:
                 indice = bosque.index(array_conexo)
                 array_origen = bosque.pop(indice)
                 break
-        
         for array_conexo in bosque:
             if destino in array_conexo:
                 indice = bosque.index(array_conexo)
                 array_destino = bosque.pop(indice)
                 break
         
-        # Si están en el mismo grupo(array), se descarta, si están en distintos grupo(array) el origen y el destino, se juntan estos
         if (array_origen is not None) and (array_destino is not None):
-            # Si ambos no son none, es porque están en distinto array
                 if (len(array_origen) > len(array_destino)) or (len(array_origen) == len(array_destino)):
                     bosque.append(array_origen + array_destino)
                 else:
@@ -613,3 +607,39 @@ def kruskalRedesSociales(grafo, red_social):
             bosque.append(array_origen)
 
     return bosque[0]
+
+
+# D y E
+
+def existeCaminoRedSocial(g, vertice, destino, red_social):
+    marcarNoVisitado(g)
+
+    cola = Cola()
+    
+    while vertice is not None:
+        if not vertice.visitado:
+            vertice.visitado = True
+            arribo(cola, vertice)
+    
+            while not cola_vacia(cola):
+                nodo = atencion(cola)
+                if nodo.info == destino:
+                    # print("Cortó en", nodo.info)
+                    return True
+                # else:
+                #     print("Pasó por", nodo.info)
+                # print(nodo.info)
+                
+                aux_adyacentes = nodo.adyacentes.inicio
+                while aux_adyacentes is not None:
+                    if aux_adyacentes.info[0] == red_social:
+                        resultado = buscarVertice(g, aux_adyacentes.destino)
+
+                        if not resultado.visitado:
+                            resultado.visitado = True
+                            arribo(cola, resultado)
+
+                    aux_adyacentes = aux_adyacentes.sig
+        vertice = vertice.sig
+
+    return False

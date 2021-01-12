@@ -423,7 +423,7 @@ mostrarMatrizAdyacencia(g)
  """
 
 
-# EJERCICIO 7   <<<<<<< FALTA TERMINAS
+# EJERCICIO 7
 """  
 g = Grafo(True)
 
@@ -453,6 +453,64 @@ print("\nArbol de expansión maximo de Instagram")
 print(kruskalRedesSociales(g, "Instagram"))
  """
 # D
+""" 
+g = Grafo(True)
+cargarVerticesRedesSociales(g)
+cargarAristasRedesSociales(g, 50)
+
+barridoVertices(g)
+
+usuario1 = input("Desde: ")
+usuario2 = input("Hasta: ")
+red = input("Red: ")
+print()
+print(existeCaminoRedSocial(g, buscarVertice(g, usuario1), usuario2, red))
+ """
+# E
+""" 
+g = Grafo(True)
+cargarVerticesRedesSociales(g)
+cargarAristasRedesSociales(g, 50)
+
+# barridoVertices(g)
+
+usuario1 = "PeGo"
+usuario2 = "MarTo"
+redes_que_conectan = []
+
+for red in ["Twitter", "Facebook", "Instagram"]:
+    print()
+    if existeCaminoRedSocial(g, buscarVertice(g, usuario1), usuario2, red):
+        redes_que_conectan.append(red)
+
+if len(redes_que_conectan) > 0:
+    print("Redes por la/s que se conectan {} y {}".format(usuario1, usuario2))
+    for red in redes_que_conectan:
+        print(red)
+else:
+    print("Los usuarios {} y {} no tienen conexion a traves de ninguna red social".format(usuario1, usuario2))
+ """
+# F
+""" 
+g = Grafo(True)
+cargarVerticesRedesSociales(g)
+cargarAristasRedesSociales(g, 50)
+
+usuario = "MarTo"
+resultado_busqueda = buscarVertice(g, usuario)
+if resultado_busqueda is not None:
+    aux_adyacentes = resultado_busqueda.adyacentes.inicio
+    print("Personas a las que sigue", usuario, "a traves de Instagram:")
+    while aux_adyacentes is not None:
+        if aux_adyacentes.info[0] == "Instagram":
+            print(aux_adyacentes.destino)
+        aux_adyacentes = aux_adyacentes.sig
+else:
+    print("Usuario", usuario, "no encontrado")
+ """
+
+
+
 
 
 
