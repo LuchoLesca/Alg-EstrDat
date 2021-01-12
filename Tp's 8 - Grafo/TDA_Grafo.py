@@ -14,7 +14,7 @@ class Grafo():
 
 class Vertice():
     '''Crea un vertice con la información cargada'''
-    def __init__ (self, info):
+    def __init__(self, info):
         self.info = info
         self.sig = None
         self.visitado = False
@@ -22,7 +22,7 @@ class Vertice():
 
 
 class Arista():
-    def __init__ (self, info, destino):
+    def __init__(self, info, destino):
         self.info = info
         self.destino = destino
         self.sig = None

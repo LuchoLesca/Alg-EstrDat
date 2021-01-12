@@ -423,30 +423,112 @@ mostrarMatrizAdyacencia(g)
  """
 
 
-# EJERCICIO 7
+# EJERCICIO 7   <<<<<<< FALTA TERMINAS
+"""  
+g = Grafo(True)
 
-datos_personas = [
-    Persona("Pedro", "Gonzalez", randint(10000000, 60000000), "PeGo"),
-    Persona("Alfonso", "Rodriguez", randint(10000000, 60000000), "AlRo"),
-    Persona("Miguel", "Lopez", randint(10000000, 60000000), "MiLo"),
-    Persona("Carmen", "Fernandez", randint(10000000, 60000000), "CarFer"),
-    Persona("Eduardo", "Garcia", randint(10000000, 60000000), "EduGa"),
-    Persona("Roberto", "Perez", randint(10000000, 60000000), "RoPe"),
-    Persona("Mario", "Martinez", randint(10000000, 60000000), "MaMa"),
-    Persona("Norma", "Gomez", randint(10000000, 60000000), "NorGo"),
-    Persona("Federico", "Diaz", randint(10000000, 60000000), "FeDi"),
-    Persona("Lucrecia", "Sanchez", randint(10000000, 60000000), "LuSa"),
-    Persona("Manolo", "Alvarez", randint(10000000, 60000000), "MaAl"),
-    Persona("Etelvina", "Romero", randint(10000000, 60000000), "EeRo"),
-    Persona("Ricardo", "Sosa", randint(10000000, 60000000), "RiSo"),
-    Persona("Ana", "Ruiz", randint(10000000, 60000000), "AnRu"),
-    Persona("Martin", "Torres", randint(10000000, 60000000), "MarTo"),
-    Persona("Abel", "Suarez", randint(10000000, 60000000), "AbSu"),
-    Persona("Florencia", "Castro", randint(10000000, 60000000), "FloCas"),
-    Persona("Rosa", "Gimenez", randint(10000000, 60000000), "RoGi"),
-    Persona("Maria", "Vazquez", randint(10000000, 60000000), "MaVaz"),
-    Persona("Joaquin", "Acosta", randint(10000000, 60000000), "JoAcos")
-]
+# A
+
+cargarVerticesRedesSociales(g)
+
+# B
+
+cargarAristasRedesSociales(g, 100)
+ """
+
+# barridoVertices(g)
+
+# C Hallar arbol de expansión máximo para cada red social
+# Para esto, será necesario crear un nuevo grafo no dirigido
+""" 
+g = Grafo(False)
+cargarVerticesRedesSociales(g)
+cargarAristasRedesSociales(g, 100)
+
+print("Arbol de expansión maximo de Facebook")
+print(kruskalRedesSociales(g, "Facebook"))
+print("\nArbol de expansión maximo de Twitter")
+print(kruskalRedesSociales(g, "Twitter"))
+print("\nArbol de expansión maximo de Instagram")
+print(kruskalRedesSociales(g, "Instagram"))
+ """
+# D
+
+
+
+
+# EJERCICIO 8   
+
+""" 
+class Aeropuerto():
+
+    def __init__(self, nombre, ubicacion, cant_pistas):
+        self.info = nombre
+        self.latitud = ubicacion[0]
+        self.longitud = ubicacion[1]
+        self.cant_pistas = cant_pistas
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+
+    def __str__(self):
+        return self.info + " " + str(self.latitud) + " " + str(self.longitud) + " " + str(self.cant_pistas)
+ """
+""" 
+class Vuelo():
+
+    def __init__(self, salida, arribo, empresa, costo, duracion, distancia):
+        self.salida = salida
+        self.arribo = arribo
+        self.empresa = empresa
+        self.costo = costo
+        self.duracion = duracion
+        self.distancia = distancia
+        """ 
+""" 
+def cargarArchivoAeropuertos():
+
+    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+
+    archivo = abrir("AeropuertosYViajes/aeropuertos")
+    limpiar(archivo)
+
+    for pais in paises:
+        latitud, longitud = randint(-150, 300), randint(-150, 300)
+        cantidad_pistas = randint(1, 6)
+        guardar(archivo, Aeropuerto(pais, [latitud, longitud], cantidad_pistas))
+
+    cerrar(archivo)
+ """
+# cargarArchivoAeropuertos()
+""" 
+archivo = abrir("AeropuertosYViajes/aeropuertos")
+barridoArchivo(archivo)
+cerrar(archivo)
+ """
+""" 
+def cargarArchivoVuelos():
+    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+
+    archivo = abrir("AeropuertosYViajes/vuelos")
+    limpiar(archivo)
+
+    for i in range(20):
+        hora_salida = time()
+        hora_arribo = randint()
+        nombre_empresa = randint("Empresa"+str(randint(1, 10)))
+        costo_pasaje = 1200
+        duracion = randint(30, 2600)
+        distancia = randint(600, 10000)
+
+    cerrar(archivo)
+
+cargarArchivoVuelos()
+
+ """
+
+
+
 
 
 

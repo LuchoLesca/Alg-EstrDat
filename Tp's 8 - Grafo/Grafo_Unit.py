@@ -474,6 +474,7 @@ class Dios():
 
 # EJERCICIO 7
 
+
 class Persona():
 
     def __init__(self, nombre, apellido, dni, username):
@@ -481,6 +482,9 @@ class Persona():
         self.nombre = nombre
         self.apellido = apellido
         self.dni = dni
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
 
     def __eq__(self, other):
         if (isinstance(other, Dios)):
@@ -488,3 +492,124 @@ class Persona():
 
     def __str__(self):
         return self.info + " " + self.dni
+
+
+def cargarVerticesRedesSociales(g):
+    datos_personas = [
+        Persona("Pedro", "Gonzalez", randint(10000000, 60000000), "PeGo"),
+        Persona("Alfonso", "Rodriguez", randint(10000000, 60000000), "AlRo"),
+        Persona("Miguel", "Lopez", randint(10000000, 60000000), "MiLo"),
+        Persona("Carmen", "Fernandez", randint(10000000, 60000000), "CarFer"),
+        Persona("Eduardo", "Garcia", randint(10000000, 60000000), "EduGa"),
+        Persona("Roberto", "Perez", randint(10000000, 60000000), "RoPe"),
+        Persona("Mario", "Martinez", randint(10000000, 60000000), "MaMa"),
+        Persona("Norma", "Gomez", randint(10000000, 60000000), "NorGo"),
+        Persona("Federico", "Diaz", randint(10000000, 60000000), "FeDi"),
+        Persona("Lucrecia", "Sanchez", randint(10000000, 60000000), "LuSa"),
+        Persona("Manolo", "Alvarez", randint(10000000, 60000000), "MaAl"),
+        Persona("Etelvina", "Romero", randint(10000000, 60000000), "EeRo"),
+        Persona("Ricardo", "Sosa", randint(10000000, 60000000), "RiSo"),
+        Persona("Ana", "Ruiz", randint(10000000, 60000000), "AnRu"),
+        Persona("Martin", "Torres", randint(10000000, 60000000), "MarTo"),
+        Persona("Abel", "Suarez", randint(10000000, 60000000), "AbSu"),
+        Persona("Florencia", "Castro", randint(10000000, 60000000), "FloCas"),
+        Persona("Rosa", "Gimenez", randint(10000000, 60000000), "RoGi"),
+        Persona("Maria", "Vazquez", randint(10000000, 60000000), "MaVaz"),
+        Persona("Joaquin", "Acosta", randint(10000000, 60000000), "JoAcos")
+    ]
+
+    for persona in datos_personas:
+        insertarVerticeObjeto(g, persona)
+
+
+def cargarAristasRedesSociales(g, cantidad):
+    redes = ["Twitter", "Instagram", "Facebook"]
+
+    for i in range(cantidad):
+        red = choice(redes)
+        retwitts_megustas = randint(0, 100)
+        lista_vertices = listaVertices(g)
+        origen = choice(lista_vertices)
+        destino = choice(lista_vertices)
+        
+        insertarArista(g, [red, retwitts_megustas], origen, destino)
+
+
+def pesoMaximoDeAristas(g, red_social):
+    peso_max = -1
+    aux_vertices = g.inicio
+    
+    while aux_vertices is not None:
+        aux_adyacentes = aux_vertices.adyacentes.inicio
+    
+        while aux_adyacentes is not None:
+            red = aux_adyacentes.info[0]
+            peso = aux_adyacentes.info[1]
+            
+            if (red == red_social) and (peso > peso_max):
+                peso_max = peso
+            aux_adyacentes = aux_adyacentes.sig
+        aux_vertices = aux_vertices.sig
+    
+    return peso_max
+
+
+def kruskalRedesSociales(grafo, red_social):
+    """Algoritmo de Kruskal para hallar el árbol de expansión màximo de la red social pasada."""
+    bosque = []
+    heap_aristas = Heap(grafo.tamanio**2)
+
+    peso_maximo = pesoMaximoDeAristas(grafo, red_social)
+    aux_vertices = grafo.inicio
+    
+    while aux_vertices is not None:
+        # Se inserta en el bosque, el origen
+        bosque.append([aux_vertices.info])
+        adyacentes = aux_vertices.adyacentes.inicio
+        
+        while adyacentes is not None:
+            # Se inserta en el heap todas las aristas del vertice
+            if adyacentes.info[0] == red_social:
+                datos = [aux_vertices.info, adyacentes.destino]
+                peso = peso_maximo - adyacentes.info[1]
+                arribo_H(heap_aristas, peso, datos)
+            
+            adyacentes = adyacentes.sig
+        aux_vertices = aux_vertices.sig
+    
+    # Una vez tenemos todas las aristas en el heap, comenzamos:
+    while (len(bosque) > 1) and (not heap_vacio(heap_aristas)):
+        datos_y_peso = atencion_H(heap_aristas)
+        peso = datos_y_peso[0]
+        datos = datos_y_peso[1]
+        
+        origen = datos[0]
+        destino = datos[1]
+        
+        array_origen = None  # Array que contendrá al origen
+        array_destino = None  # Array que contendré al destino
+
+        # Se busca si el origen y destino son conexos
+        for array_conexo in bosque:
+            if origen in array_conexo:
+                indice = bosque.index(array_conexo)
+                array_origen = bosque.pop(indice)
+                break
+        
+        for array_conexo in bosque:
+            if destino in array_conexo:
+                indice = bosque.index(array_conexo)
+                array_destino = bosque.pop(indice)
+                break
+        
+        # Si están en el mismo grupo(array), se descarta, si están en distintos grupo(array) el origen y el destino, se juntan estos
+        if (array_origen is not None) and (array_destino is not None):
+            # Si ambos no son none, es porque están en distinto array
+                if (len(array_origen) > len(array_destino)) or (len(array_origen) == len(array_destino)):
+                    bosque.append(array_origen + array_destino)
+                else:
+                    bosque.append(array_destino + array_origen)
+        else:
+            bosque.append(array_origen)
+
+    return bosque[0]
