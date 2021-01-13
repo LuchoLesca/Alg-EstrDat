@@ -473,3 +473,37 @@ def dijkstra2(grafo, origen, destino):
     camino_resuelto = resolverCaminoDijkstra(camino, destino)
 
     return camino_resuelto, largo_de_camino
+
+
+def dijkstra3(grafo, origen, destino, campo):
+    '''Camino mas corto entre dos nodos objetos'''
+    no_visitados = Heap(grafo.tamanio)
+    camino = Pila()
+    aux_vertices = grafo.inicio
+
+    while aux_vertices is not None:
+        if aux_vertices.info == origen:
+            arribo_H(no_visitados, 0, [aux_vertices, None])
+        else:
+            arribo_H(no_visitados, inf, [aux_vertices, None])
+        aux_vertices = aux_vertices.sig
+
+    while not heap_vacio(no_visitados):
+        # Se extrae el vertice de menor peso que no haya sido visitado
+        dato = atencion_H(no_visitados)
+        apilar(camino, dato)
+        # Se apunta a sus adyacentes para hacer un barrido
+        aux_adyacentes = dato[1][0].adyacentes.inicio
+
+        while aux_adyacentes is not None:
+            # Se busca en el heap el adyacente, (en el heap están solo los que no fueron vvisitados)
+            pos = buscar_H(no_visitados, aux_adyacentes.destino)
+            # Se calcula la distancia acumulada que tomaría desde lo que lleva la arista analizada más el camino que tomaría llegar a la nueva arista
+            distancia_acumulada = dato[0] + aux_adyacentes.info
+            # Si el que está en heap tiene mayor peso que el acumulado anterior, se reemplazan los valores
+            if (distancia_acumulada < no_visitados.vector[pos][0]):
+                no_visitados.vector[pos][1][1] = dato[1][0].info  # Cambia el valor "de donde viene"
+                cambiarPrioridad(no_visitados, pos, distancia_acumulada)  # Cambia el peso y flota o hunde
+            aux_adyacentes = aux_adyacentes.sig
+
+    return resolverCaminoDijkstra(camino, destino)

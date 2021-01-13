@@ -311,14 +311,14 @@ barridoAmplitud(g, resultado)
 
 
 
-# EJERCICIO 5  FALTA TERMINAR >>>>>>>>>>>>>>>>>>>>
-""" 
+# EJERCICIO 5
+
 # txtToDat("Dioses/dioses.txt", "Dioses/dioses")
+""" 
 g = Grafo(False)
 dioses = []
 
 archivo = abrir("Dioses/dioses")
-
 
 pos = 0
 tam_archivo = len(archivo)
@@ -334,11 +334,14 @@ while pos < tam_archivo:
 
 cerrar(archivo)
 
+
+# Insertnado Vertices de dioses
+
 for dios in dioses:
     insertarVerticeObjeto(g, dios)
+
+barridoVertices(g )
  """
-
-
 
 # EJERCICIO 6
 """ 
@@ -510,86 +513,136 @@ else:
  """
 
 
+# EJERCICIO 8
 
+# Carga de Archivos (Los resetea y vuelve a cargar con datos random)
 
-
-
-
-# EJERCICIO 8   
-
-""" 
-class Aeropuerto():
-
-    def __init__(self, nombre, ubicacion, cant_pistas):
-        self.info = nombre
-        self.latitud = ubicacion[0]
-        self.longitud = ubicacion[1]
-        self.cant_pistas = cant_pistas
-        self.sig = None
-        self.visitado = False
-        self.adyacentes = listaAristas()
-
-    def __str__(self):
-        return self.info + " " + str(self.latitud) + " " + str(self.longitud) + " " + str(self.cant_pistas)
- """
-""" 
-class Vuelo():
-
-    def __init__(self, salida, arribo, empresa, costo, duracion, distancia):
-        self.salida = salida
-        self.arribo = arribo
-        self.empresa = empresa
-        self.costo = costo
-        self.duracion = duracion
-        self.distancia = distancia
-        """ 
-""" 
-def cargarArchivoAeropuertos():
-
-    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
-
-    archivo = abrir("AeropuertosYViajes/aeropuertos")
-    limpiar(archivo)
-
-    for pais in paises:
-        latitud, longitud = randint(-150, 300), randint(-150, 300)
-        cantidad_pistas = randint(1, 6)
-        guardar(archivo, Aeropuerto(pais, [latitud, longitud], cantidad_pistas))
-
-    cerrar(archivo)
- """
 # cargarArchivoAeropuertos()
+# cargarArchivoVuelos(1000)
+
+# Comprobación de datos de archivos
 """ 
 archivo = abrir("AeropuertosYViajes/aeropuertos")
 barridoArchivo(archivo)
 cerrar(archivo)
  """
 """ 
-def cargarArchivoVuelos():
-    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+archivo = abrir("AeropuertosYViajes/vuelos")
+barridoArchivo(archivo)
+cerrar(archivo)
+ """
 
-    archivo = abrir("AeropuertosYViajes/vuelos")
-    limpiar(archivo)
+# Carga Grafos (imcompleto)
+""" 
+g = Grafo(False)
 
-    for i in range(20):
-        hora_salida = time()
-        hora_arribo = randint()
-        nombre_empresa = randint("Empresa"+str(randint(1, 10)))
-        costo_pasaje = 1200
-        duracion = randint(30, 2600)
-        distancia = randint(600, 10000)
-
-    cerrar(archivo)
-
-cargarArchivoVuelos()
-
+archivo_aeropuertos = abrir("AeropuertosYViajes/aeropuertos")
+pos = 0
+tam_archivo = len(archivo_aeropuertos)
+while pos < tam_archivo:
+    vuelo = leer(archivo_aeropuertos, pos)
+    print(vuelo)
+    pos += 1
+cerrar(archivo_aeropuertos)
  """
 
 
+class VerticePerro():
+
+    def __init__(self, nombre, edad, peso):
+        self.info = nombre
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+        self.edad = edad
+        self.peso = peso
+
+    def __str__(self):
+        return "Nombre: " + self.info + " Edad: " + str(self.edad) + " Peso: " + str(self.peso)
+
+
+class AristaCorrea():
+
+    def __init__(self, largo, color, destino):
+        self.info = 0
+        self.destino = destino
+        self.sig = None
+
+        self.largo = largo
+        self.color = color
+
+    def __str__(self):
+        return "Largo: " + str(self.largo) + " Color: " + self.color
+
+g = Grafo(True)
+
+perros = [
+    "Perro1", "Perro2", "Perro3", "Perro4", "Perro5", "Perro6", "Perro7"
+]
+
+insertarVerticeObjeto(g, VerticePerro("Perro1", 12, 23))
+insertarVerticeObjeto(g, VerticePerro("Perro2", 15, 33))
+insertarVerticeObjeto(g, VerticePerro("Perro3", 7, 56))
+insertarVerticeObjeto(g, VerticePerro("Perro4", 10, 43))
+insertarVerticeObjeto(g, VerticePerro("Perro5", 32, 31))
+insertarVerticeObjeto(g, VerticePerro("Perro6", 1, 62))
+insertarVerticeObjeto(g, VerticePerro("Perro7", 4, 26))
+
+barridoVertices(g)
 
 
 
 
 
+# E  / Camino más corto desde Argentina a Tailandia
+
+# i. Menor distancia
+# ii. Menor duracion
+# iii. Menor costo
+# iv. Menor numero de escalas
 
 
+
+# EJERCICIO 9
+
+# A
+""" 
+planetas = [
+    "Alderaan", "Endor", "Dagobah", "Hoth", "Tatooine", "Kamino", "Naboo", "Mustafar", "Scarif", "Bespin", "Coruscant", "Corellia", "Mantell", "Kessel", "Yavin IV", "Ansion", "Korriban", "Mygetto", "Nadiem", "Felucia"
+]
+
+g = Grafo(False)
+
+# Agregando vertices
+for planeta in planetas:
+    insertarVertice(g, planeta)
+ """
+# B
+""" 
+# Agregando aristas sin que los vertice se autoapunten
+for planeta in planetas:
+    generados = 0
+    origen = planeta
+    while generados < 4:
+        destino = choice(planetas)
+        if destino != planeta:
+            insertarArista(g, randint(10, 10000), origen, destino)
+            generados += 1
+ """
+# C
+""" 
+arbol_expansion_minima = kruskal(g)
+print("Arbol de expansion minima para recorrer todos los plantas")
+print(arbol_expansion_minima)
+ """
+# D
+""" 
+print("Camino mas corto desde Tatooine hasta Dagobah")
+print(dijkstra(g, "Tatooine", "Dagobah"))
+
+print("Camino mas corto desde Alderaan hasta Endor")
+print(dijkstra(g, "Alderaan", "Endor"))
+
+print("Camino mas corto desde Hoth hasta Tatooine")
+print(dijkstra(g, "Hoth", "Tatooine"))
+ """

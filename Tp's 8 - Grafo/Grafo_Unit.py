@@ -1,5 +1,6 @@
 from TDA_Grafo import *
 from random import randint, choice
+from TDA_Archivo import *
 
 
 # EJERCICIO 1
@@ -643,3 +644,72 @@ def existeCaminoRedSocial(g, vertice, destino, red_social):
         vertice = vertice.sig
 
     return False
+
+
+
+# EJERCICIO 8
+
+class VerticeAeropuerto():
+    '''Nodo vertice con datos de aeropuerto'''
+    def __init__(self, nombre, ubicacion, cant_pistas):
+        self.info = nombre
+        self.latitud = ubicacion[0]
+        self.longitud = ubicacion[1]
+        self.cant_pistas = cant_pistas
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+
+    def __str__(self):
+        return "Nombre:" + self.info + " - Latitud:" + str(self.latitud) + " - Longitud" + str(self.longitud) + " - Pistas:" + str(self.cant_pistas)
+
+
+class AristaVuelo():
+    '''Nodo arista con datos de vuelo'''
+    def __init__(self, salida, arribo, empresa, costo, duracion, distancia):
+        self.salida = salida
+        self.arribo = arribo
+        self.empresa = empresa
+        self.costo = costo
+        self.duracion = duracion
+        self.distancia = distancia
+
+    def __str__(self):
+        return "Salida:" + self.salida + " - Arribo:" + self.arribo + " - Empresa:" + self.empresa + " - Costo:" + str(self.costo) + " - Duracion:" + str(self.duracion) + " - Distancia:" + str(self.distancia)
+        
+    
+def cargarArchivoAeropuertos():
+    '''Carga aeropuertos(vertices) con info random (excepto nombre/info) a un archivo'''
+    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+
+    archivo = abrir("AeropuertosYViajes/aeropuertos")
+    limpiar(archivo)
+
+    for pais in paises:
+        latitud, longitud = randint(-150, 300), randint(-150, 300)
+        cantidad_pistas = randint(1, 6)
+        guardar(archivo, VerticeAeropuerto(pais, [latitud, longitud], cantidad_pistas))
+
+    cerrar(archivo)
+
+
+def cargarArchivoVuelos(cantidad=20):
+    '''Carga vuelos(aristas) con info random (excepto origen y destino) a un archivo'''
+    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+
+    archivo = abrir("AeropuertosYViajes/vuelos")
+    limpiar(archivo)
+
+    for i in range(cantidad):
+        hora_salida = str(randint(00, 23)) + ":" + str(randint(00, 59))
+        hora_arribo = str(randint(00, 23)) + ":" + str(randint(00, 59))
+        nombre_empresa = "Empresa"+str(randint(1, 10))
+        costo_pasaje = 1200
+        duracion = randint(30, 2600)
+        distancia = randint(600, 10000)
+
+        nuevo_vuelo = AristaVuelo(hora_salida, hora_arribo, nombre_empresa, costo_pasaje, duracion, distancia)
+
+        guardar(archivo, nuevo_vuelo)
+
+    cerrar(archivo)
