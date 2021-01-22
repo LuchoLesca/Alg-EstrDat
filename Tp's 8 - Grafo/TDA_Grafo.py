@@ -474,7 +474,7 @@ def dijkstra2(grafo, origen, destino):
 
     return camino_resuelto, largo_de_camino
 
-
+""" 
 def dijkstra3(grafo, origen, destino, campo):
     '''Camino mas corto entre dos nodos objetos'''
     no_visitados = Heap(grafo.tamanio)
@@ -507,3 +507,4 @@ def dijkstra3(grafo, origen, destino, campo):
             aux_adyacentes = aux_adyacentes.sig
 
     return resolverCaminoDijkstra(camino, destino)
+ """

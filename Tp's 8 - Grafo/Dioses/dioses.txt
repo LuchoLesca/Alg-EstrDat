@@ -43,7 +43,7 @@ Zeus;Descripcion;Kronos;Rhea
 Persephone;Descripcion;Zeus;Demeter
 Ares;Descripcion;Zeus;Hera
 Hephaistos;Descripcion;Zeus;Hera
-Athena;DescripcionZeus;;-
+Athena;Descripcion;Zeus;-
 Apolo;Descripcion;Zeus;Leto
 Artemis;Descripcion;Zeus;Leto
 Dionysos;Descripcion;Zeus;Semele

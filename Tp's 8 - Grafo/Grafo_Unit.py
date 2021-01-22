@@ -469,8 +469,137 @@ class Dios():
             return self.info == other.info
 
     def __str__(self):
-        return self.info
+        return "Info(nombre): " + self.info + " - Padre: " + self.padre + " - Madre: " + self.madre
 
+
+def extraerDiosesDesdeArchivo(g, archivo):
+    '''Carga los vertices de los dioses en el grafo'''
+    dioses = []
+
+    pos = 0
+    tam_archivo = len(archivo)
+    while pos < tam_archivo:
+        linea = leer(archivo, pos)
+        datos_dios = linea.split(";")
+        nombre = datos_dios[0].strip()
+        descripcion = datos_dios[1].strip()
+        nombre_padre = datos_dios[2].strip()
+        nombre_madre = datos_dios[3].strip()
+        dios = Dios(nombre, descripcion, nombre_padre, nombre_madre)
+        if dios not in dioses:
+            dioses.append(dios)
+        pos += 1
+    return dioses
+
+def cargarGrafoDeDioses(g):
+    txtToDat("Dioses/dioses.txt", "Dioses/dioses")
+    
+    archivo = abrir("Dioses/dioses")
+    dioses = extraerDiosesDesdeArchivo(g, archivo)
+    cerrar(archivo)
+
+    cargarVerticesDiosesGrafo(g, dioses)
+    cargarAristasDiosesGrafo(g, dioses)
+
+def cargarVerticesDiosesGrafo(g, lista_dioses):
+    for dios in lista_dioses:
+        insertarVerticeObjeto(g, dios)
+
+def cargarAristasDiosesGrafo(g, lista_dioses):
+    for dios in lista_dioses:
+        nombre_dios = dios.info
+        nombre_padre = dios.padre
+        nombre_madre = dios.madre
+        
+        # cargarRelacionPareja(g, nombre_padre, nombre_madre)
+        
+        cargarRelacionPadresHijos(g, nombre_padre, nombre_dios, "Padre de")
+        cargarRelacionPadresHijos(g, nombre_madre, nombre_dios, "Madre de")
+        
+        cargarRelacionHermanos(g, nombre_dios, nombre_padre, nombre_madre, lista_dioses)
+
+def cargarRelacionPareja(g, dios1, dios2):
+    '''Carga las aristas de las relaciones pareja'''
+    datos_dios1 = buscarVertice(g, dios1)
+    datos_dios2 = buscarVertice(g, dios2)
+    
+    if (datos_dios1 is not None) and (datos_dios2 is not None):
+        if buscarArista(datos_dios1, dios2) is None:
+            insertarArista(g, "Pareja", dios1, dios2)
+            insertarArista(g, "Pareja", dios2, dios1)
+
+def cargarRelacionPadresHijos(g, padre_madre, hijo, condicion_madre_padre):
+    '''Carga las aristas de las relaciones padres/hijos'''
+    datos_padre_madre = buscarVertice(g, padre_madre)
+    datos_hijo = buscarVertice(g, hijo)
+    if (datos_padre_madre is not None) and (datos_hijo is not None):
+        if buscarArista(datos_padre_madre, condicion_madre_padre) is None:
+            insertarArista(g, condicion_madre_padre, padre_madre, hijo)
+        if buscarArista(datos_hijo, "Hijo de") is None:
+            insertarArista(g, "Hijo de", hijo, padre_madre)
+
+def cargarRelacionHermanos(g, nombre_dios, nombre_padre, nombre_madre, dioses):
+    for dios in dioses:
+        mismo_padre = (nombre_padre != "-") and (nombre_padre == dios.padre)
+        misma_madre = (nombre_madre != "-") and (nombre_madre == dios.madre)
+        comparten_padre_o_madre = mismo_padre or misma_madre
+        
+        if (comparten_padre_o_madre) and (dios.info != nombre_dios):
+            insertarArista(g, "Hermano de", nombre_dios, dios.info)
+
+# E
+
+def tieneRelDirecta(vertice1, vertice2):
+    rel_directa = False
+    relacion = ""
+    # Busca si un vertice es adyacente de otro
+    aux_aristas = vertice1.adyacentes.inicio
+    while aux_aristas is not None:
+        if aux_aristas.destino == vertice2.info:
+            rel_directa = True
+            relacion += aux_aristas.info
+            break
+        aux_aristas = aux_aristas.sig
+
+    # Lo mismo que antes pero con los datos de busqueda intercambiados
+    aux_aristas = vertice2.adyacentes.inicio
+    while aux_aristas is not None:
+        if aux_aristas.destino == vertice1.info:
+            rel_directa = True
+            relacion += " - " + aux_aristas.info
+            break
+        aux_aristas = aux_aristas.sig
+    
+    return rel_directa, relacion
+
+# F
+
+def caminoMasCortoPorCantAristas(g, origen, destino):
+    '''Camino mas corto (menos aristas) entre dos nodos'''
+    no_visitados = Heap(g.tamanio)
+    camino = Pila()
+    aux_vertices = g.inicio
+    while aux_vertices is not None:
+        if aux_vertices.info == origen:
+            arribo_H(no_visitados, 0, [aux_vertices, None])
+        else:
+            arribo_H(no_visitados, inf, [aux_vertices, None])
+        aux_vertices = aux_vertices.sig
+
+    while not heap_vacio(no_visitados):
+        dato = atencion_H(no_visitados)
+        apilar(camino, dato)
+        aux_adyacentes = dato[1][0].adyacentes.inicio
+
+        while aux_adyacentes is not None:
+            pos = buscar_H(no_visitados, aux_adyacentes.destino)
+            distancia_acumulada = dato[0] + 1
+            if (distancia_acumulada < no_visitados.vector[pos][0]):
+                no_visitados.vector[pos][1][1] = dato[1][0].info
+                cambiarPrioridad(no_visitados, pos, distancia_acumulada)
+            aux_adyacentes = aux_adyacentes.sig
+
+    return resolverCaminoDijkstra(camino, destino)
 
 
 # EJERCICIO 7

@@ -313,35 +313,89 @@ barridoAmplitud(g, resultado)
 
 # EJERCICIO 5
 
-# txtToDat("Dioses/dioses.txt", "Dioses/dioses")
+g = Grafo()
+
+cargarGrafoDeDioses(g)
+
+# C
 """ 
-g = Grafo(False)
-dioses = []
+dios_a_buscar = "Zeus"
+resultado = buscarVertice(g, dios_a_buscar)
 
-archivo = abrir("Dioses/dioses")
-
-pos = 0
-tam_archivo = len(archivo)
-while pos < tam_archivo:
-    linea = leer(archivo, pos)
-    
-    nombre, descripcion, nombre_padre, nombre_madre = linea.split(";")
-    dios = Dios(nombre, descripcion, nombre_padre, nombre_madre)
-    if dios not in dioses:
-        dioses.append(dios)
-    
-    pos += 1
-
-cerrar(archivo)
-
-
-# Insertnado Vertices de dioses
-
-for dios in dioses:
-    insertarVerticeObjeto(g, dios)
-
-barridoVertices(g )
+if not resultado:
+    print("Vertice no encontrado")
+else:
+    aux_adyacentes = resultado.adyacentes.inicio
+    print(dios_a_buscar, "es padre o madre de:")
+    while aux_adyacentes is not None:
+        if (aux_adyacentes.info == "Padre de") or (aux_adyacentes.info == "Madre de"):
+            print(aux_adyacentes.destino)
+        aux_adyacentes = aux_adyacentes.sig
  """
+# D
+""" 
+vertice_a_buscar = "Ares"
+resultado = buscarVertice(g, vertice_a_buscar)
+if not resultado:
+    print("Vertice no encontrado")
+else:
+    aux_adyacentes = resultado.adyacentes.inicio
+    padre_madre = []
+    hermanos = []
+    hijos = []
+    while aux_adyacentes is not None:
+        if aux_adyacentes.info == "Hijo de":
+            padre_madre.append(aux_adyacentes.destino)
+        elif aux_adyacentes.info == "Padre de" or aux_adyacentes.info == "Madre de":
+            hijos.append(aux_adyacentes.destino)
+        elif aux_adyacentes.info == "Hermano de":
+            hermanos.append(aux_adyacentes.destino)
+        aux_adyacentes = aux_adyacentes.sig
+    
+    print("Nombre:", resultado.info)
+    print("Padres: ", padre_madre)
+    print("Hermanos: ", hermanos)
+    print("Hijos: ", hijos)
+ """
+# E
+""" 
+dios1 = "Zeus"
+dios2 = "Kronos"
+
+resultado_dios1 = buscarVertice(g, dios1)
+resultado_dios2 = buscarVertice(g, dios2)
+
+if resultado_dios1 is not None and resultado_dios2 is not None:
+    relacion_directa, relacion = tieneRelDirecta(resultado_dios1, resultado_dios2)
+    if relacion_directa:
+        print("La relacion entre {} y {} es: {}".format(dios1, dios2, relacion))
+    else:
+        print("{} y {} no tienen relacion directa".format(dios1, dios2))
+else:
+    print("Vertice/s no encontrado/s")
+ """
+# F
+""" 
+desde = "Selene"
+hasta = "Ouranos"
+camino = caminoMasCortoPorCantAristas(g, desde, hasta)
+if len(camino) > 0:
+    print("Camino más corto desde {} hasta {}".format(desde, hasta))
+    print(camino)
+else:
+    print("No se encontro camino entre {} y {}".format(desde, hasta))
+ """
+# G
+""" 
+marcarNoVisitado(g)
+print("Barrido en amplitud")
+barridoAmplitud(g, g.inicio)
+
+marcarNoVisitado(g)
+print("\nBarrido en profundidad")
+barridoProfundidad(g, g.inicio)
+ """
+
 
 # EJERCICIO 6
 """ 
@@ -352,7 +406,7 @@ for vertice in vertices:
     insertarVertice(g, vertice)
 
 insertarArista(g, 15, "A", "B")
-insertarArista(g, 19, "A", "C")
+insertarAOuranosrista(g, 19, "A", "C")
 insertarArista(g, 13, "A", "D")
 insertarArista(g, 2, "B", "C")
 insertarArista(g, 20, "B", "E")
@@ -545,52 +599,6 @@ while pos < tam_archivo:
     pos += 1
 cerrar(archivo_aeropuertos)
  """
-
-
-class VerticePerro():
-
-    def __init__(self, nombre, edad, peso):
-        self.info = nombre
-        self.sig = None
-        self.visitado = False
-        self.adyacentes = listaAristas()
-        self.edad = edad
-        self.peso = peso
-
-    def __str__(self):
-        return "Nombre: " + self.info + " Edad: " + str(self.edad) + " Peso: " + str(self.peso)
-
-
-class AristaCorrea():
-
-    def __init__(self, largo, color, destino):
-        self.info = 0
-        self.destino = destino
-        self.sig = None
-
-        self.largo = largo
-        self.color = color
-
-    def __str__(self):
-        return "Largo: " + str(self.largo) + " Color: " + self.color
-
-g = Grafo(True)
-
-perros = [
-    "Perro1", "Perro2", "Perro3", "Perro4", "Perro5", "Perro6", "Perro7"
-]
-
-insertarVerticeObjeto(g, VerticePerro("Perro1", 12, 23))
-insertarVerticeObjeto(g, VerticePerro("Perro2", 15, 33))
-insertarVerticeObjeto(g, VerticePerro("Perro3", 7, 56))
-insertarVerticeObjeto(g, VerticePerro("Perro4", 10, 43))
-insertarVerticeObjeto(g, VerticePerro("Perro5", 32, 31))
-insertarVerticeObjeto(g, VerticePerro("Perro6", 1, 62))
-insertarVerticeObjeto(g, VerticePerro("Perro7", 4, 26))
-
-barridoVertices(g)
-
-
 
 
 
