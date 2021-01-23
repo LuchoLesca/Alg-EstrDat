@@ -778,6 +778,48 @@ def existeCaminoRedSocial(g, vertice, destino, red_social):
 
 # EJERCICIO 8
 
+def probar(vertice):
+    '''Le paso un vertice, y muestro sus aristas ayacentes hasta que no haya'''
+    print("\n" + str(vertice))
+    adyacentes = vertice.adyacentes.inicio
+    while (adyacentes is not None):
+        print(adyacentes)
+        adyacentes = adyacentes.sig
+
+
+def agregarAristaObjeto(lista_adyacentes, nueva_arista):
+    '''Agrega la arista a la lista de adyacentes del orígen.'''
+    if (lista_adyacentes.inicio is None) or (nueva_arista.destino < lista_adyacentes.inicio.destino):
+        nueva_arista.sig = lista_adyacentes.inicio
+        lista_adyacentes.inicio = nueva_arista
+    else:
+        ant = lista_adyacentes.inicio
+        act = lista_adyacentes.inicio.sig
+        
+        while (act is not None) and (act.destino < nueva_arista.destino):
+            ant = act
+            act = act.sig
+        
+        nueva_arista.sig = act
+        ant.sig = nueva_arista
+
+    lista_adyacentes.tamanio += 1
+
+
+def insertarAristaObjeto(grafo, origen, nueva_arista):
+    '''Si los vertices de origen y destino existen, insertar arista directamente'''
+    ori = buscarVertice(grafo, origen)
+    des = buscarVertice(grafo, nueva_arista.destino)
+
+    if (ori is not None) and (des is not None):
+        if grafo.dirigido:
+            agregarAristaObjeto(ori.adyacentes, nueva_arista)
+        else:
+            agregarAristaObjeto(ori.adyacentes, nueva_arista)
+            nueva_arista = AristaVuelo(nueva_arista.salida, nueva_arista.arribo, nueva_arista.empresa, nueva_arista.costo, nueva_arista.duracion, nueva_arista.distancia, ori.info)
+            agregarAristaObjeto(des.adyacentes, nueva_arista)
+
+
 class VerticeAeropuerto():
     '''Nodo vertice con datos de aeropuerto'''
     def __init__(self, nombre, ubicacion, cant_pistas):
@@ -790,27 +832,30 @@ class VerticeAeropuerto():
         self.adyacentes = listaAristas()
 
     def __str__(self):
-        return "Nombre:" + self.info + " - Latitud:" + str(self.latitud) + " - Longitud" + str(self.longitud) + " - Pistas:" + str(self.cant_pistas)
-
+        # return "Nombre:" + self.info + " - Latitud:" + str(self.latitud) + " - Longitud" + str(self.longitud) + " - Pistas:" + str(self.cant_pistas)
+        return "Nombre:" + self.info
 
 class AristaVuelo():
     '''Nodo arista con datos de vuelo'''
-    def __init__(self, salida, arribo, empresa, costo, duracion, distancia):
+    def __init__(self, salida, arribo, empresa, costo, duracion, distancia, destino):
         self.salida = salida
         self.arribo = arribo
         self.empresa = empresa
         self.costo = costo
         self.duracion = duracion
         self.distancia = distancia
+        
+        self.destino = destino
+        self.sig = None
 
     def __str__(self):
-        return "Salida:" + self.salida + " - Arribo:" + self.arribo + " - Empresa:" + self.empresa + " - Costo:" + str(self.costo) + " - Duracion:" + str(self.duracion) + " - Distancia:" + str(self.distancia)
-        
-    
-def cargarArchivoAeropuertos():
+        # return "Salida:" + self.salida + " - Arribo:" + self.arribo + " - Empresa:" + self.empresa + " - Costo:" + str(self.costo) + " - Duracion:" + str(self.duracion) + " - Distancia:" + str(self.distancia)
+        return "Destino: " + self.destino + " - Duracion:" + str(self.duracion) + " - Distancia:" + str(self.distancia)
+            
+def generarArchivoAeropuertos():
     '''Carga aeropuertos(vertices) con info random (excepto nombre/info) a un archivo'''
-    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
-
+    # paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+    paises = ["Argentina", "China", "Brasil", "Tailandia"]
     archivo = abrir("AeropuertosYViajes/aeropuertos")
     limpiar(archivo)
 
@@ -821,11 +866,10 @@ def cargarArchivoAeropuertos():
 
     cerrar(archivo)
 
-
-def cargarArchivoVuelos(cantidad=20):
+def generarArchivoVuelos(cantidad=20):
     '''Carga vuelos(aristas) con info random (excepto origen y destino) a un archivo'''
-    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
-
+    # paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+    paises = ["Argentina", "China", "Brasil", "Tailandia"]
     archivo = abrir("AeropuertosYViajes/vuelos")
     limpiar(archivo)
 
@@ -836,9 +880,81 @@ def cargarArchivoVuelos(cantidad=20):
         costo_pasaje = 1200
         duracion = randint(30, 2600)
         distancia = randint(600, 10000)
+        destino = choice(paises)
 
-        nuevo_vuelo = AristaVuelo(hora_salida, hora_arribo, nombre_empresa, costo_pasaje, duracion, distancia)
+        nuevo_vuelo = AristaVuelo(hora_salida, hora_arribo, nombre_empresa, costo_pasaje, duracion, distancia, destino)
 
         guardar(archivo, nuevo_vuelo)
 
     cerrar(archivo)
+
+def cargarAeropuertosGrafo(g):
+    archivo_aeropuertos = abrir("AeropuertosYViajes/aeropuertos")
+    pos = 0
+    tam_archivo = len(archivo_aeropuertos)
+    while pos < tam_archivo:
+        aeropuerto = leer(archivo_aeropuertos, pos)
+        insertarVerticeObjeto(g, aeropuerto)
+        pos += 1
+    cerrar(archivo_aeropuertos)
+
+def cargarVuelosGrafo(g):
+    paises = ["Argentina", "China", "Brasil", "Tailandia"]
+
+    vuelos = [
+        ### ["Argentina", AristaVuelo("", "", "Empresa0", 0, 800, 1000, "Argentina")],
+        ["Argentina", AristaVuelo("", "", "Empresa1", 0, 20, 600, "Brasil")],  # Estas dos juntas hcen que tire falla
+        ["Argentina", AristaVuelo("", "", "Empresa2", 0, 50, 700, "China")],  # 
+        ["Tailandia", AristaVuelo("", "", "Empresa3", 0, 40, 500, "China")],  # Estas dos juntas hcen que tire falla
+        ["China", AristaVuelo("", "", "Empresa4", 0, 10, 400, "Tailandia")],  # 
+        ["China", AristaVuelo("", "", "Empresa5", 0, 70, 100, "Brasil")],  # Hasta acá bien
+        ["Brasil", AristaVuelo("", "", "Empresa6", 0, 30, 300, "Tailandia")],  # 
+        ### ["Brasil", AristaVuelo("", "", "Empresa7", 0, 370, 450, "Brasil")],  # 
+        ### ["Brasil", AristaVuelo("", "", "Empresa8", 0, 410, 95, "Brasil")],  # 
+        ["Tailandia", AristaVuelo("", "", "Empresa9", 0, 60, 200, "China")]  # 
+    ]
+
+    for vuelo in vuelos:
+        insertarAristaObjeto(g, vuelo[0], vuelo[1])
+    
+""" 
+    archivo_vuelos = abrir("AeropuertosYViajes/vuelos")
+    pos = 0
+    tam_archivo = len(archivo_vuelos)
+    while pos < tam_archivo:
+        vuelo = leer(archivo_vuelos, pos)
+        insertarAristaObjeto(g, choice(paises), vuelo)
+        pos += 1
+    cerrar(archivo_vuelos)
+ """
+
+# EJERCICIO 10
+
+class Lugar():
+
+    def __init__(self, nombre, latitud, longitud):
+        self.info = nombre
+        self.latitud = latitud
+        self.longitud = longitud
+        self.sig = None
+        self.visitado = False
+        self.adyacentes = listaAristas()
+
+    def __str__(self):
+        return "Nombre: " + self.info + " - Lat: " + str(self.latitud) + " - Long: " + str(self.longitud)
+
+# A y B
+
+def cargarVerticesLugaresGrafo(g, puntos):
+    for punto in puntos:
+        latitud, longitud = randint(-200, 200), randint(-200, 200)
+        lugar = Lugar(punto, latitud, longitud)
+        insertarVerticeObjeto(g, lugar)
+
+def cargarAristasLugaresGrafo(g, puntos):
+    for punto in puntos:
+        vertice = buscarVertice(g, punto)
+        for lugar in puntos:
+            if punto != lugar and (buscarArista(vertice, lugar) is None):
+                distancia = randint(5, 5000)
+                insertarArista(g, distancia, vertice.info, lugar)

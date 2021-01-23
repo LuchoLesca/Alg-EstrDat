@@ -312,11 +312,11 @@ barridoAmplitud(g, resultado)
 
 
 # EJERCICIO 5
-
+""" 
 g = Grafo()
 
 cargarGrafoDeDioses(g)
-
+ """
 # C
 """ 
 dios_a_buscar = "Zeus"
@@ -571,8 +571,8 @@ else:
 
 # Carga de Archivos (Los resetea y vuelve a cargar con datos random)
 
-# cargarArchivoAeropuertos()
-# cargarArchivoVuelos(1000)
+# generarArchivoAeropuertos()  # Recordar reemplazar en funcion para que lo haga con todos los paises, no manualmente como se puso para probar
+# generarArchivoVuelos(10)  # Recordar reemplazar en funcion para que lo haga con todos los paises, no manualmente como se puso para probar
 
 # Comprobación de datos de archivos
 """ 
@@ -586,20 +586,21 @@ barridoArchivo(archivo)
 cerrar(archivo)
  """
 
-# Carga Grafos (imcompleto)
-""" 
+# Carga Grafo
 g = Grafo(False)
 
-archivo_aeropuertos = abrir("AeropuertosYViajes/aeropuertos")
-pos = 0
-tam_archivo = len(archivo_aeropuertos)
-while pos < tam_archivo:
-    vuelo = leer(archivo_aeropuertos, pos)
-    print(vuelo)
-    pos += 1
-cerrar(archivo_aeropuertos)
- """
+cargarAeropuertosGrafo(g)
+cargarVuelosGrafo(g)  # Acordarse modificar esto para que haga la carga desde el archivo, y no la carga manual que le puse
 
+# Barrido para comprobar la carga correcta de los vuelos
+""" 
+cont = 0
+aux_vertices = g.inicio
+
+while aux_vertices is not None:
+    probar(aux_vertices)
+    aux_vertices = aux_vertices.sig
+ """
 
 
 # E  / Camino más corto desde Argentina a Tailandia
@@ -608,6 +609,17 @@ cerrar(archivo_aeropuertos)
 # ii. Menor duracion
 # iii. Menor costo
 # iv. Menor numero de escalas
+
+""" vuel = AristaVuelo("", "", "EMresa", 123, 323, 32, "Arg")
+print(getattr(vuel, "empresa")) """
+
+print("Distancia:")
+print(dijkstra3(g, "Argentina", "Tailandia", "distancia"))
+print("\nDuracion:")
+print(dijkstra3(g, "Argentina", "Tailandia", "duracion"))
+print("\nCosto:")
+print(dijkstra3(g, "Argentina", "Tailandia", "costo"))
+
 
 
 
@@ -654,3 +666,32 @@ print(dijkstra(g, "Alderaan", "Endor"))
 print("Camino mas corto desde Hoth hasta Tatooine")
 print(dijkstra(g, "Hoth", "Tatooine"))
  """
+
+
+
+# EJERCICIO 10
+""" 
+# A - B
+
+g = Grafo(False)
+puntos = ["Acropolis", "Delfos", "Efeso", "Olimpia", "Partenon", "Sunion"]
+
+# Carga de vertices
+cargarVerticesLugaresGrafo(g, puntos)
+
+# Carga Aristas
+cargarAristasLugaresGrafo(g, puntos)
+ """
+# C
+""" 
+arbol_expansion_minima = kruskal(g)
+print("Arbol de expansión mínima comenzando desde el inicio del grafo:")
+print(arbol_expansion_minima)
+ """
+# D
+""" 
+camino_mas_corto = dijkstra(g, "Partenon", "Delfos")
+print("Camino más corto desde Partenon hasta Delfos:")
+print(camino_mas_corto)
+ """
+

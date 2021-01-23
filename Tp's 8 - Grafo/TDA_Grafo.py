@@ -474,7 +474,7 @@ def dijkstra2(grafo, origen, destino):
 
     return camino_resuelto, largo_de_camino
 
-""" 
+
 def dijkstra3(grafo, origen, destino, campo):
     '''Camino mas corto entre dos nodos objetos'''
     no_visitados = Heap(grafo.tamanio)
@@ -497,9 +497,9 @@ def dijkstra3(grafo, origen, destino, campo):
 
         while aux_adyacentes is not None:
             # Se busca en el heap el adyacente, (en el heap están solo los que no fueron vvisitados)
-            pos = buscar_H(no_visitados, aux_adyacentes.destino)
+            pos = buscar_H(no_visitados, getattr(aux_adyacentes, "destino"))
             # Se calcula la distancia acumulada que tomaría desde lo que lleva la arista analizada más el camino que tomaría llegar a la nueva arista
-            distancia_acumulada = dato[0] + aux_adyacentes.info
+            distancia_acumulada = dato[0] + getattr(aux_adyacentes, campo)
             # Si el que está en heap tiene mayor peso que el acumulado anterior, se reemplazan los valores
             if (distancia_acumulada < no_visitados.vector[pos][0]):
                 no_visitados.vector[pos][1][1] = dato[1][0].info  # Cambia el valor "de donde viene"
@@ -507,4 +507,3 @@ def dijkstra3(grafo, origen, destino, campo):
             aux_adyacentes = aux_adyacentes.sig
 
     return resolverCaminoDijkstra(camino, destino)
- """
