@@ -613,13 +613,12 @@ while aux_vertices is not None:
 """ vuel = AristaVuelo("", "", "EMresa", 123, 323, 32, "Arg")
 print(getattr(vuel, "empresa")) """
 
-print("Distancia:")
-print(dijkstra3(g, "Argentina", "Tailandia", "distancia"))
-print("\nDuracion:")
-print(dijkstra3(g, "Argentina", "Tailandia", "duracion"))
-print("\nCosto:")
+print("Costo:")
 print(dijkstra3(g, "Argentina", "Tailandia", "costo"))
-
+print("Duracion:")
+print(dijkstra3(g, "Argentina", "Tailandia", "duracion"))
+print("Distancia:")
+print(dijkstra3(g, "Argentina", "China", "distancia"))
 
 
 

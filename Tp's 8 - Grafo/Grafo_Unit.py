@@ -902,16 +902,12 @@ def cargarVuelosGrafo(g):
     paises = ["Argentina", "China", "Brasil", "Tailandia"]
 
     vuelos = [
-        ### ["Argentina", AristaVuelo("", "", "Empresa0", 0, 800, 1000, "Argentina")],
-        ["Argentina", AristaVuelo("", "", "Empresa1", 0, 20, 600, "Brasil")],  # Estas dos juntas hcen que tire falla
-        ["Argentina", AristaVuelo("", "", "Empresa2", 0, 50, 700, "China")],  # 
-        ["Tailandia", AristaVuelo("", "", "Empresa3", 0, 40, 500, "China")],  # Estas dos juntas hcen que tire falla
-        ["China", AristaVuelo("", "", "Empresa4", 0, 10, 400, "Tailandia")],  # 
-        ["China", AristaVuelo("", "", "Empresa5", 0, 70, 100, "Brasil")],  # Hasta acá bien
-        ["Brasil", AristaVuelo("", "", "Empresa6", 0, 30, 300, "Tailandia")],  # 
-        ### ["Brasil", AristaVuelo("", "", "Empresa7", 0, 370, 450, "Brasil")],  # 
-        ### ["Brasil", AristaVuelo("", "", "Empresa8", 0, 410, 95, "Brasil")],  # 
-        ["Tailandia", AristaVuelo("", "", "Empresa9", 0, 60, 200, "China")]  # 
+        ["Argentina", AristaVuelo("", "", "ERand", 100, 200, 50, "Brasil")],
+        ["Brasil", AristaVuelo("", "", "ERand", 200, 50, 160, "China")],
+        ["Brasil", AristaVuelo("", "", "ERand", 300, 120, 70, "Tailandia")],
+        ["China", AristaVuelo("", "", "ERand", 50, 100, 100, "Tailandia")],
+        ["Argentina", AristaVuelo("", "", "ERand", 500, 300, 100, "Tailandia")],
+        ["Argentina", AristaVuelo("", "", "ERand", 400, 100, 300, "China")]
     ]
 
     for vuelo in vuelos:
