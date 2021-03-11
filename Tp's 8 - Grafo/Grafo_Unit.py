@@ -7,11 +7,9 @@ from TDA_Archivo import *
 
 # A
 
-
 def verticeSinApuntar(vertice):
     '''retorna True si el vértice no apunta a ningún otro'''
     return vertice.adyacentes.tamanio == 0
-
 
 def verticeEsApuntado(grafo, vertice):
     '''Retorna True si el vertice es apuntado por algún otro'''
@@ -31,11 +29,9 @@ def verticeEsApuntado(grafo, vertice):
 
     return apuntado
 
-
 def verticeDesconectado(grafo, vertice):
     '''Retorna True si el vertice no apunta a nada y no es apuntado por ninguno'''
     return verticeSinApuntar(vertice) and (not verticeEsApuntado(grafo, vertice))
-
 
 def listarVerticesDesconectados(grafo):
     '''Devuelve una lista de los vertices desconectados: que nu apuntan a ninguno, y ninguno apunta a él'''
@@ -50,7 +46,6 @@ def listarVerticesDesconectados(grafo):
         aux_vertice = aux_vertice.sig
     return lista
 
-
 def listaAleatoriaVerticesSinRepetir(cantidad=10):
     '''Devuelve una lista aleatoria de datos de vertices a ser ingresados, sin repetirse'''
     lista_vertices = []
@@ -61,7 +56,6 @@ def listaAleatoriaVerticesSinRepetir(cantidad=10):
             lista_vertices.append(info)
 
     return lista_vertices
-
 
 def eliminarVerticesDesconectados(grafo):
     '''Elimina del grafo todos los vértices desconectados. Devuelve lista'''
@@ -77,9 +71,7 @@ def eliminarVerticesDesconectados(grafo):
 
     return eliminados
 
-
 # B
-
 
 def nodosMayorCantidadAristasSalida(grafo):
     '''Retorna lista de nodos con mayor cantidad de aristas que salen de él'''
@@ -98,7 +90,6 @@ def nodosMayorCantidadAristasSalida(grafo):
         aux_vertices = aux_vertices.sig
 
     return lista_nodos
-
 
 # C 
 
@@ -123,7 +114,6 @@ def listaNodosQueMeApuntan(grafo, vertice):
 
     return lista
 
-
 def nodosMayorCantidadAristasEntrada(grafo):
     '''Retorna lista de nodos con mayor cantidad de aristas que llegan a él'''
     lista_nodos = []
@@ -145,7 +135,6 @@ def nodosMayorCantidadAristasEntrada(grafo):
 
     return lista_nodos
 
-
 # D
 
 def verticesSinAccesoAOtros(grafo):
@@ -160,7 +149,6 @@ def verticesSinAccesoAOtros(grafo):
         
         aux_vertices = aux_vertices.sig
     
-
 # F
 
 def seAutoapunta(vertice):
@@ -186,7 +174,6 @@ def cantidadAutoapuntados(grafo):
         aux_vertices = aux_vertices.sig
 
     return cantidad_autoapuntados
-
 
 # G
 
@@ -224,7 +211,6 @@ def aristaMasLarga(grafo):
         aux_vertice = aux_vertice.sig
 
     return lista
-
 
 
 
@@ -274,7 +260,6 @@ def mostrarMatrizAdyacencia(grafo):
         print(aux_vertices.info + " |  " + "   ".join(lista_linea))
         aux_vertices = aux_vertices.sig
 
-
 def listaAdyacentes(vertice):
     '''Devuelve lista con valores de lista de adyacentes del vertices'''
     lista = []
@@ -291,7 +276,6 @@ def mostrarListaAdyacencia(grafo):
         print("Vertices:", aux_vertices.info, "Aristas:", " >> ".join(lista_adyacentes))
         print()
         aux_vertices = aux_vertices.sig
-
 
 # B
 
@@ -333,7 +317,6 @@ def cargarGrafoEj2V2():
 
 
 
-
 # EJERCICIO 3
 
 class Antena():
@@ -349,7 +332,6 @@ class Antena():
     def __str__(self):
         return "Id: " + str(self.info) + "\nUbicacion: " + str(self.ubicacion) + "\nVel. de transf.: " + str(self.vel_transf) + "MB/s"
 
-
 def antenaRandom(identificador=-1):
     '''Devuelve un objeto antena con valores random'''
     if identificador == -1:
@@ -361,8 +343,6 @@ def antenaRandom(identificador=-1):
     trasnferencia = randint(100, 5000)
 
     return Antena(id, latitud, longitud, trasnferencia)
-
-
 
 def insertarVerticeObjeto(grafo, objeto):
     '''Inserta un vertice al grafo, el cual en vez de ser un dato es un objeto completo'''
@@ -392,7 +372,6 @@ class NodoRed():
         self.sig = None
         self.visitado = False
         self.adyacentes = listaAristas()
-
 
 # E
 
@@ -450,8 +429,7 @@ def Ej4f(g, switch, servidor):
 
 
 
-
-# EJERCICOI 5
+# EJERCICIO 5
 
 class Dios():
 
@@ -470,7 +448,6 @@ class Dios():
 
     def __str__(self):
         return "Info(nombre): " + self.info + " - Padre: " + self.padre + " - Madre: " + self.madre
-
 
 def extraerDiosesDesdeArchivo(g, archivo):
     '''Carga los vertices de los dioses en el grafo'''
@@ -602,8 +579,8 @@ def caminoMasCortoPorCantAristas(g, origen, destino):
     return resolverCaminoDijkstra(camino, destino)
 
 
-# EJERCICIO 7
 
+# EJERCICIO 7
 
 class Persona():
 
@@ -686,7 +663,6 @@ def pesoMaximoDeAristas(g, red_social):
     
     return peso_max
 
-
 def kruskalRedesSociales(grafo, red_social):
     """Algoritmo de Kruskal para hallar el árbol de expansión màximo de la red social pasada."""
     bosque = []
@@ -738,7 +714,6 @@ def kruskalRedesSociales(grafo, red_social):
 
     return bosque[0]
 
-
 # D y E
 
 def existeCaminoRedSocial(g, vertice, destino, red_social):
@@ -778,15 +753,6 @@ def existeCaminoRedSocial(g, vertice, destino, red_social):
 
 # EJERCICIO 8
 
-def probar(vertice):
-    '''Le paso un vertice, y muestro sus aristas ayacentes hasta que no haya'''
-    print("\n" + str(vertice))
-    adyacentes = vertice.adyacentes.inicio
-    while (adyacentes is not None):
-        print(adyacentes)
-        adyacentes = adyacentes.sig
-
-
 def agregarAristaObjeto(lista_adyacentes, nueva_arista):
     '''Agrega la arista a la lista de adyacentes del orígen.'''
     if (lista_adyacentes.inicio is None) or (nueva_arista.destino < lista_adyacentes.inicio.destino):
@@ -805,7 +771,6 @@ def agregarAristaObjeto(lista_adyacentes, nueva_arista):
 
     lista_adyacentes.tamanio += 1
 
-
 def insertarAristaObjeto(grafo, origen, nueva_arista):
     '''Si los vertices de origen y destino existen, insertar arista directamente'''
     ori = buscarVertice(grafo, origen)
@@ -818,7 +783,6 @@ def insertarAristaObjeto(grafo, origen, nueva_arista):
             agregarAristaObjeto(ori.adyacentes, nueva_arista)
             nueva_arista = AristaVuelo(nueva_arista.salida, nueva_arista.arribo, nueva_arista.empresa, nueva_arista.costo, nueva_arista.duracion, nueva_arista.distancia, ori.info)
             agregarAristaObjeto(des.adyacentes, nueva_arista)
-
 
 class VerticeAeropuerto():
     '''Nodo vertice con datos de aeropuerto'''
@@ -854,8 +818,8 @@ class AristaVuelo():
             
 def generarArchivoAeropuertos():
     '''Carga aeropuertos(vertices) con info random (excepto nombre/info) a un archivo'''
-    # paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
-    paises = ["Argentina", "China", "Brasil", "Tailandia"]
+    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+    # paises = ["Argentina", "China", "Brasil", "Tailandia"]
     archivo = abrir("AeropuertosYViajes/aeropuertos")
     limpiar(archivo)
 
@@ -868,8 +832,8 @@ def generarArchivoAeropuertos():
 
 def generarArchivoVuelos(cantidad=20):
     '''Carga vuelos(aristas) con info random (excepto origen y destino) a un archivo'''
-    # paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
-    paises = ["Argentina", "China", "Brasil", "Tailandia"]
+    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+    # paises = ["Argentina", "China", "Brasil", "Tailandia"]
     archivo = abrir("AeropuertosYViajes/vuelos")
     limpiar(archivo)
 
@@ -899,30 +863,62 @@ def cargarAeropuertosGrafo(g):
     cerrar(archivo_aeropuertos)
 
 def cargarVuelosGrafo(g):
-    paises = ["Argentina", "China", "Brasil", "Tailandia"]
+    paises = ["Argentina", "China", "Brasil", "Tailandia", "Grecia", "Alemania", "Francia", "Estados Unidos", "Japon", "Jamaica"]
+    origen = choice(paises)
 
-    vuelos = [
-        ["Argentina", AristaVuelo("", "", "ERand", 100, 200, 50, "Brasil")],
-        ["Brasil", AristaVuelo("", "", "ERand", 200, 50, 160, "China")],
-        ["Brasil", AristaVuelo("", "", "ERand", 300, 120, 70, "Tailandia")],
-        ["China", AristaVuelo("", "", "ERand", 50, 100, 100, "Tailandia")],
-        ["Argentina", AristaVuelo("", "", "ERand", 500, 300, 100, "Tailandia")],
-        ["Argentina", AristaVuelo("", "", "ERand", 400, 100, 300, "China")]
-    ]
-
-    for vuelo in vuelos:
-        insertarAristaObjeto(g, vuelo[0], vuelo[1])
-    
-""" 
     archivo_vuelos = abrir("AeropuertosYViajes/vuelos")
     pos = 0
     tam_archivo = len(archivo_vuelos)
     while pos < tam_archivo:
-        vuelo = leer(archivo_vuelos, pos)
-        insertarAristaObjeto(g, choice(paises), vuelo)
+        arista_de_vuelo = leer(archivo_vuelos, pos)
+        while origen == arista_de_vuelo.destino:
+            origen = choice(paises)
+        insertarAristaObjeto(g, origen, arista_de_vuelo)
         pos += 1
     cerrar(archivo_vuelos)
- """
+
+def dijkstraObjeto(grafo, origen, destino, campo):
+    '''Camino mas corto entre dos nodos objetos'''
+    no_visitados = Heap(grafo.tamanio)
+    camino = Pila()
+    aux_vertices = grafo.inicio
+
+    while aux_vertices is not None:
+        if aux_vertices.info == origen:
+            arribo_H(no_visitados, 0, [aux_vertices, None])
+        else:
+            arribo_H(no_visitados, inf, [aux_vertices, None])
+        aux_vertices = aux_vertices.sig
+
+    while not heap_vacio(no_visitados):
+        dato = atencion_H(no_visitados)
+        apilar(camino, dato)
+        aux_adyacentes = dato[1][0].adyacentes.inicio
+
+        while aux_adyacentes is not None:
+            pos = buscar_H(no_visitados, getattr(aux_adyacentes, "destino"))
+            distancia_acumulada = dato[0] + getattr(aux_adyacentes, campo)
+            if (distancia_acumulada < no_visitados.vector[pos][0]):
+                no_visitados.vector[pos][1][1] = dato[1][0].info
+                cambiarPrioridad(no_visitados, pos, distancia_acumulada)
+            aux_adyacentes = aux_adyacentes.sig
+
+    return resolverCaminoDijkstra(camino, destino)
+
+def aeropuertosArribableDesde(g, vertice):
+        if not vertice.visitado:
+            vertice.visitado = True
+            print(vertice.info)
+            adyacentes = vertice.adyacentes.inicio
+            
+            while adyacentes is not None:
+                aux_adyacente = buscarVertice(g, adyacentes.destino)         
+                if not aux_adyacente.visitado:
+                    aeropuertosArribableDesde(g, aux_adyacente)
+            
+                adyacentes = adyacentes.sig
+
+
 
 # EJERCICIO 10
 

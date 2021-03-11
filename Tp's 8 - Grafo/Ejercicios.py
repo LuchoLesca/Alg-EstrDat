@@ -571,55 +571,44 @@ else:
 
 # Carga de Archivos (Los resetea y vuelve a cargar con datos random)
 
-# generarArchivoAeropuertos()  # Recordar reemplazar en funcion para que lo haga con todos los paises, no manualmente como se puso para probar
-# generarArchivoVuelos(10)  # Recordar reemplazar en funcion para que lo haga con todos los paises, no manualmente como se puso para probar
-
-# Comprobación de datos de archivos
-""" 
-archivo = abrir("AeropuertosYViajes/aeropuertos")
-barridoArchivo(archivo)
-cerrar(archivo)
- """
-""" 
-archivo = abrir("AeropuertosYViajes/vuelos")
-barridoArchivo(archivo)
-cerrar(archivo)
- """
+# generarArchivoAeropuertos()
+# generarArchivoVuelos(30)
 
 # Carga Grafo
+""" 
 g = Grafo(False)
 
 cargarAeropuertosGrafo(g)
-cargarVuelosGrafo(g)  # Acordarse modificar esto para que haga la carga desde el archivo, y no la carga manual que le puse
-
-# Barrido para comprobar la carga correcta de los vuelos
-""" 
-cont = 0
-aux_vertices = g.inicio
-
-while aux_vertices is not None:
-    probar(aux_vertices)
-    aux_vertices = aux_vertices.sig
+cargarVuelosGrafo(g)
  """
-
-
 # E  / Camino más corto desde Argentina a Tailandia
-
+""" 
 # i. Menor distancia
 # ii. Menor duracion
 # iii. Menor costo
+
+criterios = ["distancia", "costo", "duracion"]
+for criterio in criterios:
+    print(criterio.capitalize() + ":")
+    try:
+        print(dijkstraObjeto(g, "Argentina", "Tailandia", criterio))
+    except:
+        print("El campo" + criterio + "ingresado no existe")
+
+
 # iv. Menor numero de escalas
-
-""" vuel = AristaVuelo("", "", "EMresa", 123, 323, 32, "Arg")
-print(getattr(vuel, "empresa")) """
-
-print("Costo:")
-print(dijkstra3(g, "Argentina", "Tailandia", "costo"))
-print("Duracion:")
-print(dijkstra3(g, "Argentina", "Tailandia", "duracion"))
-print("Distancia:")
-print(dijkstra3(g, "Argentina", "China", "distancia"))
-
+print("Menor numero de escalas:")
+print(caminoMasCortoPorCantAristas(g, "Argentina", "China"))
+ """
+# F
+""" 
+pais = buscarVertice(g, "Grecia")
+if pais is None:
+    print("El pais buscado no existe")
+else:
+    marcarNoVisitado(g)
+    aeropuertosArribableDesde(g, pais)
+ """
 
 
 # EJERCICIO 9
